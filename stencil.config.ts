@@ -1,8 +1,9 @@
-import { Config } from '@stencil/core'
-import { postcss } from '@stencil/postcss'
-import { reactOutputTarget } from '@stencil/react-output-target'
-import { vueOutputTarget } from '@stencil/vue-output-target'
-import postcssConfig from './postcss.config.cjs'
+import { Config } from '@stencil/core';
+import { postcss } from '@stencil/postcss';
+import { reactOutputTarget } from '@stencil/react-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
+import { angularOutputTarget } from '@stencil/angular-output-target';
+import postcssConfig from './postcss.config.cjs';
 
 export const config: Config = {
   namespace: 'liquid',
@@ -18,6 +19,12 @@ export const config: Config = {
       componentCorePackage: '..',
       proxiesFile: './src/vue.ts',
       includeDefineCustomElements: false,
+    }),
+    angularOutputTarget({
+      componentCorePackage: '../..',
+      directivesProxyFile: './src/angular/angular-components.ts',
+      directivesArrayFile: './src/angular/angular-directives.ts',
+      includeImportCustomElements: false,
     }),
     {
       type: 'dist',
@@ -61,4 +68,4 @@ export const config: Config = {
     cloneNodeFix: false,
     slotChildNodesFix: false,
   },
-}
+};

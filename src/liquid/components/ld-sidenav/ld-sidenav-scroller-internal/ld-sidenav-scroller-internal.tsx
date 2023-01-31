@@ -6,9 +6,9 @@ import {
   Listen,
   Method,
   State,
-} from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
-import { closest } from '../../../utils/closest'
+} from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
+import { closest } from '../../../utils/closest';
 
 /** @internal **/
 @Component({
@@ -17,32 +17,32 @@ import { closest } from '../../../utils/closest'
   shadow: true,
 })
 export class LdSidenavScrollerInternal {
-  @Element() el: HTMLElement
-  private sidenav: HTMLLdSidenavElement
+  @Element() el: HTMLElement;
+  private sidenav: HTMLLdSidenavElement;
 
-  @State() hasShadowBottom = false
-  @State() hasShadowTop = false
-  @State() needsHRBottom: boolean
-  @State() needsHRTop: boolean
-  @State() relative: boolean
-  @State() sidenavClosable: boolean
-  @State() sidenavCollapsed: boolean
+  @State() hasShadowBottom = false;
+  @State() hasShadowTop = false;
+  @State() needsHRBottom: boolean;
+  @State() needsHRTop: boolean;
+  @State() relative: boolean;
+  @State() sidenavClosable: boolean;
+  @State() sidenavCollapsed: boolean;
 
   @Listen('ldSidenavCollapsedChange', { target: 'window', passive: true })
   handleSidenavCollapsedChange(
     ev: CustomEvent<{
-      collapsed: boolean
-      fully: boolean
+      collapsed: boolean;
+      fully: boolean;
     }>
   ) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavCollapsed = ev.detail.collapsed
+    if (ev.target !== this.sidenav) return;
+    this.sidenavCollapsed = ev.detail.collapsed;
   }
 
   @Listen('ldSidenavBreakpointChange', { target: 'window', passive: true })
   handleSidenavBreakpointChange(ev: CustomEvent<boolean>) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavClosable = ev.detail
+    if (ev.target !== this.sidenav) return;
+    this.sidenavClosable = ev.detail;
   }
 
   /**
@@ -51,12 +51,12 @@ export class LdSidenavScrollerInternal {
    */
   @Method()
   async updateShadows() {
-    const scrollContainer = this.el
-    if (!scrollContainer) return
+    const scrollContainer = this.el;
+    if (!scrollContainer) return;
     this.hasShadowBottom =
       scrollContainer.scrollTop <
-      scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
-    this.hasShadowTop = scrollContainer.scrollTop > 10
+      scrollContainer.scrollHeight - scrollContainer.clientHeight - 10;
+    this.hasShadowTop = scrollContainer.scrollTop > 10;
   }
 
   /** Scrolls the scroll container to the top instantly. */
@@ -64,30 +64,30 @@ export class LdSidenavScrollerInternal {
   async scrollToTop(smoothly = false) {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
-    ).matches
+    ).matches;
     try {
       this.el.scrollTo({
         top: 0,
         behavior: smoothly && !prefersReducedMotion ? 'smooth' : 'auto',
-      })
+      });
     } catch (err) {
       // js-dom seems to not know scrollTo - ignoring for now
     }
   }
 
   componentWillLoad() {
-    this.sidenav = closest('ld-sidenav', this.el)
-    if (!this.sidenav) return
+    this.sidenav = closest('ld-sidenav', this.el);
+    if (!this.sidenav) return;
 
-    this.needsHRTop = !!this.sidenav.querySelector('[slot="top"]')
-    this.needsHRBottom = !!this.sidenav.querySelector('[slot="bottom"]')
-    this.relative = !this.sidenav.querySelector('ld-sidenav-slider')
+    this.needsHRTop = !!this.sidenav.querySelector('[slot="top"]');
+    this.needsHRBottom = !!this.sidenav.querySelector('[slot="bottom"]');
+    this.relative = !this.sidenav.querySelector('ld-sidenav-slider');
   }
 
   componentDidLoad() {
     setTimeout(() => {
-      this.updateShadows()
-    })
+      this.updateShadows();
+    });
   }
 
   render() {
@@ -97,7 +97,7 @@ export class LdSidenavScrollerInternal {
       this.sidenavCollapsed &&
         !this.sidenavClosable &&
         'ld-sidenav-scroller-internal--collapsed',
-    ])
+    ]);
 
     return (
       <Host
@@ -131,6 +131,6 @@ export class LdSidenavScrollerInternal {
         )}
         <slot></slot>
       </Host>
-    )
+    );
   }
 }

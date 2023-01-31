@@ -1,6 +1,6 @@
-import { Component, Element, h, Prop, State } from '@stencil/core'
-import { cloneAttributes } from '../../utils/cloneAttributes'
-import { getClassNames } from 'src/liquid/utils/getClassNames'
+import { Component, Element, h, Prop, State } from '@stencil/core';
+import { cloneAttributes } from '../../utils/cloneAttributes';
+import { getClassNames } from 'src/liquid/utils/getClassNames';
 
 /**
  * @virtualProp ref - reference to component
@@ -13,28 +13,28 @@ import { getClassNames } from 'src/liquid/utils/getClassNames'
   shadow: true,
 })
 export class LdLabel implements ClonesAttributes {
-  @Element() el: HTMLLabelElement
+  @Element() el: HTMLLabelElement;
 
-  private attributesObserver: MutationObserver
+  private attributesObserver: MutationObserver;
 
   /** Align input message with input position. */
-  @Prop() alignMessage: boolean
+  @Prop() alignMessage: boolean;
 
   /** Relative position to labeled element. Default is top. */
-  @Prop() position: 'left' | 'right'
+  @Prop() position: 'left' | 'right';
 
   /** Size of the label. Default is small. */
-  @Prop() size: 'm'
+  @Prop() size: 'm';
 
-  @State() clonedAttributes
+  @State() clonedAttributes;
 
   private handleClick = async (event: MouseEvent) => {
     const inputElement: HTMLElement = this.el.querySelector(
       'ld-input, ld-textarea, ld-toggle, ld-select, ld-button, ld-checkbox, ld-radio, input, textarea, button, select'
-    )
+    );
     const clickedInsideInputElement =
       event.target === inputElement ||
-      inputElement.contains(event.target as Node)
+      inputElement.contains(event.target as Node);
 
     if (
       inputElement &&
@@ -42,25 +42,25 @@ export class LdLabel implements ClonesAttributes {
       !inputElement['disabled']
     ) {
       if ('focusInner' in inputElement) {
-        await (inputElement as unknown as InnerFocusable).focusInner()
+        await (inputElement as unknown as InnerFocusable).focusInner();
       } else {
-        inputElement.focus()
+        inputElement.focus();
       }
 
-      inputElement.click()
+      inputElement.click();
     }
-  }
+  };
 
   componentWillLoad() {
     this.attributesObserver = cloneAttributes.call(this, [
       'align-message',
       'position',
       'size',
-    ])
+    ]);
   }
 
   disconnectedCallback() {
-    this.attributesObserver?.disconnect()
+    this.attributesObserver?.disconnect();
   }
 
   render() {
@@ -69,7 +69,7 @@ export class LdLabel implements ClonesAttributes {
       this.alignMessage && 'ld-label--align-message',
       this.position && `ld-label--${this.position}`,
       this.size && `ld-label--${this.size}`,
-    ])
+    ]);
 
     return (
       <label
@@ -80,6 +80,6 @@ export class LdLabel implements ClonesAttributes {
       >
         <slot></slot>
       </label>
-    )
+    );
   }
 }

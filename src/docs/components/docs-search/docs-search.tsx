@@ -1,15 +1,15 @@
-import 'wicg-inert'
-import { Component, h, Listen, State, Host } from '@stencil/core'
-import Fuse from 'fuse.js'
-import eventBus from '../../utils/eventBus'
-import { SearchEventType } from '../../utils/eventTypes'
+import 'wicg-inert';
+import { Component, h, Listen, State, Host } from '@stencil/core';
+import Fuse from 'fuse.js';
+import eventBus from '../../utils/eventBus';
+import { SearchEventType } from '../../utils/eventTypes';
 
 interface SearchResult {
-  breadcrumbs: string[]
-  headings: ''
-  tags: string
-  title: string
-  url: string
+  breadcrumbs: string[];
+  headings: '';
+  tags: string;
+  title: string;
+  url: string;
 }
 
 /** @internal **/
@@ -20,18 +20,18 @@ interface SearchResult {
   assetsDirs: ['assets'],
 })
 export class DocsSearch {
-  private searchInput!: HTMLLdInputElement
-  private searchResults!: HTMLOListElement
-  private fuse: Fuse<SearchResult>
+  private searchInput!: HTMLLdInputElement;
+  private searchResults!: HTMLOListElement;
+  private fuse: Fuse<SearchResult>;
 
-  @State() results: Fuse.FuseResult<SearchResult>[] = []
-  @State() isActive: boolean
+  @State() results: Fuse.FuseResult<SearchResult>[] = [];
+  @State() isActive: boolean;
 
   @Listen('click', { capture: true })
   handleClick(ev) {
     if (ev.target.id === 'docs-search-backdrop') {
-      ev.preventDefault()
-      this.onSearchClose()
+      ev.preventDefault();
+      this.onSearchClose();
     }
   }
 
@@ -40,11 +40,11 @@ export class DocsSearch {
   })
   handleEscapeDown(ev: KeyboardEvent) {
     if (!this.isActive) {
-      return
+      return;
     }
     if (ev.key === 'Escape') {
-      ev.stopImmediatePropagation()
-      this.onSearchClose()
+      ev.stopImmediatePropagation();
+      this.onSearchClose();
     }
   }
 
@@ -53,76 +53,76 @@ export class DocsSearch {
   })
   handleKeyDown(ev: KeyboardEvent) {
     if (!this.isActive) {
-      return
+      return;
     }
     switch (ev.key) {
       case 'ArrowDown': {
-        ev.preventDefault()
+        ev.preventDefault();
 
         if (
           document.activeElement.closest('.docs-search__input') ===
           this.searchInput
         ) {
-          ;(
+          (
             this.searchResults.querySelector(
               '.docs-search__result > a'
             ) as HTMLAnchorElement
-          )?.focus()
-          return
+          )?.focus();
+          return;
         }
 
         const nextSibling = document.activeElement.closest(
           '.docs-search__result'
-        )?.nextElementSibling
+        )?.nextElementSibling;
         if (nextSibling?.classList.contains('docs-search__result')) {
-          ;(nextSibling.querySelector('a') as HTMLAnchorElement).focus()
+          (nextSibling.querySelector('a') as HTMLAnchorElement).focus();
         }
-        return
+        return;
       }
 
       case 'ArrowUp': {
-        ev.preventDefault()
+        ev.preventDefault();
 
         const focusedSearchResult = document.activeElement.closest(
           '.docs-search__result'
-        )
+        );
 
         if (focusedSearchResult) {
-          const prevSibling = focusedSearchResult.previousElementSibling
+          const prevSibling = focusedSearchResult.previousElementSibling;
           if (prevSibling?.classList.contains('docs-search__result')) {
-            ;(prevSibling.querySelector('a') as HTMLAnchorElement).focus()
+            (prevSibling.querySelector('a') as HTMLAnchorElement).focus();
           } else {
-            this.searchInput.querySelector('input').focus()
-            this.searchResults.scrollTo(0, 0)
+            this.searchInput.querySelector('input').focus();
+            this.searchResults.scrollTo(0, 0);
           }
         }
-        return
+        return;
       }
 
       case ' ': {
         const focusedSearchResult = document.activeElement.closest(
           '.docs-search__result'
-        )
+        );
 
         if (focusedSearchResult) {
-          ev.preventDefault()
+          ev.preventDefault();
           window.location.href = (
             focusedSearchResult.querySelector('a') as HTMLAnchorElement
-          ).href
+          ).href;
         }
-        return
+        return;
       }
     }
   }
 
   @Listen('submit')
   handleSubmit(ev: Event) {
-    ev.preventDefault()
+    ev.preventDefault();
   }
 
   private handleChange() {
-    const searchResult = this.fuse.search(this.searchInput.value)
-    this.results = searchResult
+    const searchResult = this.fuse.search(this.searchInput.value);
+    this.results = searchResult;
   }
 
   componentWillLoad() {
@@ -143,27 +143,27 @@ export class DocsSearch {
       ],
       distance: 10000,
       threshold: 0.3,
-    })
+    });
   }
 
   componentDidLoad() {
-    eventBus.on(SearchEventType.open, this.onSearchOpen.bind(this))
+    eventBus.on(SearchEventType.open, this.onSearchOpen.bind(this));
   }
 
   private onSearchOpen() {
-    document.getElementById('docs-layout').setAttribute('inert', 'true')
-    this.isActive = true
-    this.searchInput.value = ''
+    document.getElementById('docs-layout').setAttribute('inert', 'true');
+    this.isActive = true;
+    this.searchInput.value = '';
     setTimeout(() => {
-      this.searchInput.focusInner()
-    })
+      this.searchInput.focusInner();
+    });
   }
 
   private onSearchClose() {
-    document.getElementById('docs-layout').removeAttribute('inert')
-    this.isActive = false
-    this.results = []
-    eventBus.emit(SearchEventType.close)
+    document.getElementById('docs-layout').removeAttribute('inert');
+    this.isActive = false;
+    this.results = [];
+    eventBus.emit(SearchEventType.close);
   }
 
   render() {
@@ -221,7 +221,7 @@ export class DocsSearch {
           >
             {this.results.length
               ? this.results.map((result) => {
-                  if (!result.item.breadcrumbs.length) return ''
+                  if (!result.item.breadcrumbs.length) return '';
                   return (
                     <li class="docs-search__result" key={result.refIndex}>
                       <a href={result.item.url}>
@@ -235,7 +235,7 @@ export class DocsSearch {
                         </span>
                       </a>
                     </li>
-                  )
+                  );
                 })
               : ''}
           </ol>
@@ -246,6 +246,6 @@ export class DocsSearch {
           aria-label="Close search"
         ></button>
       </Host>
-    )
+    );
   }
 }

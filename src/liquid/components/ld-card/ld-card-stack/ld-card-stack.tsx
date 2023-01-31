@@ -1,5 +1,5 @@
-import { Component, h, Host, Prop } from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
+import { Component, h, Host, Prop } from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /**
  * @virtualProp ref - reference to component
@@ -12,7 +12,7 @@ import { getClassNames } from '../../../utils/getClassNames'
 })
 export class LdCardStack {
   /** The stack direction. */
-  @Prop() direction?: 'ltr' | 'rtl' | 'vertical'
+  @Prop() direction?: 'ltr' | 'rtl' | 'vertical';
 
   render() {
     return (
@@ -25,6 +25,6 @@ export class LdCardStack {
       >
         <slot></slot>
       </Host>
-    )
+    );
   }
 }

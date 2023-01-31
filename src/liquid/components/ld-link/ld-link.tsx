@@ -1,6 +1,6 @@
-import { Component, Element, h, Method, Prop, State } from '@stencil/core'
-import { getClassNames } from 'src/liquid/utils/getClassNames'
-import { cloneAttributes } from '../../utils/cloneAttributes'
+import { Component, Element, h, Method, Prop, State } from '@stencil/core';
+import { getClassNames } from 'src/liquid/utils/getClassNames';
+import { cloneAttributes } from '../../utils/cloneAttributes';
 
 /**
  * @part anchor - the link anchor
@@ -15,70 +15,70 @@ import { cloneAttributes } from '../../utils/cloneAttributes'
   shadow: true,
 })
 export class LdLink implements ClonesAttributes, InnerFocusable {
-  @Element() el: HTMLElement
-  private anchor: HTMLAnchorElement
-  private attributesObserver: MutationObserver
+  @Element() el: HTMLElement;
+  private anchor: HTMLAnchorElement;
+  private attributesObserver: MutationObserver;
 
   /** Displays chevron icon. */
-  @Prop() chevron?: 'start' | 'end'
+  @Prop() chevron?: 'start' | 'end';
 
   /**
    * The disabled attribute sets `aria-disabled="true"`
    * on the rendered anchor element.
    */
-  @Prop() disabled?: boolean
+  @Prop() disabled?: boolean;
 
   /** Tab index of the input. */
-  @Prop() ldTabindex: number | undefined
+  @Prop() ldTabindex: number | undefined;
 
   /**
    * The `target` attributed can be used in conjunction with the `href` attribute.
    * See [mdn docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target)
    * for more information on the `target` attribute.
    */
-  @Prop() target?: '_blank' | '_self' | '_parent' | '_top'
+  @Prop() target?: '_blank' | '_self' | '_parent' | '_top';
 
-  @State() clonedAttributes
+  @State() clonedAttributes;
 
   /** Sets focus on the anchor. */
   @Method()
   async focusInner() {
-    this.anchor.focus()
+    this.anchor.focus();
   }
 
   componentWillLoad() {
     this.attributesObserver = cloneAttributes.call(this, [
       'iconStart',
       'iconEnd',
-    ])
+    ]);
   }
 
   connectedCallback() {
     this.el.addEventListener('click', this.handleClick, {
       capture: true,
-    })
+    });
   }
 
   disconnectedCallback() {
     this.el.removeEventListener('click', this.handleClick, {
       capture: true,
-    })
-    this.attributesObserver?.disconnect()
+    });
+    this.attributesObserver?.disconnect();
   }
 
   private handleClick = (ev: MouseEvent) => {
     if (this.disabled || this.el.ariaDisabled) {
-      ev.preventDefault()
-      return
+      ev.preventDefault();
+      return;
     }
-  }
+  };
 
   render() {
     const cl = getClassNames([
       'ld-link',
       this.chevron && `ld-link--chevron-${this.chevron}`,
       this.disabled && `ld-link--disabled`,
-    ])
+    ]);
 
     return (
       <a
@@ -97,6 +97,6 @@ export class LdLink implements ClonesAttributes, InnerFocusable {
       >
         <slot></slot>
       </a>
-    )
+    );
   }
 }

@@ -1,6 +1,6 @@
-import { Component, h, Host } from '@stencil/core'
-import eventBus from '../../utils/eventBus'
-import { NavEventType } from '../../utils/eventTypes'
+import { Component, h, Host } from '@stencil/core';
+import eventBus from '../../utils/eventBus';
+import { NavEventType } from '../../utils/eventTypes';
 
 /** @internal **/
 @Component({
@@ -10,12 +10,12 @@ import { NavEventType } from '../../utils/eventTypes'
 })
 export class DocsNavBackdrop {
   private onClick(ev) {
-    ev.preventDefault()
-    location.hash = ''
+    ev.preventDefault();
+    location.hash = '';
     setTimeout(() => {
-      history.replaceState({}, '', window.location.pathname)
-      eventBus.emit(NavEventType.close)
-    })
+      history.replaceState({}, '', window.location.pathname);
+      eventBus.emit(NavEventType.close);
+    });
   }
 
   render() {
@@ -32,6 +32,6 @@ export class DocsNavBackdrop {
           Close nav
         </a>
       </Host>
-    )
+    );
   }
 }

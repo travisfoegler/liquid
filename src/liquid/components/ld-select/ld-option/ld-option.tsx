@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop, Element } from '@stencil/core'
+import { Component, h, Host, Prop, Element } from '@stencil/core';
 
 /**
  * @virtualProp ref - reference to component
@@ -10,33 +10,33 @@ import { Component, h, Host, Prop, Element } from '@stencil/core'
   shadow: true,
 })
 export class LdOption {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   /**
    * The content of this attribute represents the value to be submitted with the form,
    * should this option be selected. If this attribute is omitted, the value is taken
    * from the text content of the option element.
    */
-  @Prop() value: string
+  @Prop() value: string;
 
   /**
    * If present, this boolean attribute indicates that the option is selected.
    */
-  @Prop() selected: boolean
+  @Prop() selected: boolean;
 
   /**
    * Disables the option.
    */
-  @Prop() disabled: boolean
+  @Prop() disabled: boolean;
 
   /** Set to true on filtering via select input. */
-  @Prop({ reflect: true }) hidden = false
+  @Prop({ reflect: true }) hidden = false;
 
   componentWillLoad() {
     // Setting selected via prop directly triggers the mutation observer to fire twice on attribute chage.
     // This is indeed only true for the selected attribute. The disabled attribute works fine when assigned directly.
     if (this.selected) {
-      this.el.setAttribute('selected', '')
+      this.el.setAttribute('selected', '');
     }
   }
 
@@ -45,6 +45,6 @@ export class LdOption {
       <Host class="ld-option">
         <slot></slot>
       </Host>
-    )
+    );
   }
 }

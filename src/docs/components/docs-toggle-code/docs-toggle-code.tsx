@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Listen, Prop } from '@stencil/core'
+import { Component, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -8,15 +8,15 @@ import { Component, Event, EventEmitter, h, Listen, Prop } from '@stencil/core'
 })
 export class DocsToggleCode {
   /** Is code toggled to be visible */
-  @Prop() isOn: boolean
+  @Prop() isOn: boolean;
 
   /** Theme select change event. */
-  @Event() toggleCode: EventEmitter<boolean>
+  @Event() toggleCode: EventEmitter<boolean>;
 
   @Listen('click', { capture: true })
   handleClick(ev) {
-    ev.preventDefault()
-    this.toggleCode.emit(!this.isOn)
+    ev.preventDefault();
+    this.toggleCode.emit(!this.isOn);
   }
 
   render() {
@@ -41,6 +41,6 @@ export class DocsToggleCode {
           </svg>
         </ld-icon>
       </ld-button>
-    )
+    );
   }
 }

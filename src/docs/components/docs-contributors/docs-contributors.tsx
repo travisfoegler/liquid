@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core'
+import { Component, Prop, h } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -8,12 +8,12 @@ import { Component, Prop, h } from '@stencil/core'
 })
 export class DocsContributors {
   /** stringified array of GitHub user ids */
-  @Prop() contributors: string
+  @Prop() contributors: string;
 
   render() {
-    const contributors = JSON.parse(this.contributors)
+    const contributors = JSON.parse(this.contributors);
     if (!contributors || contributors.length === 0) {
-      return null
+      return null;
     }
 
     return (
@@ -44,6 +44,6 @@ export class DocsContributors {
           ))}
         </ul>
       </section>
-    )
+    );
   }
 }

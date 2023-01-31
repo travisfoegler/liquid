@@ -1,4 +1,4 @@
-import { Component, h, Listen, State } from '@stencil/core'
+import { Component, h, Listen, State } from '@stencil/core';
 
 /**
  * @virtualProp ref - reference to component
@@ -9,11 +9,11 @@ import { Component, h, Listen, State } from '@stencil/core'
   shadow: true,
 })
 export class LdSrLive {
-  private infoSuffix: string
-  private alertSuffix: string
+  private infoSuffix: string;
+  private alertSuffix: string;
 
-  @State() info: string
-  @State() alert: string
+  @State() info: string;
+  @State() alert: string;
 
   @Listen('ldSrLiveInfo', {
     target: 'window',
@@ -22,8 +22,8 @@ export class LdSrLive {
   handleInfo(event: CustomEvent<string>) {
     // MAGIC: the second “pseudo-empty” string contains a zero width space, which is required
     // in order to repeat an alert message, without altering the printed message displayed on the screen.
-    this.infoSuffix = this.infoSuffix ? '' : '​'
-    this.info = event.detail + this.infoSuffix
+    this.infoSuffix = this.infoSuffix ? '' : '​';
+    this.info = event.detail + this.infoSuffix;
   }
 
   @Listen('ldSrLiveAlert', {
@@ -33,8 +33,8 @@ export class LdSrLive {
   handleAlert(event: CustomEvent<string>) {
     // MAGIC: the second “pseudo-empty” string contains a zero width space, which is required
     // in order to repeat an alert message, without altering the printed message displayed on the screen.
-    this.alertSuffix = this.alertSuffix ? '' : '​'
-    this.alert = event.detail + this.alertSuffix
+    this.alertSuffix = this.alertSuffix ? '' : '​';
+    this.alert = event.detail + this.alertSuffix;
   }
 
   render() {
@@ -57,6 +57,6 @@ export class LdSrLive {
           {this.alert}
         </span>
       </ld-sr-only>
-    )
+    );
   }
 }

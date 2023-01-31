@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop } from '@stencil/core'
+import { Component, h, Host, Prop } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -8,16 +8,16 @@ import { Component, h, Host, Prop } from '@stencil/core'
 })
 export class DocsTypography {
   /** Sets primary color on the M-Font and transforms it to uppercase. */
-  @Prop() brand?: boolean
+  @Prop() brand?: boolean;
 
   /** CSS prop name */
-  @Prop() prop = 'font'
+  @Prop() prop = 'font';
 
   /** CSS variable value */
-  @Prop() val: string
+  @Prop() val: string;
 
   /** CSS variable name */
-  @Prop() var: string
+  @Prop() var: string;
 
   render() {
     return (
@@ -42,6 +42,6 @@ export class DocsTypography {
           Almost before we knew it, we had left the ground.
         </span>
       </Host>
-    )
+    );
   }
 }

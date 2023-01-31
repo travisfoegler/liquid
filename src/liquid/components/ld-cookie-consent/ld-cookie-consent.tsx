@@ -8,10 +8,10 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core'
-import Cookies from 'js-cookie'
-import { LdCookieConsentConfig } from './ld-cookie-consent.types'
-import { getClassNames } from '../../utils/getClassNames'
+} from '@stencil/core';
+import Cookies from 'js-cookie';
+import { LdCookieConsentConfig } from './ld-cookie-consent.types';
+import { getClassNames } from '../../utils/getClassNames';
 
 /**
  * @slot disclaimer-description - Slot for description in cookie consent disclaimer.
@@ -65,55 +65,55 @@ import { getClassNames } from '../../utils/getClassNames'
   shadow: true,
 })
 export class LdCookieConsent {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   /** Component settings object to be merged with the default options (optionally stringified). */
-  @Prop() settings!: Partial<LdCookieConsentConfig> | string
+  @Prop() settings!: Partial<LdCookieConsentConfig> | string;
 
   /** Emitted when the cookie consent disclaimer is shown. */
-  @Event() ldCookieConsentDisclaimerShow: EventEmitter<undefined>
+  @Event() ldCookieConsentDisclaimerShow: EventEmitter<undefined>;
 
   /** Emitted after loading saved consent from local storage. */
   @Event() ldCookieSavedConsentLoad: EventEmitter<{
-    acceptedCategories: Set<string>
-    consentDate: Date
-    rejectedCategories: Set<string>
-    revision: number
-  }>
+    acceptedCategories: Set<string>;
+    consentDate: Date;
+    rejectedCategories: Set<string>;
+    revision: number;
+  }>;
 
   /** Emitted when the cookie consent preferences modal layer is shown. */
-  @Event() ldCookieConsentPreferencesShow: EventEmitter<undefined>
+  @Event() ldCookieConsentPreferencesShow: EventEmitter<undefined>;
 
   /** Emitted after clearing cookies which happens after saving setting. */
-  @Event() ldCookieConsentAutoclearCookies: EventEmitter<undefined>
+  @Event() ldCookieConsentAutoclearCookies: EventEmitter<undefined>;
 
   /** Emitted after saving cookies preferences to local storage with accepted categories. */
   @Event() ldCookieConsentSave: EventEmitter<{
-    acceptedCategories: Set<string>
-    consentDate: Date
-    rejectedCategories: Set<string>
-    revision: number
-  }>
+    acceptedCategories: Set<string>;
+    consentDate: Date;
+    rejectedCategories: Set<string>;
+    revision: number;
+  }>;
 
   /** Emitted after the cookie consent disclaimer has been dismissed (no consent has been saved in this case). */
-  @Event() ldCookieConsentDismiss: EventEmitter<undefined>
+  @Event() ldCookieConsentDismiss: EventEmitter<undefined>;
 
   /** Emitted after activating scripts (only emitted if at least one script has been activated). */
-  @Event() ldCookieConsentActivateScripts: EventEmitter<undefined>
+  @Event() ldCookieConsentActivateScripts: EventEmitter<undefined>;
 
-  @State() private isDisclaimerVisible = false
-  @State() private allCategories: Set<string> = new Set()
-  @State() private preselectedCategories: Set<string> = new Set()
+  @State() private isDisclaimerVisible = false;
+  @State() private allCategories: Set<string> = new Set();
+  @State() private preselectedCategories: Set<string> = new Set();
   @State() private savedConsent: {
-    acceptedCategories: Set<string>
-    consentDate: Date
-    rejectedCategories: Set<string>
-    revision: number
-  } | null
-  @State() private selectedCategories: Set<string> = new Set()
+    acceptedCategories: Set<string>;
+    consentDate: Date;
+    rejectedCategories: Set<string>;
+    revision: number;
+  } | null;
+  @State() private selectedCategories: Set<string> = new Set();
 
-  private disclaimerRef: HTMLDivElement
-  private modalRef: HTMLLdModalElement
+  private disclaimerRef: HTMLDivElement;
+  private modalRef: HTMLLdModalElement;
   private config: LdCookieConsentConfig = {
     backdropBlur: true,
     buttonAcceptAll: 'Accept all',
@@ -133,43 +133,43 @@ export class LdCookieConsent {
     scriptSelector: 'data-ld-cookie-category',
     showOnLoad: true,
     showOnLoadDelay: 1000,
-  }
+  };
 
   /** Returns accepted categories. */
   @Method()
   async getAcceptedAndRejectedCategories(): Promise<{
-    acceptedCategories: Set<string>
-    rejectedCategories: Set<string>
+    acceptedCategories: Set<string>;
+    rejectedCategories: Set<string>;
   }> {
-    let acceptedCategories
+    let acceptedCategories;
     switch (this.config.mode) {
       case 'notice-only':
-        acceptedCategories = this.preselectedCategories
-        break
+        acceptedCategories = this.preselectedCategories;
+        break;
       case 'opt-in':
         if (this.isConsentGivenForCurrentRevision()) {
-          acceptedCategories = this.savedConsent.acceptedCategories
+          acceptedCategories = this.savedConsent.acceptedCategories;
         } else {
-          acceptedCategories = new Set()
+          acceptedCategories = new Set();
         }
-        break
+        break;
       case 'opt-out':
         if (this.isConsentGivenForCurrentRevision()) {
-          acceptedCategories = this.savedConsent.acceptedCategories
+          acceptedCategories = this.savedConsent.acceptedCategories;
         } else {
-          acceptedCategories = this.preselectedCategories
+          acceptedCategories = this.preselectedCategories;
         }
-        break
+        break;
     }
     const rejectedCategories = new Set(
       [...this.allCategories].filter(
         (category) => !acceptedCategories.has(category)
       )
-    )
+    );
     return {
       acceptedCategories,
       rejectedCategories,
-    }
+    };
   }
 
   /** Returns true if cookie category has been accepted. */
@@ -177,39 +177,39 @@ export class LdCookieConsent {
   async isCategoryAccepted(cookieCategory: string): Promise<boolean> {
     return (
       await this.getAcceptedAndRejectedCategories()
-    ).acceptedCategories.has(cookieCategory)
+    ).acceptedCategories.has(cookieCategory);
   }
 
   /** Shows cookie consent disclaimer. */
   @Method()
   async showDisclaimer(delay?: number) {
     const cb = () => {
-      this.isDisclaimerVisible = true
-      this.disclaimerRef?.focus()
-      this.ldCookieConsentDisclaimerShow.emit()
-    }
+      this.isDisclaimerVisible = true;
+      this.disclaimerRef?.focus();
+      this.ldCookieConsentDisclaimerShow.emit();
+    };
     if (delay) {
-      setTimeout(cb, delay)
+      setTimeout(cb, delay);
     } else {
-      cb()
+      cb();
     }
   }
 
   /** Hides cookie consent disclaimer and preferences. */
   @Method()
   async hideDisclaimerAndPreferences() {
-    this.isDisclaimerVisible = false
-    this.modalRef?.close()
+    this.isDisclaimerVisible = false;
+    this.modalRef?.close();
   }
 
   private showPreferences() {
-    this.modalRef.showModal()
-    this.ldCookieConsentPreferencesShow.emit()
+    this.modalRef.showModal();
+    this.ldCookieConsentPreferencesShow.emit();
   }
 
   /** Tries to delete cookies as per configuration if consent is not yet expressed. */
   private autoclearCookies(rejectedCategories: Set<string>) {
-    const allCookieNames = Cookies.get()
+    const allCookieNames = Cookies.get();
     this.config.categories
       ?.filter(
         (category) =>
@@ -222,45 +222,45 @@ export class LdCookieConsent {
             Cookies.remove(cookieName, {
               path: autoclear.path || '/',
               domain: autoclear.domain || document.domain,
-            })
+            });
           }
         }
-      })
-    this.ldCookieConsentAutoclearCookies.emit()
+      });
+    this.ldCookieConsentAutoclearCookies.emit();
   }
 
   private saveConsent(
     consentType: 'accept-all' | 'accept-none' | 'accept-selected'
   ) {
-    let acceptedCategories: Set<string>
+    let acceptedCategories: Set<string>;
     switch (consentType) {
       case 'accept-all':
         acceptedCategories = new Set(
           this.config.categories?.map((category) => category.toggle.value)
-        )
-        break
+        );
+        break;
       case 'accept-none':
-        acceptedCategories = new Set()
-        break
+        acceptedCategories = new Set();
+        break;
       case 'accept-selected':
-        acceptedCategories = this.selectedCategories
-        break
+        acceptedCategories = this.selectedCategories;
+        break;
     }
 
-    this.selectedCategories = new Set([...acceptedCategories])
+    this.selectedCategories = new Set([...acceptedCategories]);
 
     const rejectedCategories = new Set(
       [...this.allCategories].filter(
         (category) => !acceptedCategories.has(category)
       )
-    )
+    );
 
     this.savedConsent = {
       acceptedCategories,
       consentDate: new Date(),
       rejectedCategories,
       revision: this.config.revision,
-    }
+    };
 
     localStorage.setItem(
       this.config.localStorageKey,
@@ -270,18 +270,19 @@ export class LdCookieConsent {
         rejectedCategories: [...this.savedConsent.rejectedCategories],
         revision: this.savedConsent.revision,
       })
-    )
+    );
 
-    this.ldCookieConsentSave.emit(this.savedConsent)
+    this.ldCookieConsentSave.emit(this.savedConsent);
 
-    this.autoclearCookies(rejectedCategories)
+    this.autoclearCookies(rejectedCategories);
 
-    this.loadScripts()
+    this.loadScripts();
   }
 
   /** Loads scripts based on expressed consent. */
   private async loadScripts() {
-    const { rejectedCategories } = await this.getAcceptedAndRejectedCategories()
+    const { rejectedCategories } =
+      await this.getAcceptedAndRejectedCategories();
     const scripts = Array.from(
       document.querySelectorAll<HTMLScriptElement>(
         `script[${this.config.scriptSelector}]`
@@ -290,62 +291,62 @@ export class LdCookieConsent {
       (script) =>
         this.config.mode === 'notice-only' ||
         !rejectedCategories.has(script.getAttribute(this.config.scriptSelector))
-    )
-    if (!scripts.length) return
+    );
+    if (!scripts.length) return;
 
     const loadScript = (script: HTMLScriptElement) => {
       // Reactivate by replacing "dormant" script with copied version of itself,
       // with the correct type and the data script selector attribute removed.
-      script.removeAttribute(this.config.scriptSelector)
-      script.removeAttribute('type')
-      const freshScript = document.createElement('script')
-      freshScript.textContent = script.innerHTML
+      script.removeAttribute(this.config.scriptSelector);
+      script.removeAttribute('type');
+      const freshScript = document.createElement('script');
+      freshScript.textContent = script.innerHTML;
       Array.from(script.attributes).forEach((attr) => {
-        const attrNodeName = attr.nodeName
+        const attrNodeName = attr.nodeName;
         freshScript.setAttribute(
           attrNodeName,
           script[attrNodeName] || script.getAttribute(attrNodeName)
-        )
-      })
+        );
+      });
 
       const onDone = () => {
-        const nextScript = scripts.shift()
+        const nextScript = scripts.shift();
         if (nextScript) {
-          loadScript(nextScript)
+          loadScript(nextScript);
         } else {
-          this.ldCookieConsentActivateScripts.emit()
+          this.ldCookieConsentActivateScripts.emit();
         }
-      }
+      };
 
-      script.parentNode.replaceChild(freshScript, script)
+      script.parentNode.replaceChild(freshScript, script);
       if (script.hasAttribute('async')) {
-        onDone()
+        onDone();
       } else {
-        freshScript.onload = onDone
+        freshScript.onload = onDone;
       }
-    }
-    loadScript(scripts.shift())
+    };
+    loadScript(scripts.shift());
   }
 
   private isConsentGivenForCurrentRevision() {
     // if no consent is given
-    if (!this.savedConsent) return false
+    if (!this.savedConsent) return false;
 
     // if revision handling is not enabled in settings
-    if (!this.config.revision) return true
+    if (!this.config.revision) return true;
 
     // if saved consent has the same revision as the one in the settings
-    if (this.savedConsent.revision === this.config.revision) return true
+    if (this.savedConsent.revision === this.config.revision) return true;
 
-    return false
+    return false;
   }
 
   private getInitialM() {
-    return <ld-icon class="ld-cookie-consent__initial-m" name="initial-m" />
+    return <ld-icon class="ld-cookie-consent__initial-m" name="initial-m" />;
   }
 
   private renderDisclaimer() {
-    const { config } = this
+    const { config } = this;
     return (
       <div
         aria-labelledby="ld-cookie-consent-disclaimer-header"
@@ -356,7 +357,7 @@ export class LdCookieConsent {
           this.isDisclaimerVisible && 'ld-cookie-consent__disclaimer--visible',
         ])}
         onTransitionEnd={function () {
-          this.focus()
+          this.focus();
         }}
         part="disclaimer"
         ref={(ref) => (this.disclaimerRef = ref)}
@@ -390,8 +391,8 @@ export class LdCookieConsent {
               aria-label={this.config.buttonDismiss}
               class="ld-cookie-consent__disclaimer-x"
               onClick={() => {
-                this.hideDisclaimerAndPreferences()
-                this.ldCookieConsentDismiss.emit()
+                this.hideDisclaimerAndPreferences();
+                this.ldCookieConsentDismiss.emit();
               }}
               part="disclaimer-button-dismiss"
             ></button>
@@ -471,7 +472,7 @@ export class LdCookieConsent {
               class="ld-cookie-consent__disclaimer-btn-preferences"
               mode="secondary"
               onClick={() => {
-                this.showPreferences()
+                this.showPreferences();
               }}
               part="disclaimer-button-preferences"
               size="sm"
@@ -484,8 +485,8 @@ export class LdCookieConsent {
               class="ld-cookie-consent__disclaimer-btn-accept-none"
               mode="secondary"
               onClick={() => {
-                this.hideDisclaimerAndPreferences()
-                this.saveConsent('accept-none')
+                this.hideDisclaimerAndPreferences();
+                this.saveConsent('accept-none');
               }}
               part="disclaimer-button-accept-none"
               size="sm"
@@ -500,8 +501,8 @@ export class LdCookieConsent {
                 : 'ld-cookie-consent__disclaimer-btn-accept-all',
             ])}
             onClick={() => {
-              this.hideDisclaimerAndPreferences()
-              this.saveConsent('accept-all')
+              this.hideDisclaimerAndPreferences();
+              this.saveConsent('accept-all');
             }}
             part="disclaimer-button-accept-all"
             size="sm"
@@ -512,11 +513,11 @@ export class LdCookieConsent {
           </ld-button>
         </div>
       </div>
-    )
+    );
   }
 
   private renderPreferences() {
-    const { config } = this
+    const { config } = this;
     return (
       <ld-modal
         blurry-backdrop={config.backdropBlur}
@@ -575,8 +576,8 @@ export class LdCookieConsent {
               class="ld-cookie-consent__btn--accept-none"
               mode="secondary"
               onClick={() => {
-                this.hideDisclaimerAndPreferences()
-                this.saveConsent('accept-none')
+                this.hideDisclaimerAndPreferences();
+                this.saveConsent('accept-none');
               }}
               part="preferences-button-accept-none"
               size="sm"
@@ -589,8 +590,8 @@ export class LdCookieConsent {
               class="ld-cookie-consent__btn--accept-selected"
               mode="secondary"
               onClick={() => {
-                this.hideDisclaimerAndPreferences()
-                this.saveConsent('accept-selected')
+                this.hideDisclaimerAndPreferences();
+                this.saveConsent('accept-selected');
               }}
               part="preferences-button-accept-selected"
               size="sm"
@@ -602,8 +603,8 @@ export class LdCookieConsent {
             <ld-button
               class="ld-cookie-consent__preferences-btn-accept-all"
               onClick={() => {
-                this.hideDisclaimerAndPreferences()
-                this.saveConsent('accept-all')
+                this.hideDisclaimerAndPreferences();
+                this.saveConsent('accept-all');
               }}
               part="preferences-button-accept-all"
               size="sm"
@@ -633,7 +634,7 @@ export class LdCookieConsent {
           </slot>
         </div>
       </ld-modal>
-    )
+    );
   }
 
   private renderCategory(category: LdCookieConsentConfig['categories'][0]) {
@@ -717,60 +718,61 @@ export class LdCookieConsent {
           class="ld-cookie-consent__preferences-category-toggle"
           checked={this.selectedCategories.has(category.toggle.value)}
           onClick={(ev) => {
-            ev.stopImmediatePropagation()
+            ev.stopImmediatePropagation();
           }}
           onLdchange={() => {
             this.selectedCategories[
               this.selectedCategories.has(category.toggle.value)
                 ? 'delete'
                 : 'add'
-            ](category.toggle.value)
+            ](category.toggle.value);
           }}
           part="preferences-category-toggle"
           value={category.toggle.value}
         />
       </ld-accordion-section>
-    )
+    );
   }
 
   componentWillLoad() {
     const parsedSettings: Partial<LdCookieConsentConfig> =
       typeof this.settings === 'string'
         ? JSON.parse(this.settings)
-        : this.settings
+        : this.settings;
 
-    this.config = Object.assign(this.config, parsedSettings)
+    this.config = Object.assign(this.config, parsedSettings);
 
     const savedParsedConsent = JSON.parse(
       localStorage.getItem(this.config.localStorageKey)
-    )
+    );
     this.savedConsent = savedParsedConsent && {
       acceptedCategories: new Set(savedParsedConsent.acceptedCategories),
       consentDate: new Date(savedParsedConsent.consentDate),
       rejectedCategories: new Set(savedParsedConsent.rejectedCategories),
       revision: savedParsedConsent.revision,
-    }
+    };
 
     this.allCategories = new Set(
       this.config.categories?.map((category) => category.toggle.value)
-    )
+    );
     this.preselectedCategories = new Set(
       this.config.categories
         ?.filter((category) => {
-          return category.toggle.checked
+          return category.toggle.checked;
         })
         .map((category) => category.toggle.value)
-    )
+    );
     this.selectedCategories = new Set(
       ...[this.savedConsent?.acceptedCategories || this.preselectedCategories]
-    )
+    );
 
-    if (this.savedConsent) this.ldCookieSavedConsentLoad.emit(this.savedConsent)
+    if (this.savedConsent)
+      this.ldCookieSavedConsentLoad.emit(this.savedConsent);
 
-    this.loadScripts()
+    this.loadScripts();
 
     if (this.config.showOnLoad && !this.isConsentGivenForCurrentRevision()) {
-      this.showDisclaimer(this.config.showOnLoadDelay)
+      this.showDisclaimer(this.config.showOnLoadDelay);
     }
   }
 
@@ -781,6 +783,6 @@ export class LdCookieConsent {
 
         {this.config.mode !== 'notice-only' && this.renderPreferences()}
       </Host>
-    )
+    );
   }
 }

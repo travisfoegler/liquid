@@ -8,9 +8,8 @@ import {
   Watch,
   Event,
   EventEmitter,
-} from '@stencil/core'
-import { getClassNames } from 'src/liquid/utils/getClassNames'
-import { SelectedDetail } from './ld-step/ld-step'
+} from '@stencil/core';
+import { getClassNames } from 'src/liquid/utils/getClassNames';
 
 /**
  * @virtualProp ref - reference to component
@@ -24,20 +23,20 @@ import { SelectedDetail } from './ld-step/ld-step'
   shadow: true,
 })
 export class LdStepper {
-  @Element() el: HTMLLdStepperElement
+  @Element() el: HTMLLdStepperElement;
 
   /** Switch colors for brand background. */
-  @Prop() brandColor = false
+  @Prop() brandColor = false;
   /** Indicates whether the steps should be evenly distributed or fit to their content */
-  @Prop() fitContent = false
+  @Prop() fitContent = false;
   /** Template for the screen-reader label, containing the label of the current step and the steps summary */
-  @Prop() labelTemplate = '$1, $2'
+  @Prop() labelTemplate = '$1, $2';
   /** Step summary template for the screen-reader label, containing the index of the current step and the overall number of steps */
-  @Prop() labelSummaryTemplate = 'step $1 of $2'
+  @Prop() labelSummaryTemplate = 'step $1 of $2';
   /** Step size */
-  @Prop() size?: HTMLLdStepElement['size']
+  @Prop() size?: HTMLLdStepElement['size'];
   /** Vertical layout */
-  @Prop() vertical = false
+  @Prop() vertical = false;
 
   // The following event is not used within the ld-stepper component itself.
   // Its only purpose is to create a type definition on the ld-stepper component,
@@ -47,44 +46,44 @@ export class LdStepper {
    * Emitted when the focusable element of a step is
    * clicked and step is neither current nor disabled.
    */
-  @Event() ldstepselected: EventEmitter<SelectedDetail>
+  @Event() ldstepselected: EventEmitter<{ index: number; label: string }>;
 
-  @State() currentLabel: string
-  @State() currentIndex: number
-  @State() steps: NodeListOf<HTMLLdStepElement>
+  @State() currentLabel: string;
+  @State() currentIndex: number;
+  @State() steps: NodeListOf<HTMLLdStepElement>;
 
   private getLabel() {
     const summary = this.labelSummaryTemplate
       .replace('$1', String(this.currentIndex + 1))
-      .replace('$2', String(this.steps.length))
+      .replace('$2', String(this.steps.length));
 
     return this.currentLabel
       ? this.labelTemplate
           .replace('$1', this.currentLabel)
           .replace('$2', summary)
-      : summary
+      : summary;
   }
 
-  updateCurrent = (event: CustomEvent<SelectedDetail>) => {
-    this.currentIndex = event.detail.index
-    this.currentLabel = event.detail.label
-  }
+  updateCurrent = (event: CustomEvent<{ index: number; label: string }>) => {
+    this.currentIndex = event.detail.index;
+    this.currentLabel = event.detail.label;
+  };
 
   @Watch('brandColor')
   @Watch('size')
   @Watch('vertical')
   private propagateProps() {
     this.steps.forEach((ldStep) => {
-      ldStep.brandColor = this.brandColor
-      ldStep.size = this.size
-      ldStep.vertical = this.vertical
-    })
+      ldStep.brandColor = this.brandColor;
+      ldStep.size = this.size;
+      ldStep.vertical = this.vertical;
+    });
   }
 
   componentWillLoad() {
-    this.steps = this.el.querySelectorAll('ld-step')
+    this.steps = this.el.querySelectorAll('ld-step');
 
-    this.propagateProps()
+    this.propagateProps();
   }
 
   render() {
@@ -104,6 +103,6 @@ export class LdStepper {
           <slot></slot>
         </ol>
       </Host>
-    )
+    );
   }
 }

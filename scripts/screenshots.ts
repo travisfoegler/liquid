@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs').promises
-const glob = require('glob')
-const yargs = require('yargs')
+const fs = require('fs').promises;
+const glob = require('glob');
+const yargs = require('yargs');
 
 async function deleteScreenshots(components?: string[]) {
   const master = JSON.parse(
     await fs.readFile('screenshot/builds/master.json', {
       encoding: 'utf8',
     })
-  )
+  );
 
   // Remove component references from master file.
   if (components?.length) {
@@ -17,40 +17,40 @@ async function deleteScreenshots(components?: string[]) {
         !new RegExp(`.*(${components.join('|')})\\.e2e\\.ts$`, 'g').test(
           screenshot.testPath
         )
-    )
+    );
     const masterNeedsUpdate =
-      updatedScreenshots.length !== master.screenshots.length
+      updatedScreenshots.length !== master.screenshots.length;
     if (masterNeedsUpdate) {
-      master.screenshots = updatedScreenshots
+      master.screenshots = updatedScreenshots;
       await fs.writeFile(
         'screenshot/builds/master.json',
         JSON.stringify(master, undefined, 2) + '\n',
         { encoding: 'utf8', flag: 'w' }
-      )
-      console.info('Updated screenshot/builds/master.json')
+      );
+      console.info('Updated screenshot/builds/master.json');
     }
   }
 
   // Delete all screenshots without reference.
-  const { screenshots } = master
-  const referencedFileNames = screenshots.map((screenshot) => screenshot.image)
+  const { screenshots } = master;
+  const referencedFileNames = screenshots.map((screenshot) => screenshot.image);
 
-  const filePaths = glob.sync('screenshot/images/*.png')
+  const filePaths = glob.sync('screenshot/images/*.png');
 
-  const toDelete = []
+  const toDelete = [];
   for (const filePath of filePaths) {
-    const fileName = filePath.split('/')[2]
+    const fileName = filePath.split('/')[2];
     if (
       !referencedFileNames.find(
         (referencedFileName) => referencedFileName === fileName
       )
     ) {
-      toDelete.push(fs.unlink(filePath))
-      console.info('Deleting', filePath)
+      toDelete.push(fs.unlink(filePath));
+      console.info('Deleting', filePath);
     }
   }
-  await Promise.all(toDelete)
-  console.info(`Deleted ${toDelete.length} screenshots.`)
+  await Promise.all(toDelete);
+  console.info(`Deleted ${toDelete.length} screenshots.`);
 }
 
 yargs(process.argv.slice(2))
@@ -67,12 +67,12 @@ yargs(process.argv.slice(2))
         .alias('c', 'components')
         .array(['components'])
         .help('h')
-        .alias('h', 'help')
+        .alias('h', 'help');
     },
     async (argv: { components?: string[] }) => {
-      await deleteScreenshots(argv.components)
+      await deleteScreenshots(argv.components);
     }
   )
   .demandCommand()
   .help('h')
-  .alias('h', 'help').argv
+  .alias('h', 'help').argv;

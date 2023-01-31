@@ -1,6 +1,6 @@
-import { Config } from '@stencil/core'
+import { Config } from '@stencil/core';
 
-import { config as configProd } from './stencil.config'
+import { config as configProd } from './stencil.config';
 
 export const config: Config = {
   ...configProd,
@@ -13,4 +13,4 @@ export const config: Config = {
       dir: 'dist_docs/dist',
     },
   ],
-}
+};

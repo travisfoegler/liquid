@@ -1,11 +1,11 @@
 import {
   analyzeAccessibility,
   getPageWithContent,
-} from 'src/liquid/utils/e2e-tests'
-import { LdIcon } from '../../ld-icon/ld-icon'
-import { LdSrOnly } from '../../ld-sr-only/ld-sr-only'
-import { LdStep } from '../ld-step/ld-step'
-import { LdStepper } from '../ld-stepper'
+} from 'src/liquid/utils/e2e-tests';
+import { LdIcon } from '../../ld-icon/ld-icon';
+import { LdSrOnly } from '../../ld-sr-only/ld-sr-only';
+import { LdStep } from '../ld-step/ld-step';
+import { LdStepper } from '../ld-stepper';
 
 const getWcStepsEmpty = (
   withCustomIcons = false,
@@ -26,7 +26,7 @@ const getWcStepsEmpty = (
 }${optional ? ' optional' : ''} last-active next aria-label="Summary"></ld-step>
 <ld-step${anchor ? ' href="#"' : ''}${
   optional ? ' optional' : ''
-} disabled aria-label="Confirmation"></ld-step>`
+} disabled aria-label="Confirmation"></ld-step>`;
 
 const getWcStepsLabel = (
   withCustomIcons = false,
@@ -47,7 +47,7 @@ const getWcStepsLabel = (
 }${optional ? ' optional' : ''} last-active next>Summary</ld-step>
 <ld-step${anchor ? ' href="#"' : ''}${
   optional ? ' optional' : ''
-} disabled>Confirmation</ld-step>`
+} disabled>Confirmation</ld-step>`;
 
 const getWcStepsDescription = (
   withCustomIcons = false,
@@ -74,7 +74,7 @@ const getWcStepsDescription = (
 } last-active next description="Summary of your articles and all the previously given information">Summary</ld-step>
 <ld-step${anchor ? ' href="#"' : ''}${
   optional ? ' optional' : ''
-} disabled description="Order confirmation with follow-up information">Confirmation</ld-step>`
+} disabled description="Order confirmation with follow-up information">Confirmation</ld-step>`;
 
 const wcStepperProps = {
   default: '',
@@ -89,12 +89,12 @@ const wcStepperProps = {
   'vertical on brand color': ' brand-color vertical',
   'vertical on brand color sm': ' brand-color size="sm" vertical',
   'vertical on brand color lg': ' brand-color size="lg" vertical',
-}
+};
 
 const wcStepperInteractionProps = {
   default: '',
   'on brand color': ' brand-color',
-}
+};
 
 const getCssStep = ({
   anchor = false,
@@ -105,13 +105,13 @@ const getCssStep = ({
   modifiers = [],
   srLabel,
 }: {
-  anchor?: boolean
-  ariaLabel?: string
-  description?: string
-  disabled?: boolean
-  label?: string
-  modifiers?: string[]
-  srLabel?: string
+  anchor?: boolean;
+  ariaLabel?: string;
+  description?: string;
+  disabled?: boolean;
+  label?: string;
+  modifiers?: string[];
+  srLabel?: string;
 }) => `
 <li class="ld-step${
   modifiers.filter(Boolean).length
@@ -145,7 +145,7 @@ const getCssStep = ({
       ? `<span class="ld-step__description">${description}</span>`
       : ''
   }
-</li>`
+</li>`;
 
 const getCssStepsEmpty = (
   withCustomIcons = false,
@@ -200,7 +200,7 @@ const getCssStepsEmpty = (
     ariaLabel: 'Confirmation',
     disabled: true,
     modifiers: [optional && 'optional', ...modifiers],
-  })
+  });
 
 const getCssStepsLabel = (
   withCustomIcons = false,
@@ -255,7 +255,7 @@ const getCssStepsLabel = (
     disabled: true,
     label: 'Confirmation',
     modifiers: [optional && 'optional', ...modifiers],
-  })
+  });
 
 const getCssStepsDescription = (
   withCustomIcons = false,
@@ -317,7 +317,7 @@ const getCssStepsDescription = (
     disabled: true,
     label: 'Confirmation',
     modifiers: [optional && 'optional', ...modifiers],
-  })
+  });
 
 const getCssStepper = (steps: string, modifiers: string[] = []) => `
 <span class="ld-sr-only">Payment, step 3 of 5</span>
@@ -327,7 +327,7 @@ const getCssStepper = (steps: string, modifiers: string[] = []) => `
     : ''
 }">
   <ol>${steps}</ol>
-</nav>`
+</nav>`;
 
 const cssStepperModifiers = {
   default: [],
@@ -342,14 +342,14 @@ const cssStepperModifiers = {
   'vertical on brand color': ['brand-color', 'vertical'],
   'vertical on brand color sm': ['brand-color', 'sm', 'vertical'],
   'vertical on brand color lg': ['brand-color', 'lg', 'vertical'],
-}
+};
 
 const cssStepperInteractionModifiers = {
   default: [],
   'on brand color': ['brand-color'],
-}
+};
 
-const customIcons = [false, true]
+const customIcons = [false, true];
 
 describe('ld-stepper', () => {
   describe('web component', () => {
@@ -364,10 +364,10 @@ describe('ld-stepper', () => {
                     bgColor: 'var(--ld-thm-primary)',
                   }
                 : undefined
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           it('with label text', async () => {
             const page = await getPageWithContent(
@@ -377,10 +377,10 @@ describe('ld-stepper', () => {
                     bgColor: 'var(--ld-thm-primary)',
                   }
                 : undefined
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           it('with label text (fit-content)', async () => {
             const page = await getPageWithContent(
@@ -392,10 +392,10 @@ describe('ld-stepper', () => {
                     bgColor: 'var(--ld-thm-primary)',
                   }
                 : undefined
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           it('with description', async () => {
             const page = await getPageWithContent(
@@ -407,10 +407,10 @@ describe('ld-stepper', () => {
                     bgColor: 'var(--ld-thm-primary)',
                   }
                 : undefined
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           it('with description (fit-content)', async () => {
             const page = await getPageWithContent(
@@ -422,8 +422,8 @@ describe('ld-stepper', () => {
                     bgColor: 'var(--ld-thm-primary)',
                   }
                 : undefined
-            )
-            const results = await page.compareScreenshot()
+            );
+            const results = await page.compareScreenshot();
             const accessibilityReport = await analyzeAccessibility(page, {
               // screen reader reads as if the li elements were nested correctly
               options: { rules: { list: { enabled: false } } },
@@ -434,11 +434,11 @@ describe('ld-stepper', () => {
                   { id: 'color-contrast', options: { ignorePseudo: true } },
                 ],
               },
-            })
+            });
 
-            expect(results).toMatchScreenshot()
-            expect(accessibilityReport).toHaveNoAccessibilityIssues()
-          })
+            expect(results).toMatchScreenshot();
+            expect(accessibilityReport).toHaveNoAccessibilityIssues();
+          });
 
           describe('optional', () => {
             it('empty', async () => {
@@ -452,10 +452,10 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
+              );
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
 
             it('with label text', async () => {
               const page = await getPageWithContent(
@@ -468,10 +468,10 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
+              );
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
 
             it('with description', async () => {
               const page = await getPageWithContent(
@@ -484,9 +484,9 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              const results = await page.compareScreenshot()
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 // screen reader reads as if the li elements were nested correctly
                 options: { rules: { list: { enabled: false } } },
@@ -497,32 +497,32 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
-          })
-        })
-      })
-    })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
+          });
+        });
+      });
+    });
 
     describe('anchor', () => {
       it('empty', async () => {
         const page = await getPageWithContent(
           `<ld-stepper>${getWcStepsEmpty(false, false, true)}</ld-stepper>`
-        )
-        const results = await page.compareScreenshot()
-        expect(results).toMatchScreenshot()
-      })
+        );
+        const results = await page.compareScreenshot();
+        expect(results).toMatchScreenshot();
+      });
 
       it('with label text', async () => {
         const page = await getPageWithContent(
           `<ld-stepper>${getWcStepsLabel(false, false, true)}</ld-stepper>`
-        )
-        const results = await page.compareScreenshot()
-        expect(results).toMatchScreenshot()
-      })
+        );
+        const results = await page.compareScreenshot();
+        expect(results).toMatchScreenshot();
+      });
 
       it('with description', async () => {
         const page = await getPageWithContent(
@@ -531,9 +531,9 @@ describe('ld-stepper', () => {
             false,
             true
           )}</ld-stepper>`
-        )
+        );
 
-        const results = await page.compareScreenshot()
+        const results = await page.compareScreenshot();
         const accessibilityReport = await analyzeAccessibility(page, {
           // screen reader reads as if the li elements were nested correctly
           options: { rules: { list: { enabled: false } } },
@@ -544,12 +544,12 @@ describe('ld-stepper', () => {
               { id: 'color-contrast', options: { ignorePseudo: true } },
             ],
           },
-        })
+        });
 
-        expect(results).toMatchScreenshot()
-        expect(accessibilityReport).toHaveNoAccessibilityIssues()
-      })
-    })
+        expect(results).toMatchScreenshot();
+        expect(accessibilityReport).toHaveNoAccessibilityIssues();
+      });
+    });
 
     describe('interaction', () => {
       Object.entries(wcStepperInteractionProps).forEach(([name, props]) => {
@@ -563,13 +563,13 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.keyboard.down('Space')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.keyboard.down('Space');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 // screen reader reads as if the li elements were nested correctly
                 options: { rules: { list: { enabled: false } } },
@@ -580,11 +580,11 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
 
             it('current', async () => {
               const page = await getPageWithContent(
@@ -594,17 +594,17 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.down('Space')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.down('Space');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
 
             it('next', async () => {
               const page = await getPageWithContent(
@@ -614,16 +614,16 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.down('Space')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.down('Space');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 // screen reader reads as if the li elements were nested correctly
                 options: { rules: { list: { enabled: false } } },
@@ -634,11 +634,11 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
 
             it('disabled', async () => {
               const page = await getPageWithContent(
@@ -648,20 +648,20 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.down('Space')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.down('Space');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
-          })
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
+          });
 
           describe('focus', () => {
             it('done', async () => {
@@ -672,12 +672,12 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 // screen reader reads as if the li elements were nested correctly
                 options: { rules: { list: { enabled: false } } },
@@ -688,11 +688,11 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
 
             it('current', async () => {
               const page = await getPageWithContent(
@@ -702,16 +702,16 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
 
             it('next', async () => {
               const page = await getPageWithContent(
@@ -721,15 +721,15 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 // screen reader reads as if the li elements were nested correctly
                 options: { rules: { list: { enabled: false } } },
@@ -740,11 +740,11 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
 
             it('disabled', async () => {
               const page = await getPageWithContent(
@@ -754,19 +754,19 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.keyboard.press('Tab')
-              await page.waitForChanges()
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.keyboard.press('Tab');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
-          })
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
+          });
 
           describe('hover', () => {
             it('done', async () => {
@@ -777,12 +777,12 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.hover('ld-step:nth-of-type(1)')
-              await page.waitForChanges()
+              await page.hover('ld-step:nth-of-type(1)');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 // screen reader reads as if the li elements were nested correctly
                 options: { rules: { list: { enabled: false } } },
@@ -793,11 +793,11 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
 
             it('current', async () => {
               const page = await getPageWithContent(
@@ -807,14 +807,14 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.hover('ld-step:nth-of-type(3)')
-              await page.waitForChanges()
+              await page.hover('ld-step:nth-of-type(3)');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
 
             it('next', async () => {
               const page = await getPageWithContent(
@@ -824,12 +824,12 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.hover('ld-step:nth-of-type(4)')
-              await page.waitForChanges()
+              await page.hover('ld-step:nth-of-type(4)');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 // screen reader reads as if the li elements were nested correctly
                 options: { rules: { list: { enabled: false } } },
@@ -840,11 +840,11 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
 
             it('disabled', async () => {
               const page = await getPageWithContent(
@@ -854,15 +854,15 @@ describe('ld-stepper', () => {
                       bgColor: 'var(--ld-thm-primary)',
                     }
                   : undefined
-              )
+              );
 
-              await page.hover('ld-step:nth-of-type(5)')
-              await page.waitForChanges()
+              await page.hover('ld-step:nth-of-type(5)');
+              await page.waitForChanges();
 
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
-          })
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
+          });
 
           describe('optional', () => {
             describe('active', () => {
@@ -877,13 +877,13 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   // screen reader reads as if the li elements were nested correctly
                   options: { rules: { list: { enabled: false } } },
@@ -894,11 +894,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('skipped', async () => {
                 const page = await getPageWithContent(
@@ -911,16 +911,16 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('current', async () => {
                 const page = await getPageWithContent(
@@ -933,17 +933,17 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('next', async () => {
                 const page = await getPageWithContent(
@@ -956,16 +956,16 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   // screen reader reads as if the li elements were nested correctly
                   options: { rules: { list: { enabled: false } } },
@@ -976,11 +976,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('disabled', async () => {
                 const page = await getPageWithContent(
@@ -993,20 +993,20 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
-            })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
+            });
 
             describe('focus', () => {
               it('done', async () => {
@@ -1020,12 +1020,12 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   // screen reader reads as if the li elements were nested correctly
                   options: { rules: { list: { enabled: false } } },
@@ -1036,11 +1036,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('skipped', async () => {
                 const page = await getPageWithContent(
@@ -1053,15 +1053,15 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('current', async () => {
                 const page = await getPageWithContent(
@@ -1074,16 +1074,16 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('next', async () => {
                 const page = await getPageWithContent(
@@ -1096,15 +1096,15 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   // screen reader reads as if the li elements were nested correctly
                   options: { rules: { list: { enabled: false } } },
@@ -1115,11 +1115,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('disabled', async () => {
                 const page = await getPageWithContent(
@@ -1132,19 +1132,19 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
-            })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
+            });
 
             describe('hover', () => {
               it('done', async () => {
@@ -1158,12 +1158,12 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.hover('ld-step:nth-of-type(1)')
-                await page.waitForChanges()
+                await page.hover('ld-step:nth-of-type(1)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   // screen reader reads as if the li elements were nested correctly
                   options: { rules: { list: { enabled: false } } },
@@ -1174,11 +1174,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('skipped', async () => {
                 const page = await getPageWithContent(
@@ -1191,14 +1191,14 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.hover('ld-step:nth-of-type(2)')
-                await page.waitForChanges()
+                await page.hover('ld-step:nth-of-type(2)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('current', async () => {
                 const page = await getPageWithContent(
@@ -1211,14 +1211,14 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.hover('ld-step:nth-of-type(3)')
-                await page.waitForChanges()
+                await page.hover('ld-step:nth-of-type(3)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('next', async () => {
                 const page = await getPageWithContent(
@@ -1231,12 +1231,12 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.hover('ld-step:nth-of-type(4)')
-                await page.waitForChanges()
+                await page.hover('ld-step:nth-of-type(4)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   // screen reader reads as if the li elements were nested correctly
                   options: { rules: { list: { enabled: false } } },
@@ -1247,11 +1247,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('disabled', async () => {
                 const page = await getPageWithContent(
@@ -1264,20 +1264,20 @@ describe('ld-stepper', () => {
                         bgColor: 'var(--ld-thm-primary)',
                       }
                     : undefined
-                )
+                );
 
-                await page.hover('ld-step:nth-of-type(5)')
-                await page.waitForChanges()
+                await page.hover('ld-step:nth-of-type(5)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
-            })
-          })
-        })
-      })
-    })
-  })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 
   describe('CSS component', () => {
     Object.entries(cssStepperModifiers).forEach(([name, modifiers]) => {
@@ -1292,10 +1292,10 @@ describe('ld-stepper', () => {
                   : undefined,
                 components: [LdIcon, LdSrOnly, LdStep, LdStepper],
               }
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           it('with label text', async () => {
             const page = await getPageWithContent(
@@ -1306,10 +1306,10 @@ describe('ld-stepper', () => {
                   : undefined,
                 components: [LdIcon, LdSrOnly, LdStep, LdStepper],
               }
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           it('with label text (fit-content)', async () => {
             const page = await getPageWithContent(
@@ -1323,10 +1323,10 @@ describe('ld-stepper', () => {
                   : undefined,
                 components: [LdIcon, LdSrOnly, LdStep, LdStepper],
               }
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           it('with description', async () => {
             const page = await getPageWithContent(
@@ -1340,8 +1340,8 @@ describe('ld-stepper', () => {
                   : undefined,
                 components: [LdIcon, LdSrOnly, LdStep, LdStepper],
               }
-            )
-            const results = await page.compareScreenshot()
+            );
+            const results = await page.compareScreenshot();
             const accessibilityReport = await analyzeAccessibility(page, {
               spec: {
                 checks: [
@@ -1350,11 +1350,11 @@ describe('ld-stepper', () => {
                   { id: 'color-contrast', options: { ignorePseudo: true } },
                 ],
               },
-            })
+            });
 
-            expect(results).toMatchScreenshot()
-            expect(accessibilityReport).toHaveNoAccessibilityIssues()
-          })
+            expect(results).toMatchScreenshot();
+            expect(accessibilityReport).toHaveNoAccessibilityIssues();
+          });
 
           it('with description (fit-content)', async () => {
             const page = await getPageWithContent(
@@ -1368,10 +1368,10 @@ describe('ld-stepper', () => {
                   : undefined,
                 components: [LdIcon, LdSrOnly, LdStep, LdStepper],
               }
-            )
-            const results = await page.compareScreenshot()
-            expect(results).toMatchScreenshot()
-          })
+            );
+            const results = await page.compareScreenshot();
+            expect(results).toMatchScreenshot();
+          });
 
           describe('optional', () => {
             it('empty', async () => {
@@ -1386,10 +1386,10 @@ describe('ld-stepper', () => {
                     : undefined,
                   components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                 }
-              )
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
+              );
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
 
             it('with label text', async () => {
               const page = await getPageWithContent(
@@ -1403,10 +1403,10 @@ describe('ld-stepper', () => {
                     : undefined,
                   components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                 }
-              )
-              const results = await page.compareScreenshot()
-              expect(results).toMatchScreenshot()
-            })
+              );
+              const results = await page.compareScreenshot();
+              expect(results).toMatchScreenshot();
+            });
 
             it('with description', async () => {
               const page = await getPageWithContent(
@@ -1420,8 +1420,8 @@ describe('ld-stepper', () => {
                     : undefined,
                   components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                 }
-              )
-              const results = await page.compareScreenshot()
+              );
+              const results = await page.compareScreenshot();
               const accessibilityReport = await analyzeAccessibility(page, {
                 spec: {
                   checks: [
@@ -1430,15 +1430,15 @@ describe('ld-stepper', () => {
                     { id: 'color-contrast', options: { ignorePseudo: true } },
                   ],
                 },
-              })
+              });
 
-              expect(results).toMatchScreenshot()
-              expect(accessibilityReport).toHaveNoAccessibilityIssues()
-            })
-          })
-        })
-      })
-    })
+              expect(results).toMatchScreenshot();
+              expect(accessibilityReport).toHaveNoAccessibilityIssues();
+            });
+          });
+        });
+      });
+    });
 
     describe('anchor', () => {
       it('empty', async () => {
@@ -1447,10 +1447,10 @@ describe('ld-stepper', () => {
           {
             components: [LdIcon, LdSrOnly, LdStep, LdStepper],
           }
-        )
-        const results = await page.compareScreenshot()
-        expect(results).toMatchScreenshot()
-      })
+        );
+        const results = await page.compareScreenshot();
+        expect(results).toMatchScreenshot();
+      });
 
       it('with label text', async () => {
         const page = await getPageWithContent(
@@ -1458,10 +1458,10 @@ describe('ld-stepper', () => {
           {
             components: [LdIcon, LdSrOnly, LdStep, LdStepper],
           }
-        )
-        const results = await page.compareScreenshot()
-        expect(results).toMatchScreenshot()
-      })
+        );
+        const results = await page.compareScreenshot();
+        expect(results).toMatchScreenshot();
+      });
 
       it('with description', async () => {
         const page = await getPageWithContent(
@@ -1472,8 +1472,8 @@ describe('ld-stepper', () => {
           {
             components: [LdIcon, LdSrOnly, LdStep, LdStepper],
           }
-        )
-        const results = await page.compareScreenshot()
+        );
+        const results = await page.compareScreenshot();
         const accessibilityReport = await analyzeAccessibility(page, {
           spec: {
             checks: [
@@ -1482,12 +1482,12 @@ describe('ld-stepper', () => {
               { id: 'color-contrast', options: { ignorePseudo: true } },
             ],
           },
-        })
+        });
 
-        expect(results).toMatchScreenshot()
-        expect(accessibilityReport).toHaveNoAccessibilityIssues()
-      })
-    })
+        expect(results).toMatchScreenshot();
+        expect(accessibilityReport).toHaveNoAccessibilityIssues();
+      });
+    });
 
     describe('interaction', () => {
       Object.entries(cssStepperInteractionModifiers).forEach(
@@ -1503,13 +1503,13 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   spec: {
                     checks: [
@@ -1518,11 +1518,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('current', async () => {
                 const page = await getPageWithContent(
@@ -1533,17 +1533,17 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('next', async () => {
                 const page = await getPageWithContent(
@@ -1554,16 +1554,16 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   spec: {
                     checks: [
@@ -1572,11 +1572,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('disabled', async () => {
                 const page = await getPageWithContent(
@@ -1587,20 +1587,20 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.down('Space')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.down('Space');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
-            })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
+            });
 
             describe('focus', () => {
               it('done', async () => {
@@ -1612,12 +1612,12 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   spec: {
                     checks: [
@@ -1626,11 +1626,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('current', async () => {
                 const page = await getPageWithContent(
@@ -1641,16 +1641,16 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('next', async () => {
                 const page = await getPageWithContent(
@@ -1661,15 +1661,15 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   spec: {
                     checks: [
@@ -1678,11 +1678,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('disabled', async () => {
                 const page = await getPageWithContent(
@@ -1693,19 +1693,19 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.keyboard.press('Tab')
-                await page.waitForChanges()
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
-            })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
+            });
 
             describe('hover', () => {
               it('done', async () => {
@@ -1717,12 +1717,12 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.hover('li:nth-of-type(1)')
-                await page.waitForChanges()
+                await page.hover('li:nth-of-type(1)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   spec: {
                     checks: [
@@ -1731,11 +1731,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('current', async () => {
                 const page = await getPageWithContent(
@@ -1746,14 +1746,14 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.hover('li:nth-of-type(3)')
-                await page.waitForChanges()
+                await page.hover('li:nth-of-type(3)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
 
               it('next', async () => {
                 const page = await getPageWithContent(
@@ -1764,12 +1764,12 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.hover('li:nth-of-type(4)')
-                await page.waitForChanges()
+                await page.hover('li:nth-of-type(4)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
+                const results = await page.compareScreenshot();
                 const accessibilityReport = await analyzeAccessibility(page, {
                   spec: {
                     checks: [
@@ -1778,11 +1778,11 @@ describe('ld-stepper', () => {
                       { id: 'color-contrast', options: { ignorePseudo: true } },
                     ],
                   },
-                })
+                });
 
-                expect(results).toMatchScreenshot()
-                expect(accessibilityReport).toHaveNoAccessibilityIssues()
-              })
+                expect(results).toMatchScreenshot();
+                expect(accessibilityReport).toHaveNoAccessibilityIssues();
+              });
 
               it('disabled', async () => {
                 const page = await getPageWithContent(
@@ -1793,15 +1793,15 @@ describe('ld-stepper', () => {
                       : undefined,
                     components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                   }
-                )
+                );
 
-                await page.hover('li:nth-of-type(5)')
-                await page.waitForChanges()
+                await page.hover('li:nth-of-type(5)');
+                await page.waitForChanges();
 
-                const results = await page.compareScreenshot()
-                expect(results).toMatchScreenshot()
-              })
-            })
+                const results = await page.compareScreenshot();
+                expect(results).toMatchScreenshot();
+              });
+            });
 
             describe('optional', () => {
               describe('active', () => {
@@ -1817,13 +1817,13 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.down('Space')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.down('Space');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
+                  const results = await page.compareScreenshot();
                   const accessibilityReport = await analyzeAccessibility(page, {
                     spec: {
                       checks: [
@@ -1835,11 +1835,11 @@ describe('ld-stepper', () => {
                         },
                       ],
                     },
-                  })
+                  });
 
-                  expect(results).toMatchScreenshot()
-                  expect(accessibilityReport).toHaveNoAccessibilityIssues()
-                })
+                  expect(results).toMatchScreenshot();
+                  expect(accessibilityReport).toHaveNoAccessibilityIssues();
+                });
 
                 it('skipped', async () => {
                   const page = await getPageWithContent(
@@ -1853,16 +1853,16 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.down('Space')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.down('Space');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
 
                 it('current', async () => {
                   const page = await getPageWithContent(
@@ -1876,17 +1876,17 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.down('Space')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.down('Space');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
 
                 it('next', async () => {
                   const page = await getPageWithContent(
@@ -1900,16 +1900,16 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.down('Space')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.down('Space');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
+                  const results = await page.compareScreenshot();
                   const accessibilityReport = await analyzeAccessibility(page, {
                     spec: {
                       checks: [
@@ -1921,11 +1921,11 @@ describe('ld-stepper', () => {
                         },
                       ],
                     },
-                  })
+                  });
 
-                  expect(results).toMatchScreenshot()
-                  expect(accessibilityReport).toHaveNoAccessibilityIssues()
-                })
+                  expect(results).toMatchScreenshot();
+                  expect(accessibilityReport).toHaveNoAccessibilityIssues();
+                });
 
                 it('disabled', async () => {
                   const page = await getPageWithContent(
@@ -1939,20 +1939,20 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.down('Space')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.down('Space');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
-              })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
+              });
 
               describe('focus', () => {
                 it('done', async () => {
@@ -1967,12 +1967,12 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
+                  const results = await page.compareScreenshot();
                   const accessibilityReport = await analyzeAccessibility(page, {
                     spec: {
                       checks: [
@@ -1984,11 +1984,11 @@ describe('ld-stepper', () => {
                         },
                       ],
                     },
-                  })
+                  });
 
-                  expect(results).toMatchScreenshot()
-                  expect(accessibilityReport).toHaveNoAccessibilityIssues()
-                })
+                  expect(results).toMatchScreenshot();
+                  expect(accessibilityReport).toHaveNoAccessibilityIssues();
+                });
 
                 it('skipped', async () => {
                   const page = await getPageWithContent(
@@ -2002,15 +2002,15 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
 
                 it('current', async () => {
                   const page = await getPageWithContent(
@@ -2024,16 +2024,16 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
 
                 it('next', async () => {
                   const page = await getPageWithContent(
@@ -2047,15 +2047,15 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
+                  const results = await page.compareScreenshot();
                   const accessibilityReport = await analyzeAccessibility(page, {
                     spec: {
                       checks: [
@@ -2067,11 +2067,11 @@ describe('ld-stepper', () => {
                         },
                       ],
                     },
-                  })
+                  });
 
-                  expect(results).toMatchScreenshot()
-                  expect(accessibilityReport).toHaveNoAccessibilityIssues()
-                })
+                  expect(results).toMatchScreenshot();
+                  expect(accessibilityReport).toHaveNoAccessibilityIssues();
+                });
 
                 it('disabled', async () => {
                   const page = await getPageWithContent(
@@ -2085,19 +2085,19 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.keyboard.press('Tab')
-                  await page.waitForChanges()
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.keyboard.press('Tab');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
-              })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
+              });
 
               describe('hover', () => {
                 it('done', async () => {
@@ -2112,12 +2112,12 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.hover('li:nth-of-type(1)')
-                  await page.waitForChanges()
+                  await page.hover('li:nth-of-type(1)');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
+                  const results = await page.compareScreenshot();
                   const accessibilityReport = await analyzeAccessibility(page, {
                     spec: {
                       checks: [
@@ -2129,11 +2129,11 @@ describe('ld-stepper', () => {
                         },
                       ],
                     },
-                  })
+                  });
 
-                  expect(results).toMatchScreenshot()
-                  expect(accessibilityReport).toHaveNoAccessibilityIssues()
-                })
+                  expect(results).toMatchScreenshot();
+                  expect(accessibilityReport).toHaveNoAccessibilityIssues();
+                });
 
                 it('skipped', async () => {
                   const page = await getPageWithContent(
@@ -2147,14 +2147,14 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.hover('li:nth-of-type(2)')
-                  await page.waitForChanges()
+                  await page.hover('li:nth-of-type(2)');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
 
                 it('current', async () => {
                   const page = await getPageWithContent(
@@ -2168,14 +2168,14 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.hover('li:nth-of-type(3)')
-                  await page.waitForChanges()
+                  await page.hover('li:nth-of-type(3)');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
 
                 it('next', async () => {
                   const page = await getPageWithContent(
@@ -2189,12 +2189,12 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.hover('li:nth-of-type(4)')
-                  await page.waitForChanges()
+                  await page.hover('li:nth-of-type(4)');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
+                  const results = await page.compareScreenshot();
                   const accessibilityReport = await analyzeAccessibility(page, {
                     spec: {
                       checks: [
@@ -2206,11 +2206,11 @@ describe('ld-stepper', () => {
                         },
                       ],
                     },
-                  })
+                  });
 
-                  expect(results).toMatchScreenshot()
-                  expect(accessibilityReport).toHaveNoAccessibilityIssues()
-                })
+                  expect(results).toMatchScreenshot();
+                  expect(accessibilityReport).toHaveNoAccessibilityIssues();
+                });
 
                 it('disabled', async () => {
                   const page = await getPageWithContent(
@@ -2224,19 +2224,19 @@ describe('ld-stepper', () => {
                         : undefined,
                       components: [LdIcon, LdSrOnly, LdStep, LdStepper],
                     }
-                  )
+                  );
 
-                  await page.hover('li:nth-of-type(5)')
-                  await page.waitForChanges()
+                  await page.hover('li:nth-of-type(5)');
+                  await page.waitForChanges();
 
-                  const results = await page.compareScreenshot()
-                  expect(results).toMatchScreenshot()
-                })
-              })
-            })
-          })
+                  const results = await page.compareScreenshot();
+                  expect(results).toMatchScreenshot();
+                });
+              });
+            });
+          });
         }
-      )
-    })
-  })
-})
+      );
+    });
+  });
+});

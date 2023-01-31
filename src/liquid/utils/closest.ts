@@ -5,5 +5,5 @@ export const closest = (selector: string, el: Element) => {
     el &&
     (el.closest(selector) ||
       closest(selector, (el.getRootNode() as unknown as ShadowRoot).host))
-  )
-}
+  );
+};

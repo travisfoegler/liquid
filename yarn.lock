@@ -93,6 +93,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular/common@npm:^15.1.2":
+  version: 15.1.2
+  resolution: "@angular/common@npm:15.1.2"
+  dependencies:
+    tslib: ^2.3.0
+  peerDependencies:
+    "@angular/core": 15.1.2
+    rxjs: ^6.5.3 || ^7.4.0
+  checksum: 576b9d12b7ea015d302bdf82eff0fb08dec7e3be41ea8cd7ba97ede8dbd1539e3cd8557373a1ac723221ec5d8dbfe2103896b6bcf46e17f08d200e0b70a6a7e7
+  languageName: node
+  linkType: hard
+
+"@angular/core@npm:^15.1.2":
+  version: 15.1.2
+  resolution: "@angular/core@npm:15.1.2"
+  dependencies:
+    tslib: ^2.3.0
+  peerDependencies:
+    rxjs: ^6.5.3 || ^7.4.0
+    zone.js: ~0.11.4 || ~0.12.0
+  checksum: d1b6f55be7ad976ec06fcf45ad14217e2f3c597c30f8735aa3fbd1a31bb5dc1b4ae49784e68215361e33c0e7c05274234df8b9ac83612d42017a032b2ac6a06f
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.16.0":
   version: 7.16.0
   resolution: "@babel/code-frame@npm:7.16.0"
@@ -1156,6 +1180,8 @@ __metadata:
     "@11ty/eleventy": ^1.0.2
     "@11ty/eleventy-navigation": ^0.3.5
     "@11ty/eleventy-plugin-syntaxhighlight": ^4.2.0
+    "@angular/common": ^15.1.2
+    "@angular/core": ^15.1.2
     "@commitlint/cli": ^17.3.0
     "@commitlint/config-conventional": ^17.3.0
     "@lottiefiles/lottie-player": ^1.6.0
@@ -1165,6 +1191,7 @@ __metadata:
     "@semantic-release/github": ^8.0.7
     "@semantic-release/npm": ^9.0.1
     "@semantic-release/release-notes-generator": ^10.0.3
+    "@stencil/angular-output-target": ^0.5.0
     "@stencil/core": ^2.19.3
     "@stencil/eslint-plugin": ^0.4.0
     "@stencil/postcss": ^2.1.0
@@ -1212,6 +1239,7 @@ __metadata:
     postcss-preset-env: ^7.8.3
     prettier: ^2.8.0
     puppeteer: ^13.5.2
+    rxjs: ^7.8.0
     semantic-release: ^19.0.5
     shx: ^0.3.4
     stylelint: ^14.15.0
@@ -1227,7 +1255,7 @@ __metadata:
     trash-cli: ^5.0.0
     ts-jest: ^27.1.4
     ts-node: ^10.9.1
-    typescript: ^4.9.3
+    typescript: ^4.9.4
     validate-branch-name: ^1.3.0
     vue: ^3.2.45
     wicg-inert: ^3.1.2
@@ -2344,6 +2372,15 @@ __metadata:
   version: 3.1.0
   resolution: "@socket.io/component-emitter@npm:3.1.0"
   checksum: db069d95425b419de1514dffe945cc439795f6a8ef5b9465715acf5b8b50798e2c91b8719cbf5434b3fe7de179d6cdcd503c277b7871cb3dd03febb69bdd50fa
+  languageName: node
+  linkType: hard
+
+"@stencil/angular-output-target@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@stencil/angular-output-target@npm:0.5.0"
+  peerDependencies:
+    "@stencil/core": ^2.9.0 || ^3.0.0-beta.0
+  checksum: f5e5dca13a64fdf9085b99614401336c80aeedc78580dff8ec99c88cc31659a878efa39b755611469c4927827527f34c911bac1130ed165e86bfc37782fb2724
   languageName: node
   linkType: hard
 
@@ -14481,12 +14518,12 @@ proxy-middleware@latest:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.5.7":
-  version: 7.5.7
-  resolution: "rxjs@npm:7.5.7"
+"rxjs@npm:^7.5.7, rxjs@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "rxjs@npm:7.8.0"
   dependencies:
     tslib: ^2.1.0
-  checksum: edabcdb73b0f7e0f5f6e05c2077aff8c52222ac939069729704357d6406438acca831c24210db320aba269e86dbe1a400f3769c89101791885121a342fb15d9c
+  checksum: 61b4d4fd323c1043d8d6ceb91f24183b28bcf5def4f01ca111511d5c6b66755bc5578587fe714ef5d67cf4c9f2e26f4490d4e1d8cabf9bd5967687835e9866a2
   languageName: node
   linkType: hard
 
@@ -16353,7 +16390,14 @@ send@latest:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.2.0":
+"tslib@npm:^2.1.0, tslib@npm:^2.3.0":
+  version: 2.5.0
+  resolution: "tslib@npm:2.5.0"
+  checksum: ae3ed5f9ce29932d049908ebfdf21b3a003a85653a9a140d614da6b767a93ef94f460e52c3d787f0e4f383546981713f165037dc2274df212ea9f8a4541004e1
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.2.0":
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
@@ -16482,13 +16526,23 @@ send@latest:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.6.4, typescript@npm:^4.9.3":
+"typescript@npm:^4.6.4":
   version: 4.9.3
   resolution: "typescript@npm:4.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 17b8f816050b412403e38d48eef0e893deb6be522d6dc7caf105e54a72e34daf6835c447735fd2b28b66784e72bfbf87f627abb4818a8e43d1fa8106396128dc
+  languageName: node
+  linkType: hard
+
+"typescript@npm:^4.9.4":
+  version: 4.9.4
+  resolution: "typescript@npm:4.9.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: e782fb9e0031cb258a80000f6c13530288c6d63f1177ed43f770533fdc15740d271554cdae86701c1dd2c83b082cea808b07e97fd68b38a172a83dbf9e0d0ef9
   languageName: node
   linkType: hard
 
@@ -16502,13 +16556,23 @@ send@latest:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.6.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.9.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.6.4#~builtin<compat/typescript>":
   version: 4.9.3
   resolution: "typescript@patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: ef65c22622d864497d0a0c5db693523329b3284c15fe632e93ad9aa059e8dc38ef3bd767d6f26b1e5ecf9446f49bd0f6c4e5714a2eeaf352805dc002479843d1
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^4.9.4#~builtin<compat/typescript>":
+  version: 4.9.4
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=bda367"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
   languageName: node
   linkType: hard
 

@@ -5,10 +5,10 @@ import {
   State,
   getAssetPath,
   Fragment,
-} from '@stencil/core'
-import { copyToClipboard } from '../../utils/copyToClipboard'
-import { getClassNames } from '../../../liquid/utils/getClassNames'
-import '@lottiefiles/lottie-player'
+} from '@stencil/core';
+import { copyToClipboard } from '../../utils/copyToClipboard';
+import { getClassNames } from '../../../liquid/utils/getClassNames';
+import '@lottiefiles/lottie-player';
 
 /** @internal **/
 @Component({
@@ -18,40 +18,40 @@ import '@lottiefiles/lottie-player'
 })
 export class DocsIcon {
   /** Play the animation back and forth */
-  @Prop() bounce = false
+  @Prop() bounce = false;
 
   /** URL to download from */
-  @Prop({ mutable: true }) downloadUrl: string
+  @Prop({ mutable: true }) downloadUrl: string;
 
   /** Icon file name */
-  @Prop() identifier: string
+  @Prop() identifier: string;
 
   /** Is an animation */
-  @Prop() isAnimation = false
+  @Prop() isAnimation = false;
 
   /** Human readable icon name */
-  @Prop() name: string
+  @Prop() name: string;
 
-  @State() confirm = false
+  @State() confirm = false;
 
   private copyIdentifier = async (event: MouseEvent) => {
-    event.preventDefault()
-    await copyToClipboard(this.identifier)
+    event.preventDefault();
+    await copyToClipboard(this.identifier);
 
-    this.confirm = true
+    this.confirm = true;
 
     setTimeout(() => {
-      this.confirm = false
-    }, 2000)
-  }
+      this.confirm = false;
+    }, 2000);
+  };
 
   async componentWillLoad(): Promise<void> {
     if (!this.downloadUrl && this.isAnimation) {
       const { buildstamp } =
-        document.querySelector<HTMLMetaElement>('[data-buildstamp]').dataset
-      this.downloadUrl = `../../${buildstamp}assets/animations/${this.identifier}.json`
+        document.querySelector<HTMLMetaElement>('[data-buildstamp]').dataset;
+      this.downloadUrl = `../../${buildstamp}assets/animations/${this.identifier}.json`;
     } else if (!this.downloadUrl) {
-      this.downloadUrl = getAssetPath(`./assets/${this.identifier}.svg`)
+      this.downloadUrl = getAssetPath(`./assets/${this.identifier}.svg`);
     }
   }
 
@@ -106,6 +106,6 @@ export class DocsIcon {
           )}
         </div>
       </a>
-    )
+    );
   }
 }

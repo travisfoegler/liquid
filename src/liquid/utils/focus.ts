@@ -13,61 +13,61 @@ const focusableSelector = [
   '[tabindex]',
 ]
   .map((selector) => selector + ':not([tabindex^="-"])')
-  .join(',')
+  .join(',');
 
 export const getFirstFocusable = (el: HTMLElement): HTMLElement | undefined => {
   // Directly focusable element.
   if (el.matches(focusableSelector)) {
-    return el
+    return el;
   }
 
   // Slot.
   if (el.tagName === 'SLOT') {
-    const hostEl = el.getRootNode()['host']
-    const slotName = el.getAttribute('name')
+    const hostEl = el.getRootNode()['host'];
+    const slotName = el.getAttribute('name');
     const slottedEl = slotName
       ? hostEl.querySelector(`[slot="${el.getAttribute('name')}"]`)
       : Array.from(hostEl.children).find(
           (child) => !(child as HTMLElement).hasAttribute('slot')
-        )
+        );
     if (slottedEl) {
-      return getFirstFocusable(slottedEl)
+      return getFirstFocusable(slottedEl);
     }
-    return null
+    return null;
   }
 
   // Web Component.
   if (el.shadowRoot) {
-    const shadowRootChildren = Array.from(el.shadowRoot.children)
+    const shadowRootChildren = Array.from(el.shadowRoot.children);
     for (const child of shadowRootChildren) {
-      const focusable = getFirstFocusable(child as HTMLElement)
-      if (focusable) return focusable
+      const focusable = getFirstFocusable(child as HTMLElement);
+      if (focusable) return focusable;
     }
   }
 
   // Element with children.
-  const children = Array.from(el.children)
+  const children = Array.from(el.children);
   for (const child of children) {
-    const focusable = getFirstFocusable(child as HTMLElement)
-    if (focusable) return focusable
+    const focusable = getFirstFocusable(child as HTMLElement);
+    if (focusable) return focusable;
   }
 
-  return null
-}
+  return null;
+};
 
 export const isInnerFocusable = <T extends object>(
   element?: T
-): element is T & InnerFocusable => element && 'focusInner' in element
+): element is T & InnerFocusable => element && 'focusInner' in element;
 
-let autofocusHandlerTimeout
+let autofocusHandlerTimeout;
 export const registerAutofocus = (autofocus: boolean) => {
-  if (!autofocus || autofocusHandlerTimeout) return
+  if (!autofocus || autofocusHandlerTimeout) return;
   autofocusHandlerTimeout = setTimeout(() => {
     const firstWithAutofocus = Array.from(
       document.querySelectorAll<HTMLInputElement>('[autofocus]')
-    ).find((el) => !el.disabled)
+    ).find((el) => !el.disabled);
     if (isInnerFocusable(firstWithAutofocus)) {
-      firstWithAutofocus.focusInner()
+      firstWithAutofocus.focusInner();
     }
-  }, 200)
-}
+  }, 200);
+};

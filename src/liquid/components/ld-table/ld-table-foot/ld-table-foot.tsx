@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core'
+import { Component, h } from '@stencil/core';
 
 /**
  * @part tfoot - the actual tfoot element
@@ -16,6 +16,6 @@ export class LdTableFoot {
       <tfoot class="ld-table-foot" part="tfoot">
         <slot />
       </tfoot>
-    )
+    );
   }
 }

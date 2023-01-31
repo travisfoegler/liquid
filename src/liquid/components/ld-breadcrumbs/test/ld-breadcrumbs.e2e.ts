@@ -1,13 +1,13 @@
 import {
   analyzeAccessibility,
   getPageWithContent,
-} from 'src/liquid/utils/e2e-tests'
-import { LdIcon } from '../../ld-icon/ld-icon'
-import { LdBreadcrumbs } from '../ld-breadcrumbs'
-import { LdCrumb } from '../ld-crumb/ld-crumb'
-import { LdLink } from '../../ld-link/ld-link'
+} from 'src/liquid/utils/e2e-tests';
+import { LdIcon } from '../../ld-icon/ld-icon';
+import { LdBreadcrumbs } from '../ld-breadcrumbs';
+import { LdCrumb } from '../ld-crumb/ld-crumb';
+import { LdLink } from '../../ld-link/ld-link';
 
-const components = [LdBreadcrumbs, LdCrumb, LdLink, LdIcon]
+const components = [LdBreadcrumbs, LdCrumb, LdLink, LdIcon];
 
 describe('ld-breadcrumbs', () => {
   it('renders as Web Component', async () => {
@@ -17,11 +17,11 @@ describe('ld-breadcrumbs', () => {
         <ld-crumb href="/foo/bar">bar</ld-crumb>
         <ld-crumb href="/foo/bar/qux">qux</ld-crumb>
       </ld-breadcrumbs>`
-    )
+    );
 
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   it('renders as CSS Component', async () => {
     const page = await getPageWithContent(
@@ -41,11 +41,11 @@ describe('ld-breadcrumbs', () => {
       {
         components,
       }
-    )
+    );
 
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   describe('accessibility', () => {
     it('is accessible as a Web Component', async () => {
@@ -55,8 +55,8 @@ describe('ld-breadcrumbs', () => {
           <ld-crumb href="/foo/bar">bar</ld-crumb>
           <ld-crumb href="/foo/bar/qux">qux</ld-crumb>
         </ld-breadcrumbs>`
-      )
-      page.waitForChanges()
+      );
+      page.waitForChanges();
 
       const accessibilityReport = await analyzeAccessibility(page, {
         options: {
@@ -68,9 +68,9 @@ describe('ld-breadcrumbs', () => {
             listitem: { enabled: false },
           },
         },
-      })
-      expect(accessibilityReport).toHaveNoAccessibilityIssues()
-    })
+      });
+      expect(accessibilityReport).toHaveNoAccessibilityIssues();
+    });
 
     it('is accessible as a CSS Component', async () => {
       const page = await getPageWithContent(
@@ -90,13 +90,13 @@ describe('ld-breadcrumbs', () => {
         {
           components,
         }
-      )
+      );
 
-      page.waitForChanges()
-      const accessibilityReport = await analyzeAccessibility(page)
-      expect(accessibilityReport).toHaveNoAccessibilityIssues()
-    })
-  })
+      page.waitForChanges();
+      const accessibilityReport = await analyzeAccessibility(page);
+      expect(accessibilityReport).toHaveNoAccessibilityIssues();
+    });
+  });
 
   it('renders with icons as Web Component', async () => {
     const page = await getPageWithContent(
@@ -117,11 +117,11 @@ describe('ld-breadcrumbs', () => {
       {
         components,
       }
-    )
+    );
 
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   it('renders with icons as CSS component', async () => {
     const page = await getPageWithContent(
@@ -165,9 +165,9 @@ describe('ld-breadcrumbs', () => {
       {
         components,
       }
-    )
+    );
 
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
-})
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
+});

@@ -47,6 +47,7 @@ Type: `Promise<void>`
 | Part              | Description                                   |
 | ----------------- | --------------------------------------------- |
 | `"content"`       | content container element                     |
+| `"focusable"`     |                                               |
 | `"input"`         | the form input element                        |
 | `"label"`         | text label container containing the main slot |
 | `"label-element"` | wrapping label element                        |

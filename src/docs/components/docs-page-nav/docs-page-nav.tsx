@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -7,24 +7,24 @@ import { Component, Element, h, Host, Prop, State } from '@stencil/core'
   shadow: false,
 })
 export class DocsPageNav {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   /** Href to previous page. */
-  @Prop() prevHref: string
+  @Prop() prevHref: string;
 
   /** Href to next page. */
-  @Prop() nextHref: string
+  @Prop() nextHref: string;
 
   /** Title of previous page. */
-  @Prop() prevTitle = 'Back'
+  @Prop() prevTitle = 'Back';
 
   /** Title of next page. */
-  @Prop() nextTitle = 'Next'
+  @Prop() nextTitle = 'Next';
 
-  @State() hasSlot = false
+  @State() hasSlot = false;
 
   componentWillLoad() {
-    this.hasSlot = this.el.childNodes.length > 2
+    this.hasSlot = this.el.childNodes.length > 2;
   }
 
   render() {
@@ -86,6 +86,6 @@ export class DocsPageNav {
         </div>
         <slot></slot>
       </Host>
-    )
+    );
   }
 }

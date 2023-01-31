@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs')
+const fs = require('fs');
 
 // Web-types build require docs to be built first
-const docs = require('../dist/web-components.json')
+const docs = require('../dist/web-components.json');
 
-const components = []
+const components = [];
 
 function toCamelCase(name) {
   return name
     .split('-')
     .map((n) => n[0].toUpperCase() + n.substr(1))
-    .join('')
+    .join('');
 }
 
 for (const component of docs.components) {
-  const attributes = []
-  const slots = []
-  const events = []
-  const componentName = toCamelCase(component.tag)
-  const docUrl = `https://liquid.merck.design/docs/components/${component.tag}`
+  const attributes = [];
+  const slots = [];
+  const events = [];
+  const componentName = toCamelCase(component.tag);
+  const docUrl = `https://liquid.merck.design/docs/components/${component.tag}`;
 
   for (const prop of component.props || []) {
     attributes.push({
@@ -30,13 +30,13 @@ for (const component of docs.components) {
         kind: 'expression',
         type: prop.type,
       },
-    })
+    });
   }
 
   for (const event of component.events || []) {
-    let eventName = event.event
+    let eventName = event.event;
     if (eventName.toLowerCase().startsWith(componentName.toLowerCase())) {
-      eventName = 'on' + eventName.substr(componentName.length)
+      eventName = 'on' + eventName.substr(componentName.length);
     }
     events.push({
       name: eventName,
@@ -47,14 +47,14 @@ for (const component of docs.components) {
           type: event.detail,
         },
       ],
-    })
+    });
   }
 
   for (const slot of component.slots || []) {
     slots.push({
       name: slot.name === '' ? 'default' : slot.name,
       description: slot.docs,
-    })
+    });
   }
 
   components.push({
@@ -72,7 +72,7 @@ for (const component of docs.components) {
     attributes,
     slots,
     events,
-  })
+  });
 }
 
 const webTypes = {
@@ -87,6 +87,6 @@ const webTypes = {
       tags: components,
     },
   },
-}
+};
 
-fs.writeFileSync('dist/web-types.json', JSON.stringify(webTypes, null, 2))
+fs.writeFileSync('dist/web-types.json', JSON.stringify(webTypes, null, 2));

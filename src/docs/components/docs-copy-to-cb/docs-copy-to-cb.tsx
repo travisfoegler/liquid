@@ -1,5 +1,5 @@
-import { Component, Element, h, Listen, Prop, State } from '@stencil/core'
-import { copyToClipboard } from '../../utils/copyToClipboard'
+import { Component, Element, h, Listen, Prop, State } from '@stencil/core';
+import { copyToClipboard } from '../../utils/copyToClipboard';
 
 /** @internal **/
 @Component({
@@ -8,27 +8,27 @@ import { copyToClipboard } from '../../utils/copyToClipboard'
   shadow: false,
 })
 export class DocsCopyToCb {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   /** Text to be copied to clipboard */
-  @Prop() textToCopy!: string
+  @Prop() textToCopy!: string;
 
   /** Display mode. */
-  @Prop() mode?: HTMLLdButtonElement['mode']
+  @Prop() mode?: HTMLLdButtonElement['mode'];
 
-  @State() copyTimeout: number | undefined
+  @State() copyTimeout: number | undefined;
 
   private clearCopyTimeout() {
-    window.clearTimeout(this.copyTimeout)
-    this.copyTimeout = undefined
+    window.clearTimeout(this.copyTimeout);
+    this.copyTimeout = undefined;
   }
 
   @Listen('click', { capture: true })
   async handleClick(ev) {
-    ev.preventDefault()
-    await copyToClipboard(this.textToCopy)
-    const timeoutID = window.setTimeout(this.clearCopyTimeout.bind(this), 500)
-    this.copyTimeout = timeoutID
+    ev.preventDefault();
+    await copyToClipboard(this.textToCopy);
+    const timeoutID = window.setTimeout(this.clearCopyTimeout.bind(this), 500);
+    this.copyTimeout = timeoutID;
   }
 
   render() {
@@ -62,6 +62,6 @@ export class DocsCopyToCb {
           </ld-icon>
         )}
       </ld-button>
-    )
+    );
   }
 }

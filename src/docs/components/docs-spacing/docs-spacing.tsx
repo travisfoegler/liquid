@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop } from '@stencil/core'
+import { Component, h, Host, Prop } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -8,10 +8,10 @@ import { Component, h, Host, Prop } from '@stencil/core'
 })
 export class DocsSpacing {
   /** CSS variable name */
-  @Prop() var: string
+  @Prop() var: string;
 
   /** CSS variable value */
-  @Prop() val: string
+  @Prop() val: string;
 
   render() {
     return (
@@ -26,6 +26,6 @@ export class DocsSpacing {
           style={{ width: `var(${this.var})`, height: `var(${this.var})` }}
         ></span>
       </Host>
-    )
+    );
   }
 }

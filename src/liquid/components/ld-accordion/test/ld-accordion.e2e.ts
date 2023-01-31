@@ -1,10 +1,10 @@
 import {
   analyzeAccessibility,
   getPageWithContent,
-} from '../../../utils/e2e-tests'
+} from '../../../utils/e2e-tests';
 
 const loremIpsum =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor quisque lectus morbi mauris, tortor dictum elementum. Morbi volutpat senectus lacus sapien viverra quis volutpat. Mauris sed lacus ipsum dictumst egestas. Elit cras at interdum id porta magnis accumsan sit pulvinar. Mi dignissim gravida venenatis, nibh dignissim tincidunt enim. Lectus diam lobortis pharetra amet et nec. Est vitae vitae porttitor varius ac. Faucibus enim augue ac sollicitudin massa. Ipsum quis elementum amet tristique. A felis nunc iaculis maecenas id.'
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor quisque lectus morbi mauris, tortor dictum elementum. Morbi volutpat senectus lacus sapien viverra quis volutpat. Mauris sed lacus ipsum dictumst egestas. Elit cras at interdum id porta magnis accumsan sit pulvinar. Mi dignissim gravida venenatis, nibh dignissim tincidunt enim. Lectus diam lobortis pharetra amet et nec. Est vitae vitae porttitor varius ac. Faucibus enim augue ac sollicitudin massa. Ipsum quis elementum amet tristique. A felis nunc iaculis maecenas id.';
 
 describe('ld-accordion', () => {
   it('default', async () => {
@@ -31,14 +31,14 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('is accessible', async () => {
     const page = await getPageWithContent(
@@ -64,16 +64,16 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
-    page.waitForChanges()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    ]);
+    page.waitForChanges();
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
-    const accessibilityReport = await analyzeAccessibility(page)
-    expect(accessibilityReport).toHaveNoAccessibilityIssues()
-  })
+    const accessibilityReport = await analyzeAccessibility(page);
+    expect(accessibilityReport).toHaveNoAccessibilityIssues();
+  });
 
   it('hover', async () => {
     const page = await getPageWithContent(
@@ -87,17 +87,17 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.hover('ld-accordion-toggle')
-    await page.waitForChanges()
+    await page.hover('ld-accordion-toggle');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('focus', async () => {
     const page = await getPageWithContent(
@@ -111,17 +111,17 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.keyboard.press('Tab')
-    await page.waitForChanges()
+    await page.keyboard.press('Tab');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('active', async () => {
     const page = await getPageWithContent(
@@ -135,18 +135,18 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.keyboard.press('Tab')
-    await page.keyboard.down('Space')
-    await page.waitForChanges()
+    await page.keyboard.press('Tab');
+    await page.keyboard.down('Space');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('dark', async () => {
     const page = await getPageWithContent(
@@ -172,13 +172,13 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-wht)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    ]);
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('on brand color', async () => {
     const page = await getPageWithContent(
@@ -207,13 +207,13 @@ describe('ld-accordion', () => {
         bgColor: 'var(--ld-thm-primary)',
         notWrapped: true,
       }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    ]);
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('on brand color hover', async () => {
     const page = await getPageWithContent(
@@ -227,17 +227,17 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-thm-primary)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.hover('ld-accordion-toggle')
-    await page.waitForChanges()
+    await page.hover('ld-accordion-toggle');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('on brand color focus', async () => {
     const page = await getPageWithContent(
@@ -251,17 +251,17 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-thm-primary)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.keyboard.press('Tab')
-    await page.waitForChanges()
+    await page.keyboard.press('Tab');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('on brand color active', async () => {
     const page = await getPageWithContent(
@@ -275,18 +275,18 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-thm-primary)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.keyboard.press('Tab')
-    await page.keyboard.down('Space')
-    await page.waitForChanges()
+    await page.keyboard.press('Tab');
+    await page.keyboard.down('Space');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('rounded', async () => {
     const page = await getPageWithContent(
@@ -315,14 +315,14 @@ describe('ld-accordion', () => {
         bgColor: 'var(--ld-thm-primary)',
         notWrapped: true,
       }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('detached', async () => {
     const page = await getPageWithContent(
@@ -351,14 +351,14 @@ describe('ld-accordion', () => {
         bgColor: 'var(--ld-thm-primary)',
         notWrapped: true,
       }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('split focus label', async () => {
     const page = await getPageWithContent(
@@ -372,17 +372,17 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.keyboard.press('Tab')
-    await page.waitForChanges()
+    await page.keyboard.press('Tab');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('split focus trigger', async () => {
     const page = await getPageWithContent(
@@ -396,18 +396,18 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    await page.keyboard.press('Tab')
-    await page.keyboard.press('Tab')
-    await page.waitForChanges()
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await page.waitForChanges();
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   it('nested', async () => {
     const page = await getPageWithContent(
@@ -458,14 +458,14 @@ describe('ld-accordion', () => {
         </ld-accordion-section>
       </ld-accordion>`,
       { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-    )
+    );
     await page.emulateMediaFeatures([
       { name: 'prefers-reduced-motion', value: 'reduce' },
-    ])
+    ]);
 
-    const result = await page.compareScreenshot()
-    expect(result).toMatchScreenshot()
-  })
+    const result = await page.compareScreenshot();
+    expect(result).toMatchScreenshot();
+  });
 
   describe('auto-scroll', () => {
     it('auto-scrolls', async () => {
@@ -521,31 +521,31 @@ describe('ld-accordion', () => {
           <div style="height: 400px"></div>
         </div>`,
         { notWrapped: true, bgColor: 'var(--ld-col-neutral-010)' }
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
+      ]);
 
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Space')
-      await page.waitForChanges()
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Space');
+      await page.waitForChanges();
 
       const screenshotScroll1 = await page.compareScreenshot(
         'after expansion of outer panel'
-      )
-      expect(screenshotScroll1).toMatchScreenshot()
+      );
+      expect(screenshotScroll1).toMatchScreenshot();
 
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Space')
-      await page.waitForChanges()
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Space');
+      await page.waitForChanges();
 
       const screenshotScroll2 = await page.compareScreenshot(
         'after expansion of inner panel'
-      )
-      expect(screenshotScroll2).toMatchScreenshot()
-    })
-  })
-})
+      );
+      expect(screenshotScroll2).toMatchScreenshot();
+    });
+  });
+});

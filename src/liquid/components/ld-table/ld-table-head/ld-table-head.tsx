@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core'
+import { Component, h } from '@stencil/core';
 
 /**
  * @part thead - the actual thead element
@@ -16,6 +16,6 @@ export class LdTableHead {
       <thead class="ld-table-head" part="thead">
         <slot />
       </thead>
-    )
+    );
   }
 }

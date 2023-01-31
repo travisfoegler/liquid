@@ -1031,6 +1031,7 @@ Type: `Promise<void>`
 
 | Part            | Description                                |
 | --------------- | ------------------------------------------ |
+| `"focusable"`   |                                            |
 | `"input"`       | Actual input/textarea element              |
 | `"placeholder"` | Placeholder rendered for input type "file" |
 

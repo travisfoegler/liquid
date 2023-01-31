@@ -10,9 +10,9 @@ import {
   Prop,
   State,
   Watch,
-} from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
-import { closest } from '../../../utils/closest'
+} from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
+import { closest } from '../../../utils/closest';
 
 /**
  * @virtualProp ref - reference to component
@@ -24,111 +24,111 @@ import { closest } from '../../../utils/closest'
   shadow: true,
 })
 export class LdSidenavSlider {
-  @Element() el: HTMLLdSidenavSliderElement
-  private sidenav: HTMLLdSidenavElement
-  private scrollerRef: HTMLLdSidenavScrollerInternalElement
+  @Element() el: HTMLLdSidenavSliderElement;
+  private sidenav: HTMLLdSidenavElement;
+  private scrollerRef: HTMLLdSidenavScrollerInternalElement;
 
   /** ID of the subnav that shall be shown on initial render. */
-  @Prop({ mutable: true }) currentSubnav: string
+  @Prop({ mutable: true }) currentSubnav: string;
 
   /** Used in the ld-sidenav-back component to display parent nav label. */
-  @Prop() label: string
+  @Prop() label: string;
 
-  @State() currentNavLevel: number
-  @State() activeSubnavs: HTMLLdSidenavSubnavElement[] = []
-  @State() isFirstLevelHidden = false
+  @State() currentNavLevel: number;
+  @State() activeSubnavs: HTMLLdSidenavSubnavElement[] = [];
+  @State() isFirstLevelHidden = false;
 
   /**
    * Emitted on navigation (before transition ends).
    */
   @Event() ldSidenavSliderChange: EventEmitter<
     { id: string; label: string } | undefined
-  >
+  >;
 
   private navigateToSubnav() {
     // Make current subnav and all ancestor subnavs active.
-    let parentSubnav: HTMLLdSidenavSubnavElement
-    let subnavId = this.currentSubnav
-    this.activeSubnavs = []
+    let parentSubnav: HTMLLdSidenavSubnavElement;
+    let subnavId = this.currentSubnav;
+    this.activeSubnavs = [];
     while (subnavId) {
       const subnav = document.querySelector<HTMLLdSidenavSubnavElement>(
         `#${subnavId}`
-      )
+      );
       if (subnav) {
-        subnav.active = true
-        parentSubnav = subnav.closest(`ld-sidenav-subnav:not(#${subnavId})`)
-        this.activeSubnavs.unshift(subnav)
+        subnav.active = true;
+        parentSubnav = subnav.closest(`ld-sidenav-subnav:not(#${subnavId})`);
+        this.activeSubnavs.unshift(subnav);
         if (parentSubnav) {
-          subnavId = parentSubnav.id
+          subnavId = parentSubnav.id;
         } else {
-          subnavId = undefined
+          subnavId = undefined;
         }
       } else {
-        subnavId = undefined
+        subnavId = undefined;
       }
     }
 
     if (this.activeSubnavs.length !== this.currentNavLevel) {
       // Condition is true for almost all use cases.
-      let needsInertUpdate = false
+      let needsInertUpdate = false;
       if (
         this.currentNavLevel === undefined ||
         this.currentNavLevel > this.activeSubnavs.length
       ) {
-        needsInertUpdate = true
-        this.updateAncestor()
+        needsInertUpdate = true;
+        this.updateAncestor();
       }
-      this.currentNavLevel = this.activeSubnavs.length
-      if (needsInertUpdate) this.updateFirstLevelHidden()
+      this.currentNavLevel = this.activeSubnavs.length;
+      if (needsInertUpdate) this.updateFirstLevelHidden();
 
-      this.updateActiveBeforeTransition()
+      this.updateActiveBeforeTransition();
     } else if (this.activeSubnavs.length > 0) {
       // This condition applies if navigating to a subnav
       // which has the same level as the currently active subnav.
       // This happens on change of the currentSubnav prop from
       // the outside.
-      this.updateActive()
-      this.updateAncestor()
-      this.updateFirstLevelHidden()
-      this.scrollInactiveToTop()
+      this.updateActive();
+      this.updateAncestor();
+      this.updateFirstLevelHidden();
+      this.scrollInactiveToTop();
     }
   }
 
   @Watch('currentSubnav')
   handleSubnavChange() {
-    this.navigateToSubnav()
-    this.emitChange()
+    this.navigateToSubnav();
+    this.emitChange();
   }
 
   @Listen('ldSidenavNavitemTo')
   slideToHandler(ev: CustomEvent<{ id: string; label: string }>) {
-    this.currentSubnav = ev.detail.id
+    this.currentSubnav = ev.detail.id;
   }
 
   @Listen('ldSidenavCollapsedChange', { target: 'window', passive: true })
   handleSidenavCollapsedChange(
     ev: CustomEvent<{
-      collapsed: boolean
-      fully: boolean
+      collapsed: boolean;
+      fully: boolean;
     }>
   ) {
-    if (ev.target !== this.sidenav) return
+    if (ev.target !== this.sidenav) return;
     if (ev.detail.collapsed) {
-      this.scrollerRef.scrollToTop(true)
-      this.toggleVisibilityOnHidableContent(false)
+      this.scrollerRef.scrollToTop(true);
+      this.toggleVisibilityOnHidableContent(false);
     } else {
-      this.toggleVisibilityOnHidableContent(true)
+      this.toggleVisibilityOnHidableContent(true);
     }
   }
 
   @Listen('ldSidenavBreakpointChange', { target: 'window', passive: true })
   handleSidenavBreakpointChange(ev: CustomEvent<boolean>) {
-    if (ev.target !== this.sidenav) return
-    const sidenavClosable = ev.detail
+    if (ev.target !== this.sidenav) return;
+    const sidenavClosable = ev.detail;
     if (sidenavClosable) {
-      this.toggleVisibilityOnHidableContent(true)
+      this.toggleVisibilityOnHidableContent(true);
     } else {
-      this.toggleVisibilityOnHidableContent(!this.sidenav.collapsed)
+      this.toggleVisibilityOnHidableContent(!this.sidenav.collapsed);
     }
   }
 
@@ -136,64 +136,64 @@ export class LdSidenavSlider {
   @Method()
   async navigateBack() {
     if (this.currentNavLevel > 0) {
-      const parentSubnav = this.activeSubnavs[this.activeSubnavs.length - 2]
-      this.currentSubnav = parentSubnav?.id || ''
+      const parentSubnav = this.activeSubnavs[this.activeSubnavs.length - 2];
+      this.currentSubnav = parentSubnav?.id || '';
     }
   }
 
   private emitChange() {
-    const activeSubnav = this.activeSubnavs[this.activeSubnavs.length - 1]
+    const activeSubnav = this.activeSubnavs[this.activeSubnavs.length - 1];
     if (activeSubnav) {
       const parentSubnav =
-        this.activeSubnavs[this.activeSubnavs.length - 2] || this.el
+        this.activeSubnavs[this.activeSubnavs.length - 2] || this.el;
       this.ldSidenavSliderChange.emit({
         id: activeSubnav.id,
         label: parentSubnav.label,
-      })
+      });
     } else if (!this.currentSubnav) {
-      this.ldSidenavSliderChange.emit()
+      this.ldSidenavSliderChange.emit();
     }
   }
 
   private updateActiveBeforeTransition = () => {
     // reset
     this.el.querySelectorAll('ld-sidenav-subnav').forEach((subnav) => {
-      subnav.activeBeforeTransition = false
-    })
+      subnav.activeBeforeTransition = false;
+    });
 
     // update
     this.activeSubnavs.forEach((subnav) => {
-      subnav.activeBeforeTransition = true
-    })
-  }
+      subnav.activeBeforeTransition = true;
+    });
+  };
 
   private updateActive = () => {
     // reset
     this.el.querySelectorAll('ld-sidenav-subnav').forEach((subnav) => {
-      subnav.active = false
-    })
+      subnav.active = false;
+    });
 
     // update
     this.activeSubnavs.forEach((subnav) => {
-      subnav.active = true
-    })
-  }
+      subnav.active = true;
+    });
+  };
 
   private updateAncestor = () => {
     // reset
     this.el.querySelectorAll('ld-sidenav-subnav').forEach((subnav) => {
-      subnav.ancestor = false
-    })
+      subnav.ancestor = false;
+    });
 
     // update
     this.activeSubnavs.forEach((subnav, index) => {
-      subnav.ancestor = index < this.activeSubnavs.length - 1
-    })
-  }
+      subnav.ancestor = index < this.activeSubnavs.length - 1;
+    });
+  };
 
   private updateFirstLevelHidden = () => {
-    this.isFirstLevelHidden = this.currentNavLevel > 0
-  }
+    this.isFirstLevelHidden = this.currentNavLevel > 0;
+  };
 
   private scrollInactiveToTop = () => {
     // Scroll all inactive subnav scroll containers to top.
@@ -201,19 +201,19 @@ export class LdSidenavSlider {
       this.el.querySelectorAll<HTMLLdSidenavSubnavElement>('ld-sidenav-subnav')
     ).forEach((subnav) => {
       if (!subnav.active) {
-        subnav.scrollToTop()
+        subnav.scrollToTop();
       }
-    })
-  }
+    });
+  };
 
   private onTransitionEnd = (ev: TransitionEvent) => {
-    if (ev.target !== this.el) return
+    if (ev.target !== this.el) return;
 
-    this.updateActive()
-    this.updateAncestor()
-    this.updateFirstLevelHidden()
-    this.scrollInactiveToTop()
-  }
+    this.updateActive();
+    this.updateAncestor();
+    this.updateFirstLevelHidden();
+    this.scrollInactiveToTop();
+  };
 
   private toggleVisibilityOnHidableContent = (visible: boolean) => {
     Array.from(this.el.children).forEach((el) => {
@@ -227,18 +227,18 @@ export class LdSidenavSlider {
           'LD-SIDENAV-SUBNAV',
         ].includes(el.tagName)
       ) {
-        el.classList.toggle('ld-sidenav-slider__hidden', !visible)
+        el.classList.toggle('ld-sidenav-slider__hidden', !visible);
       }
-    })
-  }
+    });
+  };
 
   componentWillLoad() {
-    this.sidenav = closest('ld-sidenav', this.el)
+    this.sidenav = closest('ld-sidenav', this.el);
     if (this.currentSubnav) {
-      this.handleSubnavChange()
+      this.handleSubnavChange();
     }
     if (this.currentNavLevel === undefined) {
-      this.currentNavLevel = 0
+      this.currentNavLevel = 0;
     }
   }
 
@@ -246,7 +246,7 @@ export class LdSidenavSlider {
     const cl = getClassNames([
       'ld-sidenav-slider',
       this.currentNavLevel > 0 && 'ld-sidenav-slider--subnav-active',
-    ])
+    ]);
 
     return (
       <Host
@@ -264,6 +264,6 @@ export class LdSidenavSlider {
           <slot></slot>
         </ld-sidenav-scroller-internal>
       </Host>
-    )
+    );
   }
 }

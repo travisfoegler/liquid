@@ -7,10 +7,10 @@ import {
   EventEmitter,
   Watch,
   State,
-} from '@stencil/core'
-import { getClassNames } from 'src/liquid/utils/getClassNames'
+} from '@stencil/core';
+import { getClassNames } from 'src/liquid/utils/getClassNames';
 
-const BUFFER_SIZE = 20
+const BUFFER_SIZE = 20;
 
 /**
  * @virtualProp ref - reference to component
@@ -35,82 +35,82 @@ const BUFFER_SIZE = 20
   shadow: true,
 })
 export class LdPagination {
-  private wrapperRef?: HTMLLIElement
+  private wrapperRef?: HTMLLIElement;
 
   /** Switch colors for brand background. */
-  @Prop() brandColor?: boolean
+  @Prop() brandColor?: boolean;
 
   /** Label text for the end button (replaces the icon). */
-  @Prop() endLabel?: string
+  @Prop() endLabel?: string;
 
   /** Hide the buttons to navigate forward/backward. */
-  @Prop() hidePrevNext = false
+  @Prop() hidePrevNext = false;
 
   /** Hide the buttons to navigate to the first/last item. */
-  @Prop() hideStartEnd = false
+  @Prop() hideStartEnd = false;
 
   /** Label to communicate the type of an item. */
-  @Prop() itemLabel = 'Page'
+  @Prop() itemLabel = 'Page';
 
   /** The number of items/pages available for pagination (required to let the user jump to the last item/page). */
-  @Prop({ mutable: true }) length = Infinity
+  @Prop({ mutable: true }) length = Infinity;
 
   /** Items display mode, default as numbers. */
-  @Prop() mode?: 'numbers' | 'dots' = 'numbers'
+  @Prop() mode?: 'numbers' | 'dots' = 'numbers';
 
   /** Label text for the forward button (replaces the icon). */
-  @Prop() nextLabel?: string
+  @Prop() nextLabel?: string;
 
   /** Number of next/previous items visible. */
-  @Prop() offset = 2
+  @Prop() offset = 2;
 
   /** Label text for the backward button (replaces the icon). */
-  @Prop() prevLabel?: string
+  @Prop() prevLabel?: string;
 
   /** The currently selected item (an index of `-1` means nothing is selected). */
-  @Prop({ mutable: true }) selectedIndex = 0
+  @Prop({ mutable: true }) selectedIndex = 0;
 
   /** Size of the pagination. */
-  @Prop() size?: 'sm' | 'lg'
+  @Prop() size?: 'sm' | 'lg';
 
   /** Space between dots (dots mode only, default depending on `size` prop). */
-  @Prop() space?: string
+  @Prop() space?: string;
 
   /** Label text for the start button (replaces the icon). */
-  @Prop() startLabel?: string
+  @Prop() startLabel?: string;
 
   /** Number of items permanently visible at the start/end. */
-  @Prop() sticky = 0
+  @Prop() sticky = 0;
 
-  @State() maxSliderColumns = 0
-  @State() renderMoreIndicators = false
-  @State() renderSticky = false
-  @State() slidableItems: number[] = []
-  @State() sliderContent: number[] = []
-  @State() transitioning = false
-  @State() visibleItemsInSlider = 0
+  @State() maxSliderColumns = 0;
+  @State() renderMoreIndicators = false;
+  @State() renderSticky = false;
+  @State() slidableItems: number[] = [];
+  @State() sliderContent: number[] = [];
+  @State() transitioning = false;
+  @State() visibleItemsInSlider = 0;
 
   /** Dispatched, if the selected index changes. */
-  @Event() ldchange: EventEmitter<number>
+  @Event() ldchange: EventEmitter<number>;
 
   @Watch('selectedIndex')
   handleSelectedIndex() {
     if (this.selectedIndex < -1) {
-      this.selectedIndex = -1
+      this.selectedIndex = -1;
     } else if (this.selectedIndex >= this.length) {
-      this.selectedIndex = this.length - 1
+      this.selectedIndex = this.length - 1;
     } else {
-      this.ldchange.emit(this.selectedIndex)
+      this.ldchange.emit(this.selectedIndex);
     }
   }
 
   handleTransitionEnd = () => {
-    this.transitioning = false
-  }
+    this.transitioning = false;
+  };
 
   handleTransitionStart = () => {
-    this.transitioning = true
-  }
+    this.transitioning = true;
+  };
 
   // pageNumber is 1-based
   private renderItem = (
@@ -118,11 +118,11 @@ export class LdPagination {
     showFrom: number,
     showTo: number
   ) => {
-    const isDots = this.mode === 'dots'
+    const isDots = this.mode === 'dots';
     const isHidden =
       (this.renderMoreIndicators || isDots) &&
-      (itemNumber < showFrom || itemNumber > showTo)
-    const isSelected = itemNumber === this.selectedIndex + 1
+      (itemNumber < showFrom || itemNumber > showTo);
+    const isSelected = itemNumber === this.selectedIndex + 1;
     return (
       <li
         aria-hidden={isHidden ? 'true' : undefined}
@@ -141,7 +141,7 @@ export class LdPagination {
           ld-tabindex={isHidden ? -1 : undefined}
           mode="ghost"
           onClick={() => {
-            this.selectedIndex = itemNumber - 1
+            this.selectedIndex = itemNumber - 1;
           }}
           part="item focusable"
           size={this.size}
@@ -149,13 +149,13 @@ export class LdPagination {
           {!isDots && itemNumber}
         </ld-button>
       </li>
-    )
-  }
+    );
+  };
 
   private calculateSliderContent = () => {
-    const directlyReachableFirstItems = this.maxSliderColumns + this.sticky - 1
+    const directlyReachableFirstItems = this.maxSliderColumns + this.sticky - 1;
     const directlyReachableLastItems =
-      this.length - this.maxSliderColumns - this.sticky + 1
+      this.length - this.maxSliderColumns - this.sticky + 1;
 
     this.sliderContent = this.slidableItems.filter(
       (itemNumber) =>
@@ -165,35 +165,35 @@ export class LdPagination {
         ((!this.hideStartEnd || this.sticky > 0) &&
           (itemNumber <= directlyReachableFirstItems ||
             itemNumber > directlyReachableLastItems))
-    )
-  }
+    );
+  };
 
   @Watch('length')
   @Watch('mode')
   @Watch('offset')
   @Watch('sticky')
   componentWillLoad() {
-    this.visibleItemsInSlider = this.offset * 2 + 1
-    const maxVisibleItems = this.sticky * 2 + this.visibleItemsInSlider
-    this.maxSliderColumns = this.visibleItemsInSlider + 2
-    this.renderSticky = this.sticky > 0 && this.mode !== 'dots'
+    this.visibleItemsInSlider = this.offset * 2 + 1;
+    const maxVisibleItems = this.sticky * 2 + this.visibleItemsInSlider;
+    this.maxSliderColumns = this.visibleItemsInSlider + 2;
+    this.renderSticky = this.sticky > 0 && this.mode !== 'dots';
     this.renderMoreIndicators =
-      this.mode !== 'dots' && this.length > maxVisibleItems + 2
+      this.mode !== 'dots' && this.length > maxVisibleItems + 2;
     this.slidableItems = Array.from({
       length: this.length === Infinity ? 9999 : this.length - this.sticky * 2,
-    }).map((_, index) => index + this.sticky + 1)
+    }).map((_, index) => index + this.sticky + 1);
 
     if (this.length < 1) {
-      this.length = 1
+      this.length = 1;
     }
 
     if (this.selectedIndex < -1) {
-      this.selectedIndex = -1
+      this.selectedIndex = -1;
     } else if (this.selectedIndex >= this.length) {
-      this.selectedIndex = this.length - 1
+      this.selectedIndex = this.length - 1;
     }
 
-    this.calculateSliderContent()
+    this.calculateSliderContent();
   }
 
   componentDidLoad() {
@@ -201,11 +201,11 @@ export class LdPagination {
       this.wrapperRef.addEventListener(
         'transitionstart',
         this.handleTransitionStart
-      )
+      );
       this.wrapperRef.addEventListener(
         'transitionend',
         this.handleTransitionEnd
-      )
+      );
     }
   }
 
@@ -214,31 +214,31 @@ export class LdPagination {
       this.wrapperRef.removeEventListener(
         'transitionstart',
         this.handleTransitionStart
-      )
+      );
       this.wrapperRef.removeEventListener(
         'transitionend',
         this.handleTransitionEnd
-      )
+      );
     }
   }
 
   render() {
-    const isDots = this.mode === 'dots'
+    const isDots = this.mode === 'dots';
     const styleDots =
       isDots && this.space
         ? {
             '--ld-pagination-dots-space':
               this.space === '0' ? '0px' : this.space,
           }
-        : undefined
+        : undefined;
     // +1 because it must be the index right to the centered item
     const showStartMoreIndicator =
       this.renderMoreIndicators &&
-      this.selectedIndex > this.sticky + this.offset + 1
+      this.selectedIndex > this.sticky + this.offset + 1;
     // -1 because it is 0-based and another -1 because it must be the index left to the centered item
     const showEndMoreIndicator =
       this.renderMoreIndicators &&
-      this.selectedIndex < this.length - this.offset - this.sticky - 2
+      this.selectedIndex < this.length - this.offset - this.sticky - 2;
     const showFrom =
       // +1 because it is not 0-based
       Math.max(
@@ -254,7 +254,7 @@ export class LdPagination {
             (isDots ? -1 : 0)
         ),
         this.sticky
-      ) + 1
+      ) + 1;
     // +1 because it is not 0-based
     const showTo =
       Math.min(
@@ -263,7 +263,7 @@ export class LdPagination {
           this.offset + this.sticky + 1 + (isDots ? 1 : 0)
         ) + this.offset,
         this.length - this.sticky
-      ) + 1
+      ) + 1;
 
     return (
       <Host role="navigation">
@@ -289,7 +289,7 @@ export class LdPagination {
                 disabled={this.selectedIndex < 1 ? true : undefined}
                 mode="ghost"
                 onClick={() => {
-                  this.selectedIndex = 0
+                  this.selectedIndex = 0;
                 }}
                 part="arrow start focusable"
                 size={this.size}
@@ -313,8 +313,8 @@ export class LdPagination {
                 disabled={this.selectedIndex < 1}
                 mode="ghost"
                 onClick={() => {
-                  if (this.selectedIndex < 1) return
-                  this.selectedIndex -= 1
+                  if (this.selectedIndex < 1) return;
+                  this.selectedIndex -= 1;
                 }}
                 part="arrow prev focusable"
                 size={this.size}
@@ -336,7 +336,7 @@ export class LdPagination {
                       aria-label={`${this.itemLabel} ${index + 1}`}
                       mode="ghost"
                       onClick={() => {
-                        this.selectedIndex = index
+                        this.selectedIndex = index;
                       }}
                       part="sticky item focusable"
                       size={this.size}
@@ -344,7 +344,7 @@ export class LdPagination {
                       {index + 1}
                     </ld-button>
                   </li>
-                )
+                );
               }
             )}
           {this.renderMoreIndicators && (
@@ -429,10 +429,10 @@ export class LdPagination {
             this.length < Infinity &&
             Array.from({ length: this.sticky })
               .map((_: unknown, index: number) => {
-                const itemNumber = this.length - index
+                const itemNumber = this.length - index;
 
                 if (itemNumber <= this.sticky) {
-                  return null
+                  return null;
                 }
 
                 return (
@@ -440,7 +440,7 @@ export class LdPagination {
                     <ld-button
                       mode="ghost"
                       onClick={() => {
-                        this.selectedIndex = itemNumber - 1
+                        this.selectedIndex = itemNumber - 1;
                       }}
                       part="sticky item focusable"
                       size={this.size}
@@ -448,7 +448,7 @@ export class LdPagination {
                       {itemNumber}
                     </ld-button>
                   </li>
-                )
+                );
               })
               .reverse()}
           {!this.hidePrevNext && (
@@ -462,8 +462,8 @@ export class LdPagination {
                 disabled={this.selectedIndex >= this.length - 1}
                 mode="ghost"
                 onClick={() => {
-                  if (this.selectedIndex >= this.length - 1) return
-                  this.selectedIndex += 1
+                  if (this.selectedIndex >= this.length - 1) return;
+                  this.selectedIndex += 1;
                 }}
                 part="arrow next focusable"
                 size={this.size}
@@ -487,7 +487,7 @@ export class LdPagination {
                 disabled={this.selectedIndex >= this.length - 1}
                 mode="ghost"
                 onClick={() => {
-                  this.selectedIndex = this.length - 1
+                  this.selectedIndex = this.length - 1;
                 }}
                 part="arrow end focusable"
                 size={this.size}
@@ -502,6 +502,6 @@ export class LdPagination {
           )}
         </ul>
       </Host>
-    )
+    );
   }
 }

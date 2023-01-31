@@ -8,12 +8,12 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
-import { closest } from '../../../utils/closest'
-import { toggleStackToTop } from '../utils/toggleStackToTop'
-import { LdTooltip } from '../../ld-tooltip/ld-tooltip'
-import Tether from 'tether'
+} from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
+import { closest } from '../../../utils/closest';
+import { toggleStackToTop } from '../utils/toggleStackToTop';
+import { LdTooltip } from '../../ld-tooltip/ld-tooltip';
+import Tether from 'tether';
 
 /**
  * @slot - default slot for the nav item label.
@@ -27,19 +27,19 @@ import Tether from 'tether'
   shadow: true,
 })
 export class LdSidenavNavitem implements InnerFocusable {
-  @Element() el: HTMLElement
-  private sidenav: HTMLLdSidenavElement
-  private focusableElement: HTMLAnchorElement | HTMLButtonElement
-  private tooltipRef: HTMLLdTooltipElement
-  private slotContainerRef: HTMLElement
+  @Element() el: HTMLElement;
+  private sidenav: HTMLLdSidenavElement;
+  private focusableElement: HTMLAnchorElement | HTMLButtonElement;
+  private tooltipRef: HTMLLdTooltipElement;
+  private slotContainerRef: HTMLElement;
 
   /** Sets visual indicator to denote that the nav item is currently selected. */
-  @Prop() selected = false
+  @Prop() selected = false;
 
   /**
    * Transforms the nav item to an anchor element.
    */
-  @Prop() href?: string
+  @Prop() href?: string;
 
   /**
    * Display mode.
@@ -48,13 +48,13 @@ export class LdSidenavNavitem implements InnerFocusable {
    * The tertiary mode is similar to secondary mode, with the navitem
    * indented and the dot being empty and having a border.
    */
-  @Prop() mode?: 'secondary' | 'tertiary'
+  @Prop() mode?: 'secondary' | 'tertiary';
 
   /** Applies full border-radius. */
-  @Prop({ reflect: true }) rounded = false
+  @Prop({ reflect: true }) rounded = false;
 
   /** Tab index of the button. */
-  @Prop() ldTabindex: number | undefined
+  @Prop() ldTabindex: number | undefined;
 
   /**
    * By default, the sidenav automatically expands on click of a navitem,
@@ -62,110 +62,110 @@ export class LdSidenavNavitem implements InnerFocusable {
    * overwrite this behavior by using this prop to explicitly force or
    * prevent expansion of the sidenav.
    */
-  @Prop() expandOnClick?: boolean
+  @Prop() expandOnClick?: boolean;
 
   /**
    * The `target` attributed can be used in conjunction with the `href` attribute.
    * See [mdn docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target)
    * for more information on the `target` attribute.
    */
-  @Prop() target?: '_blank' | '_self' | '_parent' | '_top'
+  @Prop() target?: '_blank' | '_self' | '_parent' | '_top';
 
   /** Tooltip tether options object to be merged with the default options (optionally stringified). */
-  @Prop() tetherOptions?: Partial<Tether.ITetherOptions> | string
+  @Prop() tetherOptions?: Partial<Tether.ITetherOptions> | string;
 
   /** Accepts an id of an ld-subnav component to navigate to it on click. */
-  @Prop({ reflect: true }) to?: string
+  @Prop({ reflect: true }) to?: string;
 
   /** Emitted on click if prop to is set. */
-  @Event() ldSidenavNavitemTo: EventEmitter<{ id: string; label: string }>
+  @Event() ldSidenavNavitemTo: EventEmitter<{ id: string; label: string }>;
 
   /** Emitted on click. */
-  @Event() ldSidenavNavitemClick: EventEmitter
+  @Event() ldSidenavNavitemClick: EventEmitter;
 
-  @State() tooltipContent: string
-  @State() abbreviation: string
-  @State() inAccordion: boolean
-  @State() isAccordionToggle: boolean
-  @State() sidenavAlignement: 'left' | 'right'
-  @State() sidenavClosable: boolean
-  @State() sidenavCollapsed: boolean
-  @State() sidenavExpandsOnMouseEnter: boolean
-  @State() secondaryIconHTML: string
-  @State() closestTheme: string
-  @State() themeClass: string
+  @State() tooltipContent: string;
+  @State() abbreviation: string;
+  @State() inAccordion: boolean;
+  @State() isAccordionToggle: boolean;
+  @State() sidenavAlignement: 'left' | 'right';
+  @State() sidenavClosable: boolean;
+  @State() sidenavCollapsed: boolean;
+  @State() sidenavExpandsOnMouseEnter: boolean;
+  @State() secondaryIconHTML: string;
+  @State() closestTheme: string;
+  @State() themeClass: string;
 
   /**
    * Sets focus on the anchor or button
    */
   @Method()
   async focusInner() {
-    this.focusableElement?.focus()
+    this.focusableElement?.focus();
   }
 
   @Listen('ldSidenavCollapsedChange', { target: 'window', passive: true })
   handleSidenavCollapsedChange(
     ev: CustomEvent<{
-      collapsed: boolean
-      fully: boolean
+      collapsed: boolean;
+      fully: boolean;
     }>
   ) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavCollapsed = ev.detail.collapsed
-    this.updateStackToTop()
-    this.tooltipRef?.hideTooltip()
+    if (ev.target !== this.sidenav) return;
+    this.sidenavCollapsed = ev.detail.collapsed;
+    this.updateStackToTop();
+    this.tooltipRef?.hideTooltip();
   }
 
   @Listen('ldSidenavBreakpointChange', { target: 'window', passive: true })
   handleSidenavBreakpointChange(ev: CustomEvent<boolean>) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavClosable = ev.detail
-    this.updateStackToTop()
+    if (ev.target !== this.sidenav) return;
+    this.sidenavClosable = ev.detail;
+    this.updateStackToTop();
   }
 
   private updateStackToTop = () => {
     if (this.sidenavClosable) {
-      toggleStackToTop(this.el, false)
+      toggleStackToTop(this.el, false);
     } else {
-      toggleStackToTop(this.el, this.sidenav.narrow && this.sidenavCollapsed)
+      toggleStackToTop(this.el, this.sidenav.narrow && this.sidenavCollapsed);
     }
-  }
+  };
 
   private getabbreviation = () => {
     try {
-      const words = this.el.textContent.trim().split(' ')
+      const words = this.el.textContent.trim().split(' ');
       const chars =
         words.length > 1
           ? words.map((s) => {
-              const char = s.match(/[a-zA-Z]/)
-              return (char && char[0]) || ''
+              const char = s.match(/[a-zA-Z]/);
+              return (char && char[0]) || '';
             })
-          : words[0].match(/[a-zA-Z]/g)
+          : words[0].match(/[a-zA-Z]/g);
       return chars
         .filter((c) => c)
         .slice(0, 2)
         .join('')
-        .toUpperCase()
+        .toUpperCase();
     } catch (err) {
-      return ''
+      return '';
     }
-  }
+  };
 
   private onClick = () => {
     if (this.to) {
       // Trigger navigation to subnav.
-      this.ldSidenavNavitemTo.emit({ id: this.to, label: this.el.textContent })
+      this.ldSidenavNavitemTo.emit({ id: this.to, label: this.el.textContent });
     } else if (this.el.parentElement.tagName === 'LD-SIDENAV-ACCORDION') {
       // Expand accordion.
       if (this.expandOnClick !== false && this.sidenavCollapsed) {
-        ;(this.el.parentElement as HTMLLdSidenavAccordionElement).expanded =
-          true
+        (this.el.parentElement as HTMLLdSidenavAccordionElement).expanded =
+          true;
       }
     }
-    this.ldSidenavNavitemClick.emit()
+    this.ldSidenavNavitemClick.emit();
 
     // Hide tooltip.
-    ;(this.tooltipRef as unknown as LdTooltip)?.hideTooltip()
+    (this.tooltipRef as unknown as LdTooltip)?.hideTooltip();
 
     // Expand sidenav.
     if (
@@ -173,52 +173,52 @@ export class LdSidenavNavitem implements InnerFocusable {
       ((this.to || this.el.parentElement.tagName === 'LD-SIDENAV-ACCORDION') &&
         this.expandOnClick !== false)
     ) {
-      this.sidenav.collapsed = false
+      this.sidenav.collapsed = false;
     }
-  }
+  };
 
   // We need to have an explicit keydown handler for keyboard navigation
   // since we do not use click events (see comment above).
   private onKeyDown = (ev) => {
     if ([' ', 'Enter'].includes(ev.key)) {
       if (this.to) {
-        ev.preventDefault()
+        ev.preventDefault();
       }
-      this.onClick()
+      this.onClick();
     }
-  }
+  };
 
   private updateTooltipIcon = () => {
-    const themeEl = this.el.closest('[class*="ld-theme-"]')
-    if (!themeEl) return
+    const themeEl = this.el.closest('[class*="ld-theme-"]');
+    if (!themeEl) return;
 
     // Array.from(themeEl.classList).find doesn't work in JSDom.
     this.themeClass = themeEl.classList
       .toString()
       .split(' ')
-      .find((cl) => cl.startsWith('ld-theme-'))
+      .find((cl) => cl.startsWith('ld-theme-'));
 
     this.secondaryIconHTML = this.el.querySelector(
       '[slot="icon-secondary"]'
-    )?.outerHTML
-  }
+    )?.outerHTML;
+  };
 
   componentWillLoad() {
-    this.inAccordion = this.el.parentElement.tagName === 'LD-SIDENAV-ACCORDION'
+    this.inAccordion = this.el.parentElement.tagName === 'LD-SIDENAV-ACCORDION';
     this.isAccordionToggle =
-      this.inAccordion && this.el.getAttribute('slot') === 'toggle'
-    this.sidenav = closest('ld-sidenav', this.el)
+      this.inAccordion && this.el.getAttribute('slot') === 'toggle';
+    this.sidenav = closest('ld-sidenav', this.el);
     if (this.sidenav) {
-      this.sidenavAlignement = this.sidenav.align
+      this.sidenavAlignement = this.sidenav.align;
       this.sidenavExpandsOnMouseEnter =
-        this.sidenav.expandTrigger === 'mouseenter'
-      this.sidenavCollapsed = this.sidenav.collapsed
+        this.sidenav.expandTrigger === 'mouseenter';
+      this.sidenavCollapsed = this.sidenav.collapsed;
     }
     if (!['secondary', 'tertiary'].includes(this.mode)) {
-      this.tooltipContent = this.el.textContent.trim()
+      this.tooltipContent = this.el.textContent.trim();
 
       if (!this.el.querySelector('[slot="icon"]')) {
-        this.abbreviation = this.getabbreviation()
+        this.abbreviation = this.getabbreviation();
       }
     }
   }
@@ -233,17 +233,17 @@ export class LdSidenavNavitem implements InnerFocusable {
     //  case we use box-sizing and align-items which otherwhise do not
     //  effect the appearence of the element.
     setTimeout(() => {
-      this.slotContainerRef.style.boxSizing = 'border-box'
-    })
+      this.slotContainerRef.style.boxSizing = 'border-box';
+    });
     setTimeout(() => {
-      this.slotContainerRef.style.alignItems = 'center'
-    }, 200)
+      this.slotContainerRef.style.alignItems = 'center';
+    }, 200);
 
     // The ldSidenavCollapsedChange event can be fired before this component is loaded.
     // So we need to update the stacking here.
     setTimeout(() => {
-      this.updateStackToTop()
-    })
+      this.updateStackToTop();
+    });
   }
 
   render() {
@@ -257,17 +257,17 @@ export class LdSidenavNavitem implements InnerFocusable {
       this.sidenavCollapsed &&
         !this.sidenavClosable &&
         'ld-sidenav-navitem--collapsed',
-    ])
+    ]);
 
-    const Tag = this.href ? 'a' : 'button'
+    const Tag = this.href ? 'a' : 'button';
 
     const tooltipIconStyle = {
       color: 'var(--ld-thm-primary)',
       display: 'inline-flex',
       marginLeft: 'var(--ld-sp-6)',
-    }
+    };
 
-    const hasPopup = this.to || this.isAccordionToggle ? 'true' : undefined
+    const hasPopup = this.to || this.isAccordionToggle ? 'true' : undefined;
 
     return (
       <Tag
@@ -351,6 +351,6 @@ export class LdSidenavNavitem implements InnerFocusable {
           )}
         </div>
       </Tag>
-    )
+    );
   }
 }

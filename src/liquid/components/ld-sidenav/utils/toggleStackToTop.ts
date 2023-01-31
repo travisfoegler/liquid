@@ -1,15 +1,15 @@
-import { LdSidenavNavitem } from '../ld-sidenav-navitem/ld-sidenav-navitem'
-import { closest } from '../../../utils/closest'
+import { LdSidenavNavitem } from '../ld-sidenav-navitem/ld-sidenav-navitem';
+import { closest } from '../../../utils/closest';
 
 export const toggleStackToTop = (el: HTMLElement, stacked: boolean) => {
   // const outerSlider = el.closest('ld-sidenav-slider')
-  const outerSlider = closest('ld-sidenav-slider', el)
-  if (!outerSlider) return
+  const outerSlider = closest('ld-sidenav-slider', el);
+  if (!outerSlider) return;
 
   // If not stacked, put everything back in place.
   if (!stacked) {
-    el.style.removeProperty('--ld-sidenav-navitem-move-up')
-    return
+    el.style.removeProperty('--ld-sidenav-navitem-move-up');
+    return;
   }
 
   const sidenavPaddingY =
@@ -17,14 +17,14 @@ export const toggleStackToTop = (el: HTMLElement, stacked: boolean) => {
       window
         .getComputedStyle(outerSlider)
         .getPropertyValue('--ld-sidenav-padding-y')
-    ) * 16
+    ) * 16;
 
   // Else, calculate how much vertical space is taken by stacked items above
   // and move the nav item up accordingly.
-  let totalSpaceAbove = 0
-  let totalSpaceOccupiedAbove = 0
+  let totalSpaceAbove = 0;
+  let totalSpaceOccupiedAbove = 0;
   for (const elem of Array.from(el.parentElement?.children || [])) {
-    if (el === elem) break
+    if (el === elem) break;
 
     if (
       elem.tagName === 'LD-SIDENAV-ACCORDION' ||
@@ -35,13 +35,13 @@ export const toggleStackToTop = (el: HTMLElement, stacked: boolean) => {
           (elem as unknown as LdSidenavNavitem).mode
         ))
     ) {
-      totalSpaceOccupiedAbove += elem.getBoundingClientRect().height
+      totalSpaceOccupiedAbove += elem.getBoundingClientRect().height;
     } else {
-      totalSpaceAbove += sidenavPaddingY
+      totalSpaceAbove += sidenavPaddingY;
     }
-    totalSpaceAbove += elem.getBoundingClientRect().height
+    totalSpaceAbove += elem.getBoundingClientRect().height;
   }
 
-  const spaceToMoveUp = totalSpaceAbove - totalSpaceOccupiedAbove
-  el.style.setProperty('--ld-sidenav-navitem-move-up', `-${spaceToMoveUp}px`)
-}
+  const spaceToMoveUp = totalSpaceAbove - totalSpaceOccupiedAbove;
+  el.style.setProperty('--ld-sidenav-navitem-move-up', `-${spaceToMoveUp}px`);
+};

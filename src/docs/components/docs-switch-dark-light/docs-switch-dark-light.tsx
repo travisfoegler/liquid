@@ -1,4 +1,4 @@
-import { Component, h, Host, State, Listen, Watch } from '@stencil/core'
+import { Component, h, Host, State, Listen, Watch } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -7,51 +7,55 @@ import { Component, h, Host, State, Listen, Watch } from '@stencil/core'
   shadow: false,
 })
 export class DocsSwitchDarkLight {
-  @State() isDark: boolean
+  @State() isDark: boolean;
 
   @Watch('isDark')
   updateIFrames(darkMode: boolean) {
-    const iframe = document.querySelector('docs-iframe')
+    const iframe = document.querySelector('docs-iframe');
 
     if (iframe) {
-      iframe.setDarkMode(darkMode)
+      iframe.setDarkMode(darkMode);
     }
   }
 
   componentWillLoad() {
-    const storedUIPref = window.localStorage.getItem('docs-ui')
+    const storedUIPref = window.localStorage.getItem('docs-ui');
     if (storedUIPref) {
-      this.isDark = storedUIPref === 'dark' ? true : false
+      this.isDark = storedUIPref === 'dark' ? true : false;
     } else {
       if (
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
       ) {
-        this.isDark = true
+        this.isDark = true;
       } else {
-        this.isDark = false
+        this.isDark = false;
       }
     }
 
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', (e) => {
-        this.isDark = e.matches
-        window.localStorage.setItem('docs-ui', this.isDark ? 'dark' : 'light')
-      })
+        this.isDark = e.matches;
+        window.localStorage.setItem('docs-ui', this.isDark ? 'dark' : 'light');
+      });
 
-    document.body.classList.add(`docs-ui-${this.isDark ? 'dark' : 'light'}`)
-    document.body.classList.remove(`docs-ui-${!this.isDark ? 'dark' : 'light'}`)
-    document.documentElement.style.colorScheme = this.isDark ? 'dark' : 'auto'
+    document.body.classList.add(`docs-ui-${this.isDark ? 'dark' : 'light'}`);
+    document.body.classList.remove(
+      `docs-ui-${!this.isDark ? 'dark' : 'light'}`
+    );
+    document.documentElement.style.colorScheme = this.isDark ? 'dark' : 'auto';
   }
 
   @Listen('click', { capture: true })
   handleClick() {
-    this.isDark = !this.isDark
-    window.localStorage.setItem('docs-ui', this.isDark ? 'dark' : 'light')
-    document.body.classList.add(`docs-ui-${this.isDark ? 'dark' : 'light'}`)
-    document.body.classList.remove(`docs-ui-${!this.isDark ? 'dark' : 'light'}`)
-    document.documentElement.style.colorScheme = this.isDark ? 'dark' : 'auto'
+    this.isDark = !this.isDark;
+    window.localStorage.setItem('docs-ui', this.isDark ? 'dark' : 'light');
+    document.body.classList.add(`docs-ui-${this.isDark ? 'dark' : 'light'}`);
+    document.body.classList.remove(
+      `docs-ui-${!this.isDark ? 'dark' : 'light'}`
+    );
+    document.documentElement.style.colorScheme = this.isDark ? 'dark' : 'auto';
   }
 
   render() {
@@ -70,6 +74,6 @@ export class DocsSwitchDarkLight {
           {this.isDark ? 'Light' : 'Dark'} UI
         </button>
       </Host>
-    )
+    );
   }
 }

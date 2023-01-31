@@ -1,12 +1,12 @@
-import { getPageWithContent } from 'src/liquid/utils/e2e-tests'
-import { LdLoading } from '../ld-loading'
+import { getPageWithContent } from 'src/liquid/utils/e2e-tests';
+import { LdLoading } from '../ld-loading';
 
 describe('ld-loading', () => {
   it('renders', async () => {
-    const page = await getPageWithContent(`<ld-loading paused />`)
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    const page = await getPageWithContent(`<ld-loading paused />`);
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   it('renders as css component', async () => {
     const page = await getPageWithContent(
@@ -20,16 +20,16 @@ describe('ld-loading', () => {
         </g>
       </svg>`,
       { components: LdLoading }
-    )
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    );
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   it('renders neutral', async () => {
-    const page = await getPageWithContent(`<ld-loading neutral paused />`)
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    const page = await getPageWithContent(`<ld-loading neutral paused />`);
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   it('renders neutral as css component', async () => {
     const page = await getPageWithContent(
@@ -43,8 +43,8 @@ describe('ld-loading', () => {
         </g>
       </svg>`,
       { components: LdLoading }
-    )
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
-})
+    );
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
+});

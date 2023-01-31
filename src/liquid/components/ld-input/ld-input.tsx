@@ -9,10 +9,10 @@ import {
   Prop,
   State,
   Watch,
-} from '@stencil/core'
-import { cloneAttributes } from '../../utils/cloneAttributes'
-import { getClassNames } from '../../utils/getClassNames'
-import { registerAutofocus } from '../../utils/focus'
+} from '@stencil/core';
+import { cloneAttributes } from '../../utils/cloneAttributes';
+import { getClassNames } from '../../utils/getClassNames';
+import { registerAutofocus } from '../../utils/focus';
 
 /**
  * The `ld-input` component. You can use it in conjunction with the `ld-label`
@@ -40,110 +40,110 @@ import { registerAutofocus } from '../../utils/focus'
   shadow: true,
 })
 export class LdInput implements InnerFocusable, ClonesAttributes {
-  @Element() el: HTMLInputElement | HTMLTextAreaElement
+  @Element() el: HTMLInputElement | HTMLTextAreaElement;
 
-  private attributesObserver: MutationObserver
+  private attributesObserver: MutationObserver;
 
-  private hiddenInput?: HTMLInputElement
-  private input: HTMLInputElement | HTMLTextAreaElement
+  private hiddenInput?: HTMLInputElement;
+  private input: HTMLInputElement | HTMLTextAreaElement;
 
   /** Hint for expected file type in file upload controls. */
-  @Prop() accept?: string
+  @Prop() accept?: string;
 
   /** Hint for form autofill feature. */
-  @Prop({ mutable: true, reflect: true }) autocomplete?: string
+  @Prop({ mutable: true, reflect: true }) autocomplete?: string;
 
   /** Automatically focus the form control when the page is loaded. */
-  @Prop({ reflect: true }) autofocus: boolean
+  @Prop({ reflect: true }) autofocus: boolean;
 
   /** Media capture input method in file upload controls. */
-  @Prop() capture?: string
+  @Prop() capture?: string;
 
   /** The number of columns. */
-  @Prop() cols?: number
+  @Prop() cols?: number;
 
   /** Name of form field to use for sending the element's directionality in form submission. */
-  @Prop() dirname?: string
+  @Prop() dirname?: string;
 
   /** Whether the form control is disabled. */
-  @Prop() disabled?: boolean
+  @Prop() disabled?: boolean;
 
   /** Associates the control with a form element. */
-  @Prop() form?: string
+  @Prop() form?: string;
 
   /** Set this property to `true` in order to mark the field visually as invalid. */
-  @Prop() invalid?: boolean
+  @Prop() invalid?: boolean;
 
   /** Tab index of the input. */
-  @Prop() ldTabindex: number | undefined
+  @Prop() ldTabindex: number | undefined;
 
   /** Value of the id attribute of the `<datalist>` of autocomplete options. */
-  @Prop() list?: string
+  @Prop() list?: string;
 
   /** Maximum value. */
-  @Prop() max?: string | number
+  @Prop() max?: string | number;
 
   /** Maximum length (number of characters) of `value`. */
-  @Prop() maxlength?: string
+  @Prop() maxlength?: string;
 
   /** Minimum value. */
-  @Prop() min?: string | number
+  @Prop() min?: string | number;
 
   /** Minimum length (number of characters) of `value`. */
-  @Prop() minlength?: string
+  @Prop() minlength?: string;
 
   /**
    * Uses textarea instead of input internally. Setting this attribute to true
    * disables the attribute type and both slots.
    */
-  @Prop() multiline?: boolean
+  @Prop() multiline?: boolean;
 
   /** Boolean. Whether to allow multiple values. */
-  @Prop() multiple?: boolean
+  @Prop() multiple?: boolean;
 
   /** Used to specify the name of the control. */
-  @Prop() name?: string
+  @Prop() name?: string;
 
   /** Pattern the `value` must match to be valid. */
-  @Prop() pattern?: string
+  @Prop() pattern?: string;
 
   /** The input placeholder. */
-  @Prop() placeholder?: string
+  @Prop() placeholder?: string;
 
   /** The value is not editable. */
-  @Prop() readonly?: boolean
+  @Prop() readonly?: boolean;
 
   /** A value is required for the form to be submittable. */
-  @Prop() required?: boolean
+  @Prop() required?: boolean;
 
   /** Whether the multiline input is resizable, and if so, in which directions. */
-  @Prop() resize?: 'none' | 'both' | 'horizontal' | 'vertical' = 'both'
+  @Prop() resize?: 'none' | 'both' | 'horizontal' | 'vertical' = 'both';
 
   /** The number of rows. */
-  @Prop() rows?: number
+  @Prop() rows?: number;
 
   /** Size of the input. */
-  @Prop() size?: 'sm' | 'lg'
+  @Prop() size?: 'sm' | 'lg';
 
   /** Incremental values that are valid. */
-  @Prop() step?: string
+  @Prop() step?: string;
 
   /** Input tone. Use `'dark'` on white backgrounds. Default is a light tone. */
-  @Prop() tone?: 'dark'
+  @Prop() tone?: 'dark';
 
   /** The input type. */
-  @Prop() type: string
+  @Prop() type: string;
 
   /** The input value. */
-  @Prop({ mutable: true }) value?: string
+  @Prop({ mutable: true }) value?: string;
 
-  @State() clonedAttributes
+  @State() clonedAttributes;
 
   /** Emitted when the input value changed and the element loses focus. */
-  @Event() ldchange: EventEmitter<string>
+  @Event() ldchange: EventEmitter<string>;
 
   /** Emitted when the input value changed. */
-  @Event() ldinput: EventEmitter<string>
+  @Event() ldinput: EventEmitter<string>;
 
   /**
    * Sets focus on the input
@@ -151,7 +151,7 @@ export class LdInput implements InnerFocusable, ClonesAttributes {
   @Method()
   async focusInner() {
     if (this.input !== undefined) {
-      this.input.focus()
+      this.input.focus();
     }
   }
 
@@ -160,179 +160,179 @@ export class LdInput implements InnerFocusable, ClonesAttributes {
   @Watch('name')
   @Watch('value')
   updateHiddenInput() {
-    const outerForm = this.el.closest('form')
+    const outerForm = this.el.closest('form');
     if (!this.hiddenInput && this.name && (outerForm || this.form)) {
-      this.createHiddenInput()
+      this.createHiddenInput();
     }
 
     if (this.hiddenInput) {
       if (this.dirname) {
-        this.hiddenInput.dirName = this.dirname
+        this.hiddenInput.dirName = this.dirname;
       }
 
       if (this.name) {
-        this.hiddenInput.name = this.name
+        this.hiddenInput.name = this.name;
       } else if (this.hiddenInput.name) {
-        this.hiddenInput.remove()
-        this.hiddenInput = undefined
-        return
+        this.hiddenInput.remove();
+        this.hiddenInput = undefined;
+        return;
       }
 
       if (this.form) {
-        this.hiddenInput.setAttribute('form', this.form)
+        this.hiddenInput.setAttribute('form', this.form);
       } else if (this.hiddenInput.getAttribute('form')) {
         if (outerForm) {
-          this.hiddenInput.removeAttribute('form')
+          this.hiddenInput.removeAttribute('form');
         } else {
-          this.hiddenInput.remove()
-          this.hiddenInput = undefined
-          return
+          this.hiddenInput.remove();
+          this.hiddenInput = undefined;
+          return;
         }
       }
 
       if (this.value) {
-        this.hiddenInput.value = this.value
+        this.hiddenInput.value = this.value;
       } else if (this.hiddenInput.value) {
-        this.hiddenInput.removeAttribute('value')
+        this.hiddenInput.removeAttribute('value');
       }
     }
   }
 
   private createHiddenInput() {
-    this.hiddenInput = document.createElement('input')
-    this.hiddenInput.type = 'hidden'
-    this.el.appendChild(this.hiddenInput)
+    this.hiddenInput = document.createElement('input');
+    this.hiddenInput.type = 'hidden';
+    this.el.appendChild(this.hiddenInput);
   }
 
   @Watch('size')
   private updateIconAndButtonSize() {
     this.el.querySelectorAll('ld-button').forEach((button) => {
       if (this.size !== undefined) {
-        button.setAttribute('size', this.size)
+        button.setAttribute('size', this.size);
       } else {
-        button.removeAttribute('size')
+        button.removeAttribute('size');
       }
-    })
+    });
     this.el.querySelectorAll('.ld-button').forEach((button) => {
       if (this.size === 'sm') {
-        button.classList.remove('ld-button--lg')
-        button.classList.add('ld-button--sm')
+        button.classList.remove('ld-button--lg');
+        button.classList.add('ld-button--sm');
       } else if (this.size === 'lg') {
-        button.classList.remove('ld-button--sm')
-        button.classList.add('ld-button--lg')
+        button.classList.remove('ld-button--sm');
+        button.classList.add('ld-button--lg');
       } else {
-        button.classList.remove('ld-button--sm', 'ld-button--lg')
+        button.classList.remove('ld-button--sm', 'ld-button--lg');
       }
-    })
+    });
     this.el.querySelectorAll('ld-icon').forEach((icon) => {
       if (this.size !== undefined) {
-        icon.setAttribute('size', this.size)
+        icon.setAttribute('size', this.size);
       } else {
-        icon.removeAttribute('size')
+        icon.removeAttribute('size');
       }
-    })
+    });
     this.el.querySelectorAll('.ld-icon').forEach((icon) => {
       if (this.size === 'sm') {
-        icon.classList.remove('ld-icon--lg')
-        icon.classList.add('ld-icon--sm')
+        icon.classList.remove('ld-icon--lg');
+        icon.classList.add('ld-icon--sm');
       } else if (this.size === 'lg') {
-        icon.classList.remove('ld-icon--sm')
-        icon.classList.add('ld-icon--lg')
+        icon.classList.remove('ld-icon--sm');
+        icon.classList.add('ld-icon--lg');
       } else {
-        icon.classList.remove('ld-icon--sm', 'ld-icon--lg')
+        icon.classList.remove('ld-icon--sm', 'ld-icon--lg');
       }
-    })
+    });
   }
 
   componentWillLoad() {
     this.attributesObserver = cloneAttributes.call(this, [
       'multiline',
       'autocomplete',
-    ])
+    ]);
 
-    const outerForm = this.el.closest('form')
+    const outerForm = this.el.closest('form');
 
     if (outerForm && !this.autocomplete) {
-      this.autocomplete = outerForm.getAttribute('autocomplete')
+      this.autocomplete = outerForm.getAttribute('autocomplete');
     }
 
     if (this.name && (outerForm || this.form)) {
-      this.createHiddenInput()
-      this.hiddenInput.name = this.name
+      this.createHiddenInput();
+      this.hiddenInput.name = this.name;
 
       if (this.dirname) {
-        this.hiddenInput.dirName = this.dirname
+        this.hiddenInput.dirName = this.dirname;
       }
 
       if (this.form) {
-        this.hiddenInput.setAttribute('form', this.form)
+        this.hiddenInput.setAttribute('form', this.form);
       }
 
       if (this.value) {
-        this.hiddenInput.value = this.value
+        this.hiddenInput.value = this.value;
       }
     }
 
-    this.updateIconAndButtonSize()
+    this.updateIconAndButtonSize();
 
-    registerAutofocus(this.autofocus)
+    registerAutofocus(this.autofocus);
   }
 
   private handleChange = (ev: InputEvent) => {
-    this.el.dispatchEvent(new InputEvent('change', ev))
-    this.ldchange.emit(this.value)
-  }
+    this.el.dispatchEvent(new InputEvent('change', ev));
+    this.ldchange.emit(this.value);
+  };
 
   private handleInput = (ev: InputEvent) => {
     if (this.input.getAttribute('aria-disabled') === 'true') {
-      ev.stopImmediatePropagation()
-      this.input.value = this.value ?? ''
-      return
+      ev.stopImmediatePropagation();
+      this.input.value = this.value ?? '';
+      return;
     }
 
-    this.value = this.input.value
-    this.ldinput.emit(this.value)
-  }
+    this.value = this.input.value;
+    this.ldinput.emit(this.value);
+  };
 
   private handleClick = (ev: MouseEvent) => {
-    const target = ev.target as HTMLElement
+    const target = ev.target as HTMLElement;
     if (
       this.el.hasAttribute('disabled') ||
       this.el.getAttribute('aria-disabled') === 'true'
     ) {
-      ev.preventDefault()
-      return
+      ev.preventDefault();
+      return;
     }
 
-    if (target.closest('ld-button')) return
+    if (target.closest('ld-button')) return;
 
     if (this.el.shadowRoot.activeElement !== this.input) {
-      this.input.focus()
+      this.input.focus();
     }
 
     if (target === this.el) {
-      this.input.dispatchEvent(new MouseEvent('click', { bubbles: false }))
+      this.input.dispatchEvent(new MouseEvent('click', { bubbles: false }));
     }
-  }
+  };
 
   private handleKeyDown = (ev: KeyboardEvent) => {
-    const outerForm = this.el.closest('form')
+    const outerForm = this.el.closest('form');
     const formToSubmit = this.form
       ? document.querySelector<HTMLFormElement>(`#${this.form}`) ?? outerForm
-      : outerForm
+      : outerForm;
 
     if (
       this.el.getAttribute('aria-disabled') === 'true' &&
       !['ArrowLeft', 'ArrowRight', 'Tab'].includes(ev.key)
     ) {
-      ev.preventDefault()
+      ev.preventDefault();
     } else if (!this.multiline && ev.key === 'Enter' && formToSubmit) {
-      formToSubmit.requestSubmit()
+      formToSubmit.requestSubmit();
     }
-  }
+  };
 
   disconnectedCallback() {
-    this.attributesObserver?.disconnect()
+    this.attributesObserver?.disconnect();
   }
 
   render() {
@@ -343,10 +343,10 @@ export class LdInput implements InnerFocusable, ClonesAttributes {
       this.tone && `ld-input--${this.tone}`,
       this.invalid && 'ld-input--invalid',
       this.multiline && this.resize && `ld-input--resize-${this.resize}`,
-    ])
+    ]);
 
     if (this.multiline) {
-      const { type, ...clonedAttributesWithoutType } = this.clonedAttributes
+      const { type, ...clonedAttributesWithoutType } = this.clonedAttributes;
       return (
         <Host class={cl} onClick={this.handleClick}>
           <textarea
@@ -364,7 +364,7 @@ export class LdInput implements InnerFocusable, ClonesAttributes {
             </span>
           )}
         </Host>
-      )
+      );
     }
 
     return (
@@ -390,6 +390,6 @@ export class LdInput implements InnerFocusable, ClonesAttributes {
         )}
         <slot name="end"></slot>
       </Host>
-    )
+    );
   }
 }

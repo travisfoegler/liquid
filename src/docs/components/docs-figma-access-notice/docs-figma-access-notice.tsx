@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core'
+import { Component, h } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -18,6 +18,6 @@ export class DocsFigmaAccessNotice {
           @external. email address.
         </ld-typo>
       </div>
-    )
+    );
   }
 }

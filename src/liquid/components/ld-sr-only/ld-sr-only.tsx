@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core'
+import { Component, Host, h } from '@stencil/core';
 
 /**
  * @virtualProp ref - reference to component
@@ -15,6 +15,6 @@ export class LdSrOnly {
       <Host class="ld-sr-only">
         <slot></slot>
       </Host>
-    )
+    );
   }
 }

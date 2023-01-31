@@ -138,9 +138,10 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part       | Description     |
-| ---------- | --------------- |
-| `"anchor"` | the link anchor |
+| Part          | Description     |
+| ------------- | --------------- |
+| `"anchor"`    | the link anchor |
+| `"focusable"` |                 |
 
 
 ## Dependencies

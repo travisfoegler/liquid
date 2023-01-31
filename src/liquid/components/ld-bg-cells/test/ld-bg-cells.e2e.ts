@@ -1,6 +1,6 @@
-import { getPageWithContent } from 'src/liquid/utils/e2e-tests'
-import { LdBgCells } from '../ld-bg-cells'
-import { readFileSync } from 'node:fs'
+import { getPageWithContent } from 'src/liquid/utils/e2e-tests';
+import { LdBgCells } from '../ld-bg-cells';
+import { readFileSync } from 'node:fs';
 
 const cellTypes = [
   'bioreliance',
@@ -15,47 +15,47 @@ const cellTypes = [
   'supelco',
   't',
   'tile',
-]
+];
 
 function fetchLayers(cellType: string): {
-  primaryLayer: string
-  secondaryLayer: string
+  primaryLayer: string;
+  secondaryLayer: string;
 } {
   const patternString = readFileSync(
     `./dist/liquid/assets/${cellType}-cell.svg`
-  ).toString()
+  ).toString();
 
   const primaryLayer = patternString.replace(
     '<svg',
     '<svg class="ld-bg-cells__layer"'
-  )
+  );
   const secondaryLayer = patternString.replace(
     '<svg',
     '<svg class="ld-bg-cells__secondary-layer"'
-  )
+  );
 
-  return { primaryLayer, secondaryLayer }
+  return { primaryLayer, secondaryLayer };
 }
 
 describe('ld-bg-cells', () => {
   describe('web component', () => {
     it(`default`, async () => {
-      const page = await getPageWithContent(`<ld-bg-cells />`)
-      const results = await page.compareScreenshot()
+      const page = await getPageWithContent(`<ld-bg-cells />`);
+      const results = await page.compareScreenshot();
 
-      expect(results).toMatchScreenshot()
-    })
+      expect(results).toMatchScreenshot();
+    });
 
     cellTypes.forEach((cellType) => {
       it(`type ${cellType}`, async () => {
         const page = await getPageWithContent(
           `<ld-bg-cells type="${cellType}" />`
-        )
-        const results = await page.compareScreenshot()
+        );
+        const results = await page.compareScreenshot();
 
-        expect(results).toMatchScreenshot()
-      })
-    })
+        expect(results).toMatchScreenshot();
+      });
+    });
 
     it(`with custom css vars`, async () => {
       const page = await getPageWithContent(
@@ -66,31 +66,31 @@ describe('ld-bg-cells', () => {
             --ld-bg-cells-layer-size: 300%;
           }
         </style>`
-      )
-      const results = await page.compareScreenshot()
+      );
+      const results = await page.compareScreenshot();
 
-      expect(results).toMatchScreenshot()
-    })
-  })
+      expect(results).toMatchScreenshot();
+    });
+  });
 
   describe('css component', () => {
     it(`default`, async () => {
-      const { primaryLayer, secondaryLayer } = await fetchLayers('hexagon')
+      const { primaryLayer, secondaryLayer } = await fetchLayers('hexagon');
       const page = await getPageWithContent(
         `<div class="ld-bg-cells">
           ${secondaryLayer}
           ${primaryLayer}
         </div>`,
         { components: LdBgCells }
-      )
-      const results = await page.compareScreenshot()
+      );
+      const results = await page.compareScreenshot();
 
-      expect(results).toMatchScreenshot()
-    })
+      expect(results).toMatchScreenshot();
+    });
 
     cellTypes.forEach((cellType) => {
       it(`type ${cellType}`, async () => {
-        const { primaryLayer, secondaryLayer } = await fetchLayers(cellType)
+        const { primaryLayer, secondaryLayer } = await fetchLayers(cellType);
 
         const page = await getPageWithContent(
           `<div class="ld-bg-cells ld-bg-cells--${cellType}">
@@ -98,15 +98,15 @@ describe('ld-bg-cells', () => {
             ${primaryLayer}
           </div>`,
           { components: LdBgCells }
-        )
-        const results = await page.compareScreenshot()
+        );
+        const results = await page.compareScreenshot();
 
-        expect(results).toMatchScreenshot()
-      })
-    })
+        expect(results).toMatchScreenshot();
+      });
+    });
 
     it(`with custom css vars`, async () => {
-      const { primaryLayer, secondaryLayer } = await fetchLayers('hexagon')
+      const { primaryLayer, secondaryLayer } = await fetchLayers('hexagon');
       const page = await getPageWithContent(
         `<div class="ld-bg-cells custom">
           ${secondaryLayer}
@@ -119,20 +119,20 @@ describe('ld-bg-cells', () => {
           }
         </style>`,
         { components: LdBgCells }
-      )
-      const results = await page.compareScreenshot()
+      );
+      const results = await page.compareScreenshot();
 
-      expect(results).toMatchScreenshot()
-    })
+      expect(results).toMatchScreenshot();
+    });
 
     it('with three layers', async () => {
       const page = await getPageWithContent(
         `<ld-bg-cells three-layers></ld-bg-cells>`,
         { components: LdBgCells }
-      )
-      const results = await page.compareScreenshot()
+      );
+      const results = await page.compareScreenshot();
 
-      expect(results).toMatchScreenshot()
-    })
-  })
-})
+      expect(results).toMatchScreenshot();
+    });
+  });
+});

@@ -1,6 +1,6 @@
-import { h } from '@stencil/core'
-import { newSpecPage } from '@stencil/core/testing'
-import { LdCardStack } from '../ld-card-stack'
+import { h } from '@stencil/core';
+import { newSpecPage } from '@stencil/core/testing';
+import { LdCardStack } from '../ld-card-stack';
 
 describe('ld-card-stack', () => {
   it('renders', async () => {
@@ -12,9 +12,9 @@ describe('ld-card-stack', () => {
           <ld-card>Card B</ld-card>
         </ld-card-stack>
       ),
-    })
-    expect(page.root).toMatchSnapshot()
-  })
+    });
+    expect(page.root).toMatchSnapshot();
+  });
 
   describe('adds classes according to props', () => {
     it('direction', async () => {
@@ -26,8 +26,8 @@ describe('ld-card-stack', () => {
             <ld-card>Card B</ld-card>
           </ld-card-stack>
         ),
-      })
-      expect(page.root).toHaveClass('ld-card-stack--ltr')
-    })
-  })
-})
+      });
+      expect(page.root).toHaveClass('ld-card-stack--ltr');
+    });
+  });
+});

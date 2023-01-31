@@ -1,5 +1,5 @@
-import { Component, h, Prop } from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
+import { Component, h, Prop } from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /**
  * @part link - Breadcrumb link
@@ -13,10 +13,10 @@ import { getClassNames } from '../../../utils/getClassNames'
 })
 export class LdCrumb {
   /** @internal */
-  @Prop() current?: boolean
+  @Prop() current?: boolean;
 
   /** The URL that the hyperlink points to. */
-  @Prop() href?: string
+  @Prop() href?: string;
 
   render() {
     return (
@@ -34,6 +34,6 @@ export class LdCrumb {
           <slot></slot>
         </ld-link>
       </li>
-    )
+    );
   }
 }

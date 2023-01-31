@@ -614,12 +614,13 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part      | Description          |
-| --------- | -------------------- |
-| `"box"`   |                      |
-| `"check"` |                      |
-| `"input"` | Actual input element |
-| `"root"`  |                      |
+| Part          | Description          |
+| ------------- | -------------------- |
+| `"box"`       |                      |
+| `"check"`     |                      |
+| `"focusable"` |                      |
+| `"input"`     | Actual input element |
+| `"root"`      |                      |
 
 
 ## Dependencies

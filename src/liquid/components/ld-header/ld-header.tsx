@@ -1,5 +1,5 @@
-import { Component, Host, h, Prop, Element, Watch } from '@stencil/core'
-import { getClassNames } from 'src/liquid/utils/getClassNames'
+import { Component, Host, h, Prop, Element, Watch } from '@stencil/core';
+import { getClassNames } from 'src/liquid/utils/getClassNames';
 
 /**
  * @slot end - Items on the right side of the header.
@@ -20,76 +20,77 @@ import { getClassNames } from 'src/liquid/utils/getClassNames'
   shadow: true,
 })
 export class LdHeader {
-  @Element() el: HTMLElement
-  private lastOffset?: number
-  private currentHeight?: number
+  @Element() el: HTMLElement;
+  private lastOffset?: number;
+  private currentHeight?: number;
 
   /** Hides header. */
-  @Prop({ mutable: true }) hidden = false
+  @Prop({ mutable: true }) hidden = false;
 
   /** Hide the header when the user scrolls down and show it again, when the user scrolls up. */
-  @Prop() hideOnScroll = false
+  @Prop() hideOnScroll = false;
 
   /** Title attribute of the logo link. */
-  @Prop() logoTitle?: string
+  @Prop() logoTitle?: string;
 
   /** URL that the logo links to. */
-  @Prop() logoUrl?: string
+  @Prop() logoUrl?: string;
 
   /** Make the header sticky. */
-  @Prop() sticky = false
+  @Prop() sticky = false;
 
   /** Name shown on the right side of the logo. */
-  @Prop() siteName?: string
+  @Prop() siteName?: string;
 
   private updateScrollDirection = () => {
-    const offset = window.pageYOffset ?? document.documentElement.scrollTop
+    const offset = window.pageYOffset ?? document.documentElement.scrollTop;
 
     if (window.innerHeight + offset >= document.body.offsetHeight) {
-      this.hidden = false
+      this.hidden = false;
     } else if (offset > this.lastOffset && offset > this.currentHeight) {
-      this.hidden = true
+      this.hidden = true;
     } else {
-      this.hidden = false
+      this.hidden = false;
     }
 
     // For mobile or negative scrolling
-    this.lastOffset = offset < 0 ? 0 : offset
-  }
+    this.lastOffset = offset < 0 ? 0 : offset;
+  };
 
   @Watch('hideOnScroll')
   connectedCallback() {
     if (this.hideOnScroll) {
-      this.lastOffset = window.pageYOffset || document.documentElement.scrollTop
+      this.lastOffset =
+        window.pageYOffset || document.documentElement.scrollTop;
       window.addEventListener('scroll', this.updateScrollDirection, {
         passive: true,
-      })
+      });
     } else {
-      this.disconnectedCallback()
+      this.disconnectedCallback();
     }
   }
 
   disconnectedCallback() {
-    window.removeEventListener('scroll', this.updateScrollDirection)
+    window.removeEventListener('scroll', this.updateScrollDirection);
   }
 
   componentDidLoad() {
-    this.currentHeight = this.el.getBoundingClientRect().height
+    this.currentHeight = this.el.getBoundingClientRect().height;
 
     this.el
       .querySelectorAll<HTMLLdButtonElement>('ld-header > ld-button')
       .forEach((ldButton) => {
-        ldButton.size = 'sm'
-        ldButton.brandColor = true
-      })
+        ldButton.size = 'sm';
+        ldButton.brandColor = true;
+      });
 
     this.el
       .querySelectorAll<HTMLElement>('ld-header > .ld-button')
       .forEach((cssButton) => {
-        cssButton.classList.add('ld-button--brand-color')
-        cssButton.classList.add('ld-button--sm')
-        cssButton.classList.remove('ld-button--lg')
-      })
+        cssButton.classList.add('ld-button--brand-color');
+        cssButton.classList.add('ld-button--sm');
+        cssButton.classList.remove('ld-button--lg');
+      });
   }
 
   render() {
@@ -97,7 +98,7 @@ export class LdHeader {
       'ld-header',
       this.hidden && 'ld-header--hidden',
       this.sticky && 'ld-header--sticky',
-    ])
+    ]);
 
     return (
       <Host class={cl} role="banner">
@@ -158,6 +159,6 @@ export class LdHeader {
           <slot name="end" />
         </header>
       </Host>
-    )
+    );
   }
 }

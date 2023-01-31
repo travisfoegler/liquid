@@ -8,8 +8,8 @@ import {
   Event,
   EventEmitter,
   Listen,
-} from '@stencil/core'
-import { getClassNames } from '../../../liquid/utils/getClassNames'
+} from '@stencil/core';
+import { getClassNames } from '../../../liquid/utils/getClassNames';
 
 /** @internal **/
 @Component({
@@ -18,71 +18,71 @@ import { getClassNames } from '../../../liquid/utils/getClassNames'
   shadow: false,
 })
 export class DocsExample {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   /** Background color mode. */
-  @Prop() background: 'brand' | 'light'
+  @Prop() background: 'brand' | 'light';
 
   /** Center examples. */
-  @Prop() centered = false
+  @Prop() centered = false;
 
   /** Web Component markup encoded as URI component. */
-  @Prop() code!: string
+  @Prop() code!: string;
 
   /** CSS component markup encoded as URI component. */
-  @Prop() codeCssComponent: string
+  @Prop() codeCssComponent: string;
 
   /** React component markup encoded as URI component. */
-  @Prop() codeReactComponent: string
+  @Prop() codeReactComponent: string;
 
   /** Adds a thin border to the container. */
-  @Prop() hasBorder = false
+  @Prop() hasBorder = false;
 
   /** Puts some space between content and container. */
-  @Prop() hasPadding = false
+  @Prop() hasPadding = false;
 
   /** Opens code view on initial load. */
-  @Prop() opened = false
+  @Prop() opened = false;
 
   /** Stack examples (use display block). */
-  @Prop() stacked = false
+  @Prop() stacked = false;
 
   /** Custom show-container styles. */
-  @Prop() styles = '{}'
+  @Prop() styles = '{}';
 
   /** Enables theme switch. */
-  @Prop() themable = false
+  @Prop() themable = false;
 
   /** Current theme. */
-  @State() currentTheme = 'ocean'
+  @State() currentTheme = 'ocean';
 
   /** Is code toggled to be visible */
-  @State() isCodeVisible = this.opened
+  @State() isCodeVisible = this.opened;
 
   /** Is Web Component visible (as opposed to the css component version) */
-  @State() codeType: 'wc' | 'css' | 'react' = 'wc'
+  @State() codeType: 'wc' | 'css' | 'react' = 'wc';
 
   /** Code type pick change event. */
-  @Event() pickCodeType: EventEmitter<this['codeType']>
+  @Event() pickCodeType: EventEmitter<this['codeType']>;
 
   private handlePickTheme = (event: CustomEvent<string>) => {
-    this.currentTheme = event.detail
-  }
+    this.currentTheme = event.detail;
+  };
 
   private handleToggleCode = (event: CustomEvent<boolean>) => {
-    this.isCodeVisible = event.detail
-  }
+    this.isCodeVisible = event.detail;
+  };
 
   @Listen('pickCodeType', {
     target: 'window',
   })
   handleSwitchCode(ev: CustomEvent<this['codeType']>) {
-    if (!this.hasCodeType(ev.detail)) return
-    this.codeType = ev.detail
+    if (!this.hasCodeType(ev.detail)) return;
+    this.codeType = ev.detail;
     window.localStorage.setItem(
       'liquid_docs_preferred_code_type',
       this.codeType
-    )
+    );
   }
 
   private unescapeCode(code) {
@@ -100,31 +100,31 @@ export class DocsExample {
           /<span class="token punctuation">}<\/span> <span class="token punctuation">}<\/span>/g,
           '<span class="token punctuation">}</span><span class="token punctuation">}</span>'
         )
-    )
+    );
   }
 
   private hasCodeType(codeType: this['codeType']) {
     if (codeType === 'wc') {
-      return Boolean(this.el.querySelector('[slot="code"]'))
+      return Boolean(this.el.querySelector('[slot="code"]'));
     }
     return Array.from(this.el.querySelectorAll('[slot^="code"]')).some(
       (slot) =>
         slot.getAttribute('slot').toLowerCase() === `code${codeType}component`
-    )
+    );
   }
 
   componentWillLoad() {
     const preferredCodeType = window.localStorage.getItem(
       'liquid_docs_preferred_code_type'
-    ) as this['codeType']
+    ) as this['codeType'];
     if (preferredCodeType) {
       if (this.hasCodeType(preferredCodeType)) {
-        this.codeType = preferredCodeType as this['codeType']
+        this.codeType = preferredCodeType as this['codeType'];
       }
     }
     this.el.querySelectorAll('[slot^="code"]').forEach((slot) => {
-      slot.innerHTML = this.unescapeCode(slot.innerHTML)
-    })
+      slot.innerHTML = this.unescapeCode(slot.innerHTML);
+    });
   }
 
   render() {
@@ -136,15 +136,15 @@ export class DocsExample {
       this.codeType === 'wc' && 'docs-example--web-component',
       this.codeType === 'css' && 'docs-example--css-component',
       this.codeType === 'react' && 'docs-example--react-component',
-    ]
+    ];
 
-    let clShow = 'docs-example__show'
+    let clShow = 'docs-example__show';
     if (this.themable && this.currentTheme) {
-      clShow += ' ld-theme-' + this.currentTheme.toLowerCase()
+      clShow += ' ld-theme-' + this.currentTheme.toLowerCase();
     }
-    if (this.centered) clShow += ' docs-example__show--centered'
-    if (this.stacked) clShow += ' docs-example__show--stacked'
-    if (this.background) clShow += ` docs-example__show--${this.background}`
+    if (this.centered) clShow += ' docs-example__show--centered';
+    if (this.stacked) clShow += ' docs-example__show--stacked';
+    if (this.background) clShow += ` docs-example__show--${this.background}`;
 
     return (
       <Host class={getClassNames(cl)}>
@@ -158,8 +158,8 @@ export class DocsExample {
               <ld-switch
                 onClick={() => (this.isCodeVisible = true)}
                 onLdswitchchange={(ev) => {
-                  this.handleSwitchCode(ev as CustomEvent<this['codeType']>)
-                  this.pickCodeType.emit(this.codeType)
+                  this.handleSwitchCode(ev as CustomEvent<this['codeType']>);
+                  this.pickCodeType.emit(this.codeType);
                 }}
                 class="docs-example__tool-switch"
                 size="sm"
@@ -256,6 +256,6 @@ export class DocsExample {
           <slot name="codeCssComponent"></slot>
         </div>
       </Host>
-    )
+    );
   }
 }

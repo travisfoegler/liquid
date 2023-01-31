@@ -1,114 +1,114 @@
 import {
   analyzeAccessibility,
   getPageWithContent,
-} from '../../../utils/e2e-tests'
+} from '../../../utils/e2e-tests';
 import {
   getSidenavWithoutSubnavigation,
   getSidenavWithSubnavigation,
   getSidenavWithAccordion,
-} from './utils'
+} from './utils';
 
 describe('ld-sidenav', () => {
   describe('without subnavigation', () => {
     describe('shows shadows', () => {
       it('shows shadow at the bottom and separator line at the top', async () => {
-        const page = await getPageWithContent(getSidenavWithoutSubnavigation())
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        const page = await getPageWithContent(getSidenavWithoutSubnavigation());
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
 
       it('shows shadow at the top and bottom when scrolling down', async () => {
-        const page = await getPageWithContent(getSidenavWithoutSubnavigation())
+        const page = await getPageWithContent(getSidenavWithoutSubnavigation());
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
+        ]);
 
         await page.evaluate(() => {
           const ldSidenavScrollerInternal = document
             .querySelector('ld-sidenav')
-            .shadowRoot.querySelector('ld-sidenav-scroller-internal')
-          ldSidenavScrollerInternal.scrollTop = 20
-        })
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+            .shadowRoot.querySelector('ld-sidenav-scroller-internal');
+          ldSidenavScrollerInternal.scrollTop = 20;
+        });
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
 
       it('shows shadow at the top and separator line at the bottom when scrolled to the bottom', async () => {
-        const page = await getPageWithContent(getSidenavWithoutSubnavigation())
+        const page = await getPageWithContent(getSidenavWithoutSubnavigation());
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
+        ]);
 
         await page.evaluate(() => {
           const ldSidenavScrollerInternal = document
             .querySelector('ld-sidenav')
-            .shadowRoot.querySelector('ld-sidenav-scroller-internal')
-          ldSidenavScrollerInternal.scrollTop = 2000
-        })
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+            .shadowRoot.querySelector('ld-sidenav-scroller-internal');
+          ldSidenavScrollerInternal.scrollTop = 2000;
+        });
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
-    })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
+    });
 
     describe('is collapsible', () => {
       it('header should not have a toggle button if not collapsible', async () => {
-        const page = await getPageWithContent(getSidenavWithSubnavigation())
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        const page = await getPageWithContent(getSidenavWithSubnavigation());
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
 
       it('header should have a toggle button if collapsible', async () => {
         const page = await getPageWithContent(
           getSidenavWithSubnavigation({ collapsible: true })
-        )
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        );
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
 
       it('should be fully collapsed', async () => {
         const page = await getPageWithContent(
           getSidenavWithoutSubnavigation({ collapsible: true, collapsed: true })
-        )
+        );
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        ]);
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
-    })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
+    });
 
     describe('is alignable', () => {
       it('should align to the right', async () => {
         const page = await getPageWithContent(
           getSidenavWithoutSubnavigation({ align: 'right' })
-        )
+        );
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        ]);
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
 
       it('collapses to the right', async () => {
         const page = await getPageWithContent(
@@ -117,49 +117,49 @@ describe('ld-sidenav', () => {
             collapsible: true,
             collapsed: true,
           })
-        )
+        );
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        ]);
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
-    })
-  })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
+    });
+  });
 
   describe('with subnavigation', () => {
     it('is accessible', async () => {
-      const page = await getPageWithContent(getSidenavWithSubnavigation())
+      const page = await getPageWithContent(getSidenavWithSubnavigation());
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const accessibilityReport = await analyzeAccessibility(page)
+      const accessibilityReport = await analyzeAccessibility(page);
       expect(accessibilityReport).toHaveNoAccessibilityIssues({
         incompleteThreshold: 1, // axe tests color contrast inside aria-hidden container
-      })
-    })
+      });
+    });
 
     it('shows back button', async () => {
       const page = await getPageWithContent(
         getSidenavWithSubnavigation({
           currentSubnav: 'artificial-intelligence',
         })
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     describe('narrow mode', () => {
       it('collapses to narrow mode', async () => {
@@ -170,16 +170,16 @@ describe('ld-sidenav', () => {
             collapsed: true,
             narrow: true,
           })
-        )
+        );
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
-        page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        ]);
+        page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
 
       it('shows tooltip on the right', async () => {
         const page = await getPageWithContent(
@@ -189,20 +189,20 @@ describe('ld-sidenav', () => {
               <ld-sidenav-navitem>Liquid Oxygen</ld-sidenav-navitem>
             </ld-sidenav-slider>
           </ld-sidenav>`
-        )
+        );
 
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
-        page.waitForChanges()
+        ]);
+        page.waitForChanges();
 
-        await page.hover('ld-sidenav-navitem')
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 250))
+        await page.hover('ld-sidenav-navitem');
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 250));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
 
       it('shows tooltip on the left', async () => {
         const page = await getPageWithContent(
@@ -212,21 +212,21 @@ describe('ld-sidenav', () => {
               <ld-sidenav-navitem>Liquid Oxygen</ld-sidenav-navitem>
             </ld-sidenav-slider>
           </ld-sidenav>`
-        )
+        );
 
         await page.emulateMediaFeatures([
           { name: 'prefers-reduced-motion', value: 'reduce' },
-        ])
-        page.waitForChanges()
+        ]);
+        page.waitForChanges();
 
-        await page.hover('ld-sidenav-navitem')
-        await page.waitForChanges()
-        await new Promise((resolve) => setTimeout(resolve, 250))
+        await page.hover('ld-sidenav-navitem');
+        await page.waitForChanges();
+        await new Promise((resolve) => setTimeout(resolve, 250));
 
-        const result = await page.compareScreenshot()
-        expect(result).toMatchScreenshot()
-      })
-    })
+        const result = await page.compareScreenshot();
+        expect(result).toMatchScreenshot();
+      });
+    });
 
     xit('shows tooltip with icon', async () => {
       const page = await getPageWithContent(
@@ -239,20 +239,20 @@ describe('ld-sidenav', () => {
               </ld-sidenav-navitem>
             </ld-sidenav-slider>
           </ld-sidenav>`
-      )
+      );
 
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      await page.hover('ld-sidenav-navitem')
-      await page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 250))
+      await page.hover('ld-sidenav-navitem');
+      await page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 250));
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('allows setting multiple navitems in top and bottom slots', async () => {
       const page = await getPageWithContent(`
@@ -268,17 +268,17 @@ describe('ld-sidenav', () => {
           <ld-sidenav-navitem slot="bottom" rounded>Corge</ld-sidenav-navitem>
           <ld-sidenav-navitem slot="bottom" rounded>Grault</ld-sidenav-navitem>
         </ld-sidenav>
-      `)
+      `);
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
-  })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
+  });
 
   describe('with subnavigation aligned to the right', () => {
     it('is expanded on the right', async () => {
@@ -288,16 +288,16 @@ describe('ld-sidenav', () => {
           collapsible: true,
           narrow: true,
         })
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('collapses to the right', async () => {
       const page = await getPageWithContent(
@@ -308,16 +308,16 @@ describe('ld-sidenav', () => {
           currentSubnav: 'artificial-intelligence',
           narrow: true,
         })
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('collapses fully in narrow mode', async () => {
       const page = await getPageWithContent(
@@ -328,17 +328,17 @@ describe('ld-sidenav', () => {
           currentSubnav: 'mathematical-foundations',
           narrow: true,
         })
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
-  })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
+  });
 
   describe('nav item', () => {
     it('uses a custom icon', async () => {
@@ -358,15 +358,15 @@ describe('ld-sidenav', () => {
             </ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('uses a custom image', async () => {
       const page = await getPageWithContent(
@@ -379,15 +379,15 @@ describe('ld-sidenav', () => {
             </ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('uses an icon fallback', async () => {
       const page = await getPageWithContent(
@@ -397,15 +397,15 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('uses secondary mode', async () => {
       const page = await getPageWithContent(
@@ -415,15 +415,15 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="secondary">Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('uses tertiary mode', async () => {
       const page = await getPageWithContent(
@@ -433,15 +433,15 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary">Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('is active', async () => {
       const page = await getPageWithContent(
@@ -453,15 +453,15 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" active>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('truncates long titles', async () => {
       const page = await getPageWithContent(
@@ -473,15 +473,15 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary">This is a extremely long title that actually needs truncation to not grow too large</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('is active and has hover state', async () => {
       const page = await getPageWithContent(
@@ -493,16 +493,16 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" active>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      await page.hover('ld-sidenav-navitem')
-      await page.waitForChanges()
+      ]);
+      await page.hover('ld-sidenav-navitem');
+      await page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('is active and has focus state', async () => {
       const page = await getPageWithContent(
@@ -514,16 +514,16 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" active>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      await page.keyboard.press('Tab')
-      await page.waitForChanges()
+      ]);
+      await page.keyboard.press('Tab');
+      await page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('is active and has active state', async () => {
       const page = await getPageWithContent(
@@ -535,17 +535,17 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" active>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      await page.keyboard.press('Tab')
-      await page.keyboard.down('Space')
-      await page.waitForChanges()
+      ]);
+      await page.keyboard.press('Tab');
+      await page.keyboard.down('Space');
+      await page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('is rounded', async () => {
       const page = await getPageWithContent(
@@ -567,15 +567,15 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" rounded>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('has a rounded hover state', async () => {
       const page = await getPageWithContent(
@@ -597,17 +597,17 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" rounded>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
+      ]);
 
-      await page.hover('ld-sidenav-navitem')
-      await page.waitForChanges()
+      await page.hover('ld-sidenav-navitem');
+      await page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('has a rounded focus state', async () => {
       const page = await getPageWithContent(
@@ -629,17 +629,17 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" rounded>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
+      ]);
 
-      await page.keyboard.press('Tab')
-      await page.waitForChanges()
+      await page.keyboard.press('Tab');
+      await page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('has a rounded active state', async () => {
       const page = await getPageWithContent(
@@ -661,18 +661,18 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem mode="tertiary" rounded>Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
+      ]);
 
-      await page.keyboard.press('Tab')
-      await page.keyboard.down('Space')
-      await page.waitForChanges()
+      await page.keyboard.press('Tab');
+      await page.keyboard.down('Space');
+      await page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('has a custom background color', async () => {
       const page = await getPageWithContent(
@@ -694,15 +694,15 @@ describe('ld-sidenav', () => {
             <ld-sidenav-navitem style="--ld-sidenav-navitem-icon-bg-col: var(--ld-col-rg)" mode="tertiary">Liquid Oxygen</ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('has a secondary icon', async () => {
       const page = await getPageWithContent(
@@ -730,15 +730,15 @@ describe('ld-sidenav', () => {
             </ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('has a secondary icon when hovering', async () => {
       const page = await getPageWithContent(
@@ -751,17 +751,17 @@ describe('ld-sidenav', () => {
             </ld-sidenav-navitem>
           </ld-sidenav-slider>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      await page.hover('ld-sidenav-navitem')
-      await page.waitForChanges()
+      ]);
+      await page.hover('ld-sidenav-navitem');
+      await page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
-  })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
+  });
 
   describe('with accordion', () => {
     it('supports nested accordions', async () => {
@@ -769,36 +769,36 @@ describe('ld-sidenav', () => {
         getSidenavWithAccordion({
           currentSubnav: 'artificial-intelligence',
         })
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result0 = await page.compareScreenshot('collapsed accordion')
-      expect(result0).toMatchScreenshot()
+      const result0 = await page.compareScreenshot('collapsed accordion');
+      expect(result0).toMatchScreenshot();
 
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Space')
-      await page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Space');
+      await page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result1 = await page.compareScreenshot('expanded accordion')
-      expect(result1).toMatchScreenshot()
+      const result1 = await page.compareScreenshot('expanded accordion');
+      expect(result1).toMatchScreenshot();
 
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Space')
-      await page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Space');
+      await page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result2 = await page.compareScreenshot('expanded nested accordion')
-      expect(result2).toMatchScreenshot()
-    })
+      const result2 = await page.compareScreenshot('expanded nested accordion');
+      expect(result2).toMatchScreenshot();
+    });
 
     it('collapses to narrow mode', async () => {
       const page = await getPageWithContent(
@@ -808,17 +808,17 @@ describe('ld-sidenav', () => {
           collapsed: true,
           narrow: true,
         })
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      ]);
+      page.waitForChanges();
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
-  })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
+  });
 
   describe('header', () => {
     it('uses a custom logo', async () => {
@@ -834,15 +834,15 @@ describe('ld-sidenav', () => {
             Liquid Oxygen
           </ld-sidenav-header>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
 
     it('uses a custom wide logo', async () => {
       const page = await getPageWithContent(
@@ -856,14 +856,14 @@ describe('ld-sidenav', () => {
             </svg>
           </ld-sidenav-header>
         </ld-sidenav>`
-      )
+      );
       await page.emulateMediaFeatures([
         { name: 'prefers-reduced-motion', value: 'reduce' },
-      ])
-      page.waitForChanges()
+      ]);
+      page.waitForChanges();
 
-      const result = await page.compareScreenshot()
-      expect(result).toMatchScreenshot()
-    })
-  })
-})
+      const result = await page.compareScreenshot();
+      expect(result).toMatchScreenshot();
+    });
+  });
+});

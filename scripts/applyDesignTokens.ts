@@ -1,36 +1,36 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const https = require('https')
-const { existsSync } = require('fs')
-const { mkdir, writeFile } = require('fs').promises
-const { join, dirname } = require('path')
+const https = require('https');
+const { existsSync } = require('fs');
+const { mkdir, writeFile } = require('fs').promises;
+const { join, dirname } = require('path');
 
-const isBin = __filename.endsWith('.cjs')
-const stylesDir = isBin ? './liquid_tmp/styles' : './src/liquid/global/styles'
+const isBin = __filename.endsWith('.cjs');
+const stylesDir = isBin ? './liquid_tmp/styles' : './src/liquid/global/styles';
 
 type TypoToken = {
-  fontFamily: string
-  fontSize: string
-  fontWeight: number
-  lineHeight: string
-}
+  fontFamily: string;
+  fontSize: string;
+  fontWeight: number;
+  lineHeight: string;
+};
 
 async function ensureWriteFile(path, data, options) {
-  const dir = dirname(path)
-  if (!existsSync(dir)) await mkdir(dir, { recursive: true })
+  const dir = dirname(path);
+  if (!existsSync(dir)) await mkdir(dir, { recursive: true });
 
-  return writeFile(path, data, options)
+  return writeFile(path, data, options);
 }
 
 function pxToRem(px: string | number) {
-  return parseInt(px + '') / 16 + 'rem'
+  return parseInt(px + '') / 16 + 'rem';
 }
 
 function getColorTokenValue(variant, styles) {
   if (variant.styles?.fill) {
-    const style = styles[variant.styles.fill]
-    const { name, description } = style
-    const variants = description.split(', ')
-    const [baseColorName, ...rest] = name.split('/')[1].split('-')
+    const style = styles[variant.styles.fill];
+    const { name, description } = style;
+    const variants = description.split(', ');
+    const [baseColorName, ...rest] = name.split('/')[1].split('-');
     const referenceName =
       (baseColorName === 'Neutral'
         ? baseColorName
@@ -40,155 +40,155 @@ function getColorTokenValue(variant, styles) {
         ? ''
         : rest.length
         ? '-' + rest.join('-')
-        : '')
-    return referenceName
+        : '');
+    return referenceName;
   } else {
-    return relRGBToAbsRGB(variant.fills[0])
+    return relRGBToAbsRGB(variant.fills[0]);
   }
 }
 
 function relRGBToAbsRGB(fill) {
-  const r = Math.round(fill.color.r * 255)
-  const g = Math.round(fill.color.g * 255)
-  const b = Math.round(fill.color.b * 255)
-  const a = Math.round((fill.opacity ?? 1) * 100) / 100
+  const r = Math.round(fill.color.r * 255);
+  const g = Math.round(fill.color.g * 255);
+  const b = Math.round(fill.color.b * 255);
+  const a = Math.round((fill.opacity ?? 1) * 100) / 100;
 
-  return a === 1 ? `rgb(${r}, ${g}, ${b})` : `rgba(${r}, ${g}, ${b}, ${a})`
+  return a === 1 ? `rgb(${r}, ${g}, ${b})` : `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
 function parseThemes(items, styles) {
-  const themes = {}
+  const themes = {};
 
   items.forEach((item) => {
     if (!item.name.startsWith('_')) {
-      const theme = {}
-      const themeName = item.name.toLowerCase().replace(/ /g, '-')
+      const theme = {};
+      const themeName = item.name.toLowerCase().replace(/ /g, '-');
 
-      const colorGroups = item.children
+      const colorGroups = item.children;
       colorGroups.forEach((colorGroup) => {
-        const groupName = colorGroup.name.toLowerCase().replace(/ /g, '-')
-        const variants = colorGroup.children
+        const groupName = colorGroup.name.toLowerCase().replace(/ /g, '-');
+        const variants = colorGroup.children;
         if (variants) {
           variants.forEach((variant) => {
-            const variantName = variant.name.toLowerCase().replace(/ /g, '-')
-            const subVariants = variant.children
+            const variantName = variant.name.toLowerCase().replace(/ /g, '-');
+            const subVariants = variant.children;
 
             if (variant.children) {
               if (subVariants) {
                 subVariants.forEach((subVariant) => {
                   const subVariantName = subVariant.name
                     .toLowerCase()
-                    .replace(/ /g, '-')
-                  const colorName = `${groupName}-${variantName}-${subVariantName}`
-                  theme[colorName] = getColorTokenValue(subVariant, styles)
-                })
+                    .replace(/ /g, '-');
+                  const colorName = `${groupName}-${variantName}-${subVariantName}`;
+                  theme[colorName] = getColorTokenValue(subVariant, styles);
+                });
               }
             } else {
               const colorName = `${groupName}${
                 variantName === 'default' ? '' : `-${variantName}`
-              }`
-              theme[colorName] = getColorTokenValue(variant, styles)
+              }`;
+              theme[colorName] = getColorTokenValue(variant, styles);
             }
-          })
+          });
         }
-      })
+      });
 
       if (Object.keys(themes).length === 0) {
-        theme['default'] = true
+        theme['default'] = true;
       }
 
-      themes[themeName] = theme
+      themes[themeName] = theme;
     }
-  })
+  });
 
-  return themes
+  return themes;
 }
 
 function parseBorderRadii(items) {
-  const borderRadii = {}
+  const borderRadii = {};
 
   items.forEach((item) => {
     borderRadii[item.name.toLowerCase()] = item.cornerRadius
       ? pxToRem(item.cornerRadius)
-      : '0'
-  })
+      : '0';
+  });
 
-  return borderRadii
+  return borderRadii;
 }
 
 function parseShadows(items) {
-  const shadows = {}
+  const shadows = {};
 
   for (const item of items) {
     shadows[item.name.split(' ')[0].toLowerCase()] = item.effects
       .map((effect) => {
-        const col = effect.color
+        const col = effect.color;
         return `${pxToRem(effect.offset.x)} ${pxToRem(
           effect.offset.y
         )} ${pxToRem(effect.radius)} rgba(${Math.round(
           col.r * 255
         )}, ${Math.round(col.g * 255)}, ${Math.round(col.b * 255)}, ${
           Math.round(col.a * 100) / 100
-        })`
+        })`;
       })
-      .join(', ')
+      .join(', ');
   }
 
-  return shadows
+  return shadows;
 }
 
 function parseColors(items, styles: { name: string; description: string }[]) {
-  const colors = {}
+  const colors = {};
 
   for (const item of items) {
     if (item.name.startsWith('_')) {
-      continue
+      continue;
     }
 
     if (item.children) {
-      Object.assign(colors, parseColors(item.children, styles))
+      Object.assign(colors, parseColors(item.children, styles));
     } else if (item.fills?.length && item.styles?.fill) {
-      const style = styles[item.styles.fill]
-      const { name, description } = style
-      const variants = description.split(', ')
-      const pathParts = name.split('/')
+      const style = styles[item.styles.fill];
+      const { name, description } = style;
+      const variants = description.split(', ');
+      const pathParts = name.split('/');
       const [baseColorName, ...rest] =
-        pathParts[pathParts.length > 1 ? pathParts.length - 1 : 0].split('-')
-      const defaultOnly = rest.length === 0
+        pathParts[pathParts.length > 1 ? pathParts.length - 1 : 0].split('-');
+      const defaultOnly = rest.length === 0;
       const colorShortName = ['Neutral', 'White'].includes(baseColorName)
         ? baseColorName === 'White'
           ? 'wht'
           : baseColorName.toLowerCase()
-        : baseColorName.replace(/[a-z]/g, '').toLowerCase()
+        : baseColorName.replace(/[a-z]/g, '').toLowerCase();
       const colorName =
         colorShortName +
         (defaultOnly ? '' : '-' + rest.join('-')) +
-        (variants.includes('Default') ? '/default' : '')
-      const colorValue = relRGBToAbsRGB(item.fills[0])
-      colors[colorName] = colorValue
+        (variants.includes('Default') ? '/default' : '');
+      const colorValue = relRGBToAbsRGB(item.fills[0]);
+      colors[colorName] = colorValue;
     }
   }
 
-  return colors
+  return colors;
 }
 
 function parseTypography(items, styles) {
-  const typography: Record<string, TypoToken> = {}
+  const typography: Record<string, TypoToken> = {};
 
   items.forEach((item) => {
-    const [, styleName] = styles[item.styles.text].name.split('/')
+    const [, styleName] = styles[item.styles.text].name.split('/');
     const typoName = styleName
       .toLowerCase()
       .replace(/^pg-/, 'body-')
-      .replace(/^caption-/, 'cap-')
+      .replace(/^caption-/, 'cap-');
     const { fontFamily, fontSize, fontWeight, lineHeightPercentFontSize } =
-      item.style
+      item.style;
     const baseFontName =
       fontFamily === 'Merck'
         ? 'MWeb'
         : fontFamily.includes(' ')
         ? `'${fontFamily}'`
-        : fontFamily
+        : fontFamily;
 
     typography[typoName] = {
       // TODO: Let Figma define the fallback fonts, as soon as
@@ -197,38 +197,38 @@ function parseTypography(items, styles) {
       fontSize: pxToRem(fontSize),
       fontWeight: fontWeight === 400 ? undefined : fontWeight,
       lineHeight: Math.round(lineHeightPercentFontSize) + '%',
-    }
-  })
+    };
+  });
 
-  return typography
+  return typography;
 }
 
 function parseSpacings(items) {
-  const spacings = {}
+  const spacings = {};
 
   for (const item of items) {
     spacings[item.name.split('$spacing-')[1]] = pxToRem(
       item.absoluteBoundingBox.height
-    )
+    );
   }
 
-  return spacings
+  return spacings;
 }
 
 async function getTokensFromFigma(figmaFileURL: string) {
-  let figmaId
-  let nodeId
+  let figmaId;
+  let nodeId;
   try {
-    const url = new URL(figmaFileURL)
-    figmaId = url.pathname.split('/file/')[1].split('/')[0]
-    nodeId = url.searchParams.get('node-id')
+    const url = new URL(figmaFileURL);
+    figmaId = url.pathname.split('/file/')[1].split('/')[0];
+    nodeId = url.searchParams.get('node-id');
   } catch (err) {
-    console.error('Failed to parse Figma file URL.')
-    throw err
+    console.error('Failed to parse Figma file URL.');
+    throw err;
   }
 
   if (!figmaId || !nodeId) {
-    throw new Error('Failed to parse Figma file URL.')
+    throw new Error('Failed to parse Figma file URL.');
   }
 
   const result = await new Promise((resolve, reject) => {
@@ -242,24 +242,24 @@ async function getTokensFromFigma(figmaFileURL: string) {
           },
         },
         (resp) => {
-          let data = ''
+          let data = '';
 
           resp.on('data', (chunk) => {
-            data += chunk
-          })
+            data += chunk;
+          });
 
           resp.on('end', () => {
-            resolve(JSON.parse(data))
-          })
+            resolve(JSON.parse(data));
+          });
         }
       )
       .on('error', (err) => {
-        reject(err)
-      })
-  })
+        reject(err);
+      });
+  });
 
-  const { document, styles } = (result as { nodes }).nodes[nodeId]
-  const { children: figmaData } = document
+  const { document, styles } = (result as { nodes }).nodes[nodeId];
+  const { children: figmaData } = document;
 
   const tokens = {
     themes: parseThemes(
@@ -288,21 +288,21 @@ async function getTokensFromFigma(figmaFileURL: string) {
     borderRadii: parseBorderRadii(
       figmaData.find((child) => child.name === 'Border Radius').children
     ),
-  }
+  };
 
-  return tokens
+  return tokens;
 }
 
 function boxShadowToDropShadow(boxShadow: string): string {
-  const shadows = boxShadow.replace('), ', ')| ').split('| ')
+  const shadows = boxShadow.replace('), ', ')| ').split('| ');
   return shadows
     .map((shadow) => {
-      const [offsetX, offsetY, blurRadius, ...color] = shadow.split(' ')
+      const [offsetX, offsetY, blurRadius, ...color] = shadow.split(' ');
       return `drop-shadow(${offsetX} ${offsetY} ${blurRadius} ${color.join(
         ' '
-      )})`
+      )})`;
     })
-    .join(' ')
+    .join(' ');
 }
 
 function generateShadows(tokens) {
@@ -323,32 +323,32 @@ function generateShadows(tokens) {
         .join('\n') +
       '\n}\n',
     'utf8'
-  )
+  );
 }
 
 function generateColors(colorTokens) {
-  const colorVariables = []
+  const colorVariables = [];
 
   // Basic colors
   Object.keys(colorTokens).forEach((key) => {
-    const val = colorTokens[key]
+    const val = colorTokens[key];
     if (key.includes('/default')) {
-      const colorKey = key.split('/default')[0]
+      const colorKey = key.split('/default')[0];
       const colorBaseName = key
         .replace(/\d/g, '')
         .replace('/default', '')
-        .replace(/-$/, '')
+        .replace(/-$/, '');
 
-      colorVariables.push(`  --ld-col-${colorKey}: ${val};`)
+      colorVariables.push(`  --ld-col-${colorKey}: ${val};`);
 
       // prevents duplicate custom properties in cases like "sp/default"
       if (colorBaseName !== colorKey) {
-        colorVariables.push(`  --ld-col-${colorBaseName}: ${val};`)
+        colorVariables.push(`  --ld-col-${colorBaseName}: ${val};`);
       }
     } else {
-      colorVariables.push(`  --ld-col-${key}: ${val};`)
+      colorVariables.push(`  --ld-col-${key}: ${val};`);
     }
-  })
+  });
 
   return ensureWriteFile(
     join(stylesDir, 'colors/colors.css'),
@@ -356,7 +356,7 @@ function generateColors(colorTokens) {
       '\n'
     ),
     'utf8'
-  )
+  );
 }
 
 function generateSpacings(tokens) {
@@ -369,48 +369,48 @@ function generateSpacings(tokens) {
         .join('\n') +
       '\n}\n',
     'utf8'
-  )
+  );
 }
 
 function generateTheming(themes) {
-  const themeColorVariables = []
-  const defaultThemeColorVariables = []
-  const themeSelectors = []
+  const themeColorVariables = [];
+  const defaultThemeColorVariables = [];
+  const themeSelectors = [];
 
   // Theme specific colors
   Object.keys(themes).forEach((themeName) => {
-    const theme = themes[themeName]
-    const currentThemeColorVariables = []
+    const theme = themes[themeName];
+    const currentThemeColorVariables = [];
 
     Object.keys(theme).forEach((colorGroupName) => {
-      const colorGroup = theme[colorGroupName]
+      const colorGroup = theme[colorGroupName];
 
       if (colorGroupName === 'default') {
-        return
+        return;
       }
 
       const variableValue =
         colorGroup.indexOf('rgb') === 0
           ? colorGroup
-          : `var(--ld-col-${colorGroup})`
+          : `var(--ld-col-${colorGroup})`;
 
       themeColorVariables.push(
         `  --ld-thm-${themeName}-${colorGroupName}: ${variableValue};`
-      )
+      );
       currentThemeColorVariables.push(
         `  --ld-thm-${colorGroupName}: var(--ld-thm-${themeName}-${colorGroupName});`
-      )
+      );
       if (theme.default) {
         defaultThemeColorVariables.push(
           `  --ld-thm-${colorGroupName}: var(--ld-thm-${themeName}-${colorGroupName});`
-        )
+        );
       }
-    })
+    });
 
-    themeSelectors.push(`.ld-theme-${themeName} {`)
-    themeSelectors.push(...currentThemeColorVariables.sort())
-    themeSelectors.push(`}`)
-  })
+    themeSelectors.push(`.ld-theme-${themeName} {`);
+    themeSelectors.push(...currentThemeColorVariables.sort());
+    themeSelectors.push(`}`);
+  });
 
   return ensureWriteFile(
     join(stylesDir, 'theming/theming.css'),
@@ -424,22 +424,22 @@ function generateTheming(themes) {
       '',
     ].join('\n'),
     'utf8'
-  )
+  );
 }
 
 function generateTypography(tokens: TypoToken[]) {
-  const tokenEntries = Object.entries(tokens)
+  const tokenEntries = Object.entries(tokens);
   const [, { fontFamily: bodyFontFamily }] = tokenEntries.find(([key]) =>
     key.startsWith('body')
-  )
+  );
   const nonBodyTypoEntry = tokenEntries.find(
     ([, value]) => value.fontFamily !== bodyFontFamily
-  )
+  );
   const getFontFamilyVarString = (ff: string) => {
     return ff === bodyFontFamily
       ? 'var(--ld-font-body)'
-      : 'var(--ld-font-display)'
-  }
+      : 'var(--ld-font-display)';
+  };
   return ensureWriteFile(
     join(stylesDir, 'typography/typography.css'),
     '/* autogenerated */\n:root {\n' +
@@ -451,17 +451,17 @@ function generateTypography(tokens: TypoToken[]) {
       Object.keys(tokens)
         .sort()
         .map((key) => {
-          const val = tokens[key]
+          const val = tokens[key];
           return `  --ld-typo-${key}: ${
             val.fontWeight ? `${val.fontWeight} ` : ''
           }${val.fontSize}/${val.lineHeight} ${getFontFamilyVarString(
             val.fontFamily
-          )};`
+          )};`;
         })
         .join('\n') +
       '\n}\n',
     'utf8'
-  )
+  );
 }
 
 function generateBorderRadii(tokens) {
@@ -474,7 +474,7 @@ function generateBorderRadii(tokens) {
         .join('\n') +
       '\n}\n',
     'utf8'
-  )
+  );
 }
 
 function generateCSSTokenFiles(tokenCollection) {
@@ -485,7 +485,7 @@ function generateCSSTokenFiles(tokenCollection) {
     generateTheming(tokenCollection.themes),
     generateTypography(tokenCollection.typography),
     generateBorderRadii(tokenCollection.borderRadii),
-  ])
+  ]);
 }
 
 function generateJSONTokenFile(tokenCollection) {
@@ -493,7 +493,7 @@ function generateJSONTokenFile(tokenCollection) {
     join(stylesDir, 'design-tokens.json'),
     JSON.stringify(tokenCollection, null, 2),
     'utf8'
-  )
+  );
 }
 
 async function applyDesignTokens(
@@ -501,21 +501,21 @@ async function applyDesignTokens(
     'https://www.figma.com/file/JcDMeUwec9e185HfBgT9XE/Liquid-Oxygen?node-id=2615%3A28396'
 ) {
   if (!process.env.FIGMA_API_KEY) {
-    console.warn('No Figma API key provided - skipping design token update.')
-    return
+    console.warn('No Figma API key provided - skipping design token update.');
+    return;
   }
 
   try {
-    const tokenCollection = await getTokensFromFigma(figmaFileURL)
-    await generateJSONTokenFile(tokenCollection)
-    await generateCSSTokenFiles(tokenCollection)
+    const tokenCollection = await getTokensFromFigma(figmaFileURL);
+    await generateJSONTokenFile(tokenCollection);
+    await generateCSSTokenFiles(tokenCollection);
   } catch (err) {
-    console.error('error', err)
+    console.error('error', err);
   }
 }
 
 if (!isBin) {
-  applyDesignTokens()
+  applyDesignTokens();
 }
 
-module.exports = applyDesignTokens
+module.exports = applyDesignTokens;

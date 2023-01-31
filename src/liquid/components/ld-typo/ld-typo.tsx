@@ -1,5 +1,5 @@
-import { Component, Element, h, Prop, State } from '@stencil/core'
-import { cloneAttributes } from '../../utils/cloneAttributes'
+import { Component, Element, h, Prop, State } from '@stencil/core';
+import { cloneAttributes } from '../../utils/cloneAttributes';
 
 /**
  * @virtualProp ref - reference to component
@@ -12,14 +12,14 @@ import { cloneAttributes } from '../../utils/cloneAttributes'
   shadow: true,
 })
 export class LdTypo implements ClonesAttributes {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
-  private attributesObserver: MutationObserver
+  private attributesObserver: MutationObserver;
 
-  private root: HTMLElement
+  private root: HTMLElement;
 
   /** The rendered HTML tag. Overrides tag inferred from the variant. */
-  @Prop() tag: string
+  @Prop() tag: string;
 
   /** The font style. Every variant has a default tag that it renders with. */
   @Prop({ mutable: true }) variant:
@@ -52,7 +52,7 @@ export class LdTypo implements ClonesAttributes {
     | 'xh3'
     | 'xh4'
     | 'xh5'
-    | 'xh6' = 'body-m'
+    | 'xh6' = 'body-m';
 
   /**
    * Since b* and xb* variants are uppercase, screen readers need to be served a
@@ -62,9 +62,9 @@ export class LdTypo implements ClonesAttributes {
    * label implicitly. If you want to set an aria-label explicitly (such as when you have
    * inner HTML that should not be part of the label), you can use this property.
    */
-  @Prop() ariaLabel: string
+  @Prop() ariaLabel: string;
 
-  @State() clonedAttributes
+  @State() clonedAttributes;
 
   private applyAriaLabel() {
     const isUppercase = [
@@ -79,13 +79,13 @@ export class LdTypo implements ClonesAttributes {
       'xb1',
       'xb2',
       'xb3',
-    ].includes(this.variant)
+    ].includes(this.variant);
 
     if (isUppercase) {
       this.root.setAttribute(
         'aria-label',
         this.ariaLabel || this.el.innerHTML.trim()
-      )
+      );
     }
   }
 
@@ -116,22 +116,22 @@ export class LdTypo implements ClonesAttributes {
       xh4: 'h4',
       xh5: 'h5',
       xh6: 'h6',
-    }[this.variant] ?? 'p')
+    }[this.variant] ?? 'p');
 
   componentWillLoad() {
-    this.attributesObserver = cloneAttributes.call(this, ['tag', 'variant'])
+    this.attributesObserver = cloneAttributes.call(this, ['tag', 'variant']);
   }
 
   componentDidRender() {
-    this.applyAriaLabel()
+    this.applyAriaLabel();
   }
 
   disconnectedCallback() {
-    this.attributesObserver?.disconnect()
+    this.attributesObserver?.disconnect();
   }
 
   render() {
-    const HTag = this.tag || this.getDefaultTag()
+    const HTag = this.tag || this.getDefaultTag();
 
     return (
       <HTag
@@ -142,6 +142,6 @@ export class LdTypo implements ClonesAttributes {
       >
         <slot></slot>
       </HTag>
-    )
+    );
   }
 }

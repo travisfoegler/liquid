@@ -1,11 +1,11 @@
 import {
   analyzeAccessibility,
   getPageWithContent,
-} from '../../../utils/e2e-tests'
-import { LdCheckbox } from '../../ld-checkbox/ld-checkbox'
-import { LdTable } from '../ld-table'
+} from '../../../utils/e2e-tests';
+import { LdCheckbox } from '../../ld-checkbox/ld-checkbox';
+import { LdTable } from '../ld-table';
 
-const components = [LdCheckbox, LdTable]
+const components = [LdCheckbox, LdTable];
 
 describe('ld-table', () => {
   it('renders as Web Component', async () => {
@@ -38,11 +38,11 @@ describe('ld-table', () => {
           </ld-table-row>
         </ld-table-body>
       </ld-table>`
-    )
+    );
 
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   it('renders as CSS Component', async () => {
     const page = await getPageWithContent(
@@ -81,11 +81,11 @@ describe('ld-table', () => {
       {
         components,
       }
-    )
+    );
 
-    const results = await page.compareScreenshot()
-    expect(results).toMatchScreenshot()
-  })
+    const results = await page.compareScreenshot();
+    expect(results).toMatchScreenshot();
+  });
 
   it('renders as Web Component with sort buttons', async () => {
     const page = await getPageWithContent(
@@ -319,22 +319,22 @@ describe('ld-table', () => {
       {
         components,
       }
-    )
+    );
 
-    const resultsScrollTop = await page.compareScreenshot('scroll top')
-    expect(resultsScrollTop).toMatchScreenshot()
+    const resultsScrollTop = await page.compareScreenshot('scroll top');
+    expect(resultsScrollTop).toMatchScreenshot();
 
     await page.evaluate(() => {
       const tableScrollContainer = document
         .querySelector('ld-table')
-        .shadowRoot.querySelector('.ld-table__scroll-container')
-      tableScrollContainer.scrollTop = 9999
-    })
-    await page.waitForChanges()
+        .shadowRoot.querySelector('.ld-table__scroll-container');
+      tableScrollContainer.scrollTop = 9999;
+    });
+    await page.waitForChanges();
 
-    const resultsScrollBottom = await page.compareScreenshot('scroll bottom')
-    expect(resultsScrollBottom).toMatchScreenshot()
-  })
+    const resultsScrollBottom = await page.compareScreenshot('scroll bottom');
+    expect(resultsScrollBottom).toMatchScreenshot();
+  });
 
   fit('renders as Web Component with selection and pagination', async () => {
     const page = await getPageWithContent(
@@ -430,25 +430,25 @@ describe('ld-table', () => {
       {
         components,
       }
-    )
+    );
 
-    const resultsScrollTop = await page.compareScreenshot('scroll left')
-    expect(resultsScrollTop).toMatchScreenshot()
+    const resultsScrollTop = await page.compareScreenshot('scroll left');
+    expect(resultsScrollTop).toMatchScreenshot();
 
     await page.evaluate(() => {
       const tableScrollContainer = document
         .querySelector('ld-table')
-        .shadowRoot.querySelector('.ld-table__scroll-container')
-      tableScrollContainer.scrollLeft = 9999
+        .shadowRoot.querySelector('.ld-table__scroll-container');
+      tableScrollContainer.scrollLeft = 9999;
 
-      const tableToolbar = document.querySelector('ld-table-toolbar')
-      tableToolbar.scrollLeft = 9999
-    })
-    await page.waitForChanges()
+      const tableToolbar = document.querySelector('ld-table-toolbar');
+      tableToolbar.scrollLeft = 9999;
+    });
+    await page.waitForChanges();
 
-    const resultsScrollBottom = await page.compareScreenshot('scroll right')
-    expect(resultsScrollBottom).toMatchScreenshot()
-  })
+    const resultsScrollBottom = await page.compareScreenshot('scroll right');
+    expect(resultsScrollBottom).toMatchScreenshot();
+  });
 
   describe('accessibility', () => {
     it('is accessible as a Web Component', async () => {
@@ -481,12 +481,12 @@ describe('ld-table', () => {
             </ld-table-row>
           </ld-table-body>
         </ld-table>`
-      )
-      page.waitForChanges()
+      );
+      page.waitForChanges();
 
-      const accessibilityReport = await analyzeAccessibility(page)
-      expect(accessibilityReport).toHaveNoAccessibilityIssues()
-    })
+      const accessibilityReport = await analyzeAccessibility(page);
+      expect(accessibilityReport).toHaveNoAccessibilityIssues();
+    });
 
     it('is accessible as a CSS Component', async () => {
       const page = await getPageWithContent(
@@ -522,11 +522,11 @@ describe('ld-table', () => {
             </table>
           </div>
         </figure>`
-      )
-      page.waitForChanges()
+      );
+      page.waitForChanges();
 
-      const accessibilityReport = await analyzeAccessibility(page)
-      expect(accessibilityReport).toHaveNoAccessibilityIssues()
-    })
-  })
-})
+      const accessibilityReport = await analyzeAccessibility(page);
+      expect(accessibilityReport).toHaveNoAccessibilityIssues();
+    });
+  });
+});

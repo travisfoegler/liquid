@@ -1,5 +1,5 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /** @internal **/
 @Component({
@@ -8,26 +8,26 @@ import { getClassNames } from '../../../utils/getClassNames'
   shadow: true,
 })
 export class LdTooltipPopper {
-  @Element() element: HTMLElement
+  @Element() element: HTMLElement;
 
-  @State() initialized = false
+  @State() initialized = false;
 
   /** Show arrow */
-  @Prop() arrow: boolean
+  @Prop() arrow: boolean;
 
   /** The tooltip size (effects tooltip padding only) */
-  @Prop() size?: 'sm'
+  @Prop() size?: 'sm';
 
   /** Event type that triggers the tooltip */
-  @Prop() triggerType: 'click' | 'hover' = 'hover'
+  @Prop() triggerType: 'click' | 'hover' = 'hover';
 
   /** Whether the tooltip has a custom trigger or not */
-  @Prop() hasDefaultTrigger: boolean
+  @Prop() hasDefaultTrigger: boolean;
 
   componentDidLoad() {
     setTimeout(() => {
-      this.initialized = true
-    })
+      this.initialized = true;
+    });
   }
 
   render() {
@@ -46,6 +46,6 @@ export class LdTooltipPopper {
         {this.arrow && <span class="ld-tooltip__arrow" />}
         <slot />
       </Host>
-    )
+    );
   }
 }

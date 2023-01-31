@@ -396,12 +396,13 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part      | Description          |
-| --------- | -------------------- |
-| `"box"`   |                      |
-| `"dot"`   |                      |
-| `"input"` | Actual input element |
-| `"root"`  |                      |
+| Part          | Description          |
+| ------------- | -------------------- |
+| `"box"`       |                      |
+| `"dot"`       |                      |
+| `"focusable"` |                      |
+| `"input"`     | Actual input element |
+| `"root"`      |                      |
 
 
 ----------------------------------------------

@@ -9,8 +9,8 @@ import {
   Listen,
   State,
   Method,
-} from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
+} from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /** @internal **/
 @Component({
@@ -19,101 +19,101 @@ import { getClassNames } from '../../../utils/getClassNames'
   shadow: true,
 })
 export class LdOptionInternal {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
-  private optionRef: HTMLElement
+  private optionRef: HTMLElement;
 
   /**
    * The content of this attribute represents the value to be submitted with the form,
    * should this option be selected. If this attribute is omitted, the value is taken
    * from the text content of the option element.
    */
-  @Prop({ mutable: true, reflect: true }) value: string
+  @Prop({ mutable: true, reflect: true }) value: string;
 
   /**
    * If present, this boolean attribute indicates that the option is selected.
    */
-  @Prop({ mutable: true, reflect: true }) selected = false
+  @Prop({ mutable: true, reflect: true }) selected = false;
 
   /**
    * Disables the option.
    */
-  @Prop() disabled = false
+  @Prop() disabled = false;
 
   /**
    * Prevents deselection of a selected options when the selected option
    * is clicked in single select mode.
    */
-  @Prop() preventDeselection: boolean
+  @Prop() preventDeselection: boolean;
 
   /**
    * Display mode.
    */
-  @Prop() mode?: 'checkbox' | undefined
+  @Prop() mode?: 'checkbox' | undefined;
 
   /** Size of the select trigger button for applying according paddings. */
-  @Prop() size?: 'sm' | 'lg'
+  @Prop() size?: 'sm' | 'lg';
 
   /** Set to true on filtering via select input. */
-  @Prop({ reflect: true }) hidden = false
+  @Prop({ reflect: true }) hidden = false;
 
   /**
    * Sets focus internally.
    */
   @Method()
   async focusOption() {
-    this.optionRef.focus()
+    this.optionRef.focus();
   }
 
   /**
    * @internal
    * Emitted on either selection or de-selection of the option.
    */
-  @Event() ldoptionselect: EventEmitter<boolean>
+  @Event() ldoptionselect: EventEmitter<boolean>;
 
-  @State() title: string
+  @State() title: string;
 
-  @State() hasFocus: boolean
-  @State() hasHover: boolean
+  @State() hasFocus: boolean;
+  @State() hasHover: boolean;
 
   private handleClick() {
-    if (this.disabled) return
+    if (this.disabled) return;
 
     if (
       !this.preventDeselection ||
       !this.selected ||
       this.mode === 'checkbox'
     ) {
-      this.selected = !this.selected
+      this.selected = !this.selected;
     }
 
     if (this.mode !== 'checkbox') {
-      this.hasFocus = false
-      this.hasHover = false
+      this.hasFocus = false;
+      this.hasHover = false;
     }
 
-    this.ldoptionselect.emit(this.selected)
+    this.ldoptionselect.emit(this.selected);
   }
 
   @Listen('keydown', { passive: false })
   handleKeyDown(ev: KeyboardEvent) {
     if (ev.key === ' ' || ev.key === 'Enter') {
-      ev.preventDefault()
-      ev.stopImmediatePropagation()
-      this.handleClick()
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      this.handleClick();
     }
 
     if (ev.key === 'Escape') {
-      this.hasFocus = false
-      this.hasHover = false
+      this.hasFocus = false;
+      this.hasHover = false;
     }
   }
 
   componentWillLoad() {
     if (typeof this.value === 'undefined') {
       requestAnimationFrame(() => {
-        this.value = this.el.innerText
-      })
+        this.value = this.el.innerText;
+      });
     }
   }
 
@@ -186,6 +186,6 @@ export class LdOptionInternal {
           </span>
         </div>
       </Host>
-    )
+    );
   }
 }

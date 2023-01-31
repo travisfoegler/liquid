@@ -1,5 +1,5 @@
-import { Component, h, Prop, Host, Element } from '@stencil/core'
-import { HTMLStencilElement } from '@stencil/core/internal'
+import { Component, h, Prop, Host, Element } from '@stencil/core';
+import { HTMLStencilElement } from '@stencil/core/internal';
 
 /**
  * @virtualProp ref - reference to component
@@ -14,13 +14,13 @@ import { HTMLStencilElement } from '@stencil/core/internal'
   shadow: true,
 })
 export class LdNotice {
-  @Element() hostElement: HTMLStencilElement
+  @Element() hostElement: HTMLStencilElement;
 
   /** Headline of the notice. */
-  @Prop() headline?: string
+  @Prop() headline?: string;
 
   /** Mode of the notice. */
-  @Prop() mode: 'error' | 'info' | 'warning' | 'success' = 'info'
+  @Prop() mode: 'error' | 'info' | 'warning' | 'success' = 'info';
 
   render() {
     return (
@@ -49,6 +49,6 @@ export class LdNotice {
         )}
         <slot></slot>
       </Host>
-    )
+    );
   }
 }

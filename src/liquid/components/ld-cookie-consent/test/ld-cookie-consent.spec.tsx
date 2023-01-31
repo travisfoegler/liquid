@@ -1,21 +1,21 @@
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
 Cookies.get = jest.fn().mockImplementation(() => ({
   'some-cookie': true,
   foo: true,
   bar: true,
   'some-other-cookie': true,
-}))
+}));
 
-Cookies.remove = jest.fn().mockImplementation(jest.fn())
+Cookies.remove = jest.fn().mockImplementation(jest.fn());
 
-import { h } from '@stencil/core'
-import { newSpecPage, SpecPage } from '@stencil/core/testing'
-import { LdCookieConsent } from '../ld-cookie-consent'
-import '../../../utils/localStorage'
-import { LdModal } from '../../ld-modal/ld-modal'
-import { LdToggle } from '../../ld-toggle/ld-toggle'
-import '../../../utils/mutationObserver'
+import { h } from '@stencil/core';
+import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import { LdCookieConsent } from '../ld-cookie-consent';
+import '../../../utils/localStorage';
+import { LdModal } from '../../ld-modal/ld-modal';
+import { LdToggle } from '../../ld-toggle/ld-toggle';
+import '../../../utils/mutationObserver';
 
 const categories = [
   {
@@ -51,84 +51,84 @@ const categories = [
       value: 'targeting',
     },
   },
-]
+];
 
 async function acceptInDisclaimer(page: SpecPage, acceptType: 'all' | 'none') {
-  const prefsModal = getPrefsModal(page)
-  const disclaimer = getDisclaimer(page)
+  const prefsModal = getPrefsModal(page);
+  const disclaimer = getDisclaimer(page);
 
-  const ldCookieConsent = getLdCookieConsent(page)
+  const ldCookieConsent = getLdCookieConsent(page);
   const btnAccept =
     ldCookieConsent.shadowRoot.querySelector<HTMLLdButtonElement>(
       `[part="disclaimer-button-accept-${acceptType}"]`
-    )
-  btnAccept.click()
-  await page.waitForChanges()
+    );
+  btnAccept.click();
+  await page.waitForChanges();
 
-  expect(prefsModal?.open).toBeFalsy()
-  expect(disclaimer).not.toHaveClass('ld-cookie-consent__disclaimer--visible')
+  expect(prefsModal?.open).toBeFalsy();
+  expect(disclaimer).not.toHaveClass('ld-cookie-consent__disclaimer--visible');
 }
 
 async function acceptInPrefs(
   page: SpecPage,
   acceptType: 'selected' | 'all' | 'none'
 ) {
-  const prefsModal = getPrefsModal(page)
-  const disclaimer = getDisclaimer(page)
+  const prefsModal = getPrefsModal(page);
+  const disclaimer = getDisclaimer(page);
 
-  const ldCookieConsent = getLdCookieConsent(page)
-  const consentSaveHandler = jest.fn()
-  ldCookieConsent.addEventListener('ldCookieConsentSave', consentSaveHandler)
+  const ldCookieConsent = getLdCookieConsent(page);
+  const consentSaveHandler = jest.fn();
+  ldCookieConsent.addEventListener('ldCookieConsentSave', consentSaveHandler);
 
   const btnAccept =
     ldCookieConsent.shadowRoot.querySelector<HTMLLdButtonElement>(
       `[part="preferences-button-accept-${acceptType}"]`
-    )
-  btnAccept.click()
-  await page.waitForChanges()
+    );
+  btnAccept.click();
+  await page.waitForChanges();
 
-  expect(consentSaveHandler).toHaveBeenCalled()
+  expect(consentSaveHandler).toHaveBeenCalled();
 
-  expect(prefsModal.open).toBe(false)
-  expect(disclaimer).not.toHaveClass('ld-cookie-consent__disclaimer--visible')
+  expect(prefsModal.open).toBe(false);
+  expect(disclaimer).not.toHaveClass('ld-cookie-consent__disclaimer--visible');
 }
 
 async function dismissDisclaimer(page: SpecPage) {
-  const prefsModal = getPrefsModal(page)
-  const disclaimer = getDisclaimer(page)
+  const prefsModal = getPrefsModal(page);
+  const disclaimer = getDisclaimer(page);
 
-  const ldCookieConsent = getLdCookieConsent(page)
+  const ldCookieConsent = getLdCookieConsent(page);
   const btnDismiss =
     ldCookieConsent.shadowRoot.querySelector<HTMLLdButtonElement>(
       `[part="disclaimer-button-dismiss"]`
-    )
-  btnDismiss.click()
-  await page.waitForChanges()
+    );
+  btnDismiss.click();
+  await page.waitForChanges();
 
-  expect(prefsModal?.open).toBeFalsy()
-  expect(disclaimer).not.toHaveClass('ld-cookie-consent__disclaimer--visible')
+  expect(prefsModal?.open).toBeFalsy();
+  expect(disclaimer).not.toHaveClass('ld-cookie-consent__disclaimer--visible');
 }
 
 function getDisclaimer(page: SpecPage) {
-  const ldCookieConsent = getLdCookieConsent(page)
+  const ldCookieConsent = getLdCookieConsent(page);
   return ldCookieConsent.shadowRoot.querySelector<HTMLElement>(
     '[part="disclaimer"]'
-  )
+  );
 }
 
 function getLdCookieConsent(page: SpecPage) {
-  return page.body.querySelector('ld-cookie-consent')
+  return page.body.querySelector('ld-cookie-consent');
 }
 
 function getPrefsModal(page) {
   const ldModal = page.body
     .querySelector('ld-cookie-consent')
-    ?.shadowRoot.querySelector('ld-modal')
-  if (!ldModal) return null
-  const dialog = ldModal.shadowRoot.querySelector('dialog')
-  dialog['close'] = jest.fn()
-  dialog['showModal'] = jest.fn()
-  return ldModal
+    ?.shadowRoot.querySelector('ld-modal');
+  if (!ldModal) return null;
+  const dialog = ldModal.shadowRoot.querySelector('dialog');
+  dialog['close'] = jest.fn();
+  dialog['showModal'] = jest.fn();
+  return ldModal;
 }
 
 function getScripts() {
@@ -152,59 +152,59 @@ function getScripts() {
         async
       ></script>
     </div>
-  )
+  );
 }
 
 async function openPrefs(page: SpecPage) {
-  const disclaimer = getDisclaimer(page)
-  const prefsModal = getPrefsModal(page)
+  const disclaimer = getDisclaimer(page);
+  const prefsModal = getPrefsModal(page);
 
-  const ldCookieConsent = getLdCookieConsent(page)
-  const prefsShowHandler = jest.fn()
+  const ldCookieConsent = getLdCookieConsent(page);
+  const prefsShowHandler = jest.fn();
   ldCookieConsent.addEventListener(
     'ldCookieConsentPreferencesShow',
     prefsShowHandler
-  )
+  );
 
   if (
     !disclaimer.classList.contains('ld-cookie-consent__disclaimer--visible')
   ) {
-    const ldCookieConsent = getLdCookieConsent(page)
-    await ldCookieConsent.showDisclaimer()
+    const ldCookieConsent = getLdCookieConsent(page);
+    await ldCookieConsent.showDisclaimer();
   }
-  await page.waitForChanges()
+  await page.waitForChanges();
 
-  expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible')
+  expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible');
 
   const btnPrefs = disclaimer.querySelector<HTMLButtonElement>(
     '[part="disclaimer-button-preferences"]'
-  )
-  btnPrefs.click()
-  await page.waitForChanges()
+  );
+  btnPrefs.click();
+  await page.waitForChanges();
 
-  expect(prefsModal.open).toBe(true)
-  expect(prefsShowHandler).toHaveBeenCalled()
+  expect(prefsModal.open).toBe(true);
+  expect(prefsShowHandler).toHaveBeenCalled();
 }
 
 function getToggles(page) {
-  const prefsModal = getPrefsModal(page)
-  return prefsModal.querySelectorAll('ld-toggle')
+  const prefsModal = getPrefsModal(page);
+  return prefsModal.querySelectorAll('ld-toggle');
 }
 
 async function transitionEnd(page) {
-  const disclaimer = getDisclaimer(page)
+  const disclaimer = getDisclaimer(page);
   const transitionEndHandler = disclaimer['__listeners'].find(
     (l) => l.type === 'transitionEnd'
-  ).handler
-  transitionEndHandler.call(disclaimer, { target: disclaimer })
-  await page.waitForChanges()
+  ).handler;
+  transitionEndHandler.call(disclaimer, { target: disclaimer });
+  await page.waitForChanges();
 }
 
 describe('ld-cookie-consent', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    global.localStorage.clear()
-  })
+    jest.clearAllMocks();
+    global.localStorage.clear();
+  });
 
   describe('settings', () => {
     it('parses settings string', async () => {
@@ -219,16 +219,16 @@ describe('ld-cookie-consent', () => {
             }'
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
       const disclaimer = ldCookieConsent.shadowRoot.querySelector(
         '[part="disclaimer"]'
-      )
-      await page.waitForChanges()
+      );
+      await page.waitForChanges();
 
-      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible')
-    })
-  })
+      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible');
+    });
+  });
 
   describe('show on load', () => {
     it('shows up on load with default delay', async () => {
@@ -242,34 +242,34 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const disclaimer = getDisclaimer(page)
+      });
+      const disclaimer = getDisclaimer(page);
 
-      const ldCookieConsent = getLdCookieConsent(page)
-      const disclaimerShowHandler = jest.fn()
+      const ldCookieConsent = getLdCookieConsent(page);
+      const disclaimerShowHandler = jest.fn();
       ldCookieConsent.addEventListener(
         'ldCookieConsentDisclaimerShow',
         disclaimerShowHandler
-      )
+      );
 
-      jest.advanceTimersByTime(0)
-      await page.waitForChanges()
+      jest.advanceTimersByTime(0);
+      await page.waitForChanges();
 
       expect(disclaimer).not.toHaveClass(
         'ld-cookie-consent__disclaimer--visible'
-      )
+      );
 
-      jest.advanceTimersByTime(1000)
-      await page.waitForChanges()
+      jest.advanceTimersByTime(1000);
+      await page.waitForChanges();
 
-      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible')
+      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible');
 
-      disclaimer.focus = jest.fn()
-      await transitionEnd(page)
+      disclaimer.focus = jest.fn();
+      await transitionEnd(page);
 
-      expect(disclaimer.focus).toHaveBeenCalledTimes(1)
-      expect(disclaimerShowHandler).toHaveBeenCalledTimes(1)
-    })
+      expect(disclaimer.focus).toHaveBeenCalledTimes(1);
+      expect(disclaimerShowHandler).toHaveBeenCalledTimes(1);
+    });
 
     it('sets focus on disclaimer when calling method showDisclaimer even if already shown', async () => {
       const page = await newSpecPage({
@@ -283,20 +283,20 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      const disclaimer = getDisclaimer(page)
-      disclaimer.focus = jest.fn()
-      await transitionEnd(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      const disclaimer = getDisclaimer(page);
+      disclaimer.focus = jest.fn();
+      await transitionEnd(page);
+      await page.waitForChanges();
 
-      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible')
-      expect(disclaimer.focus).toHaveBeenCalledTimes(1)
+      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible');
+      expect(disclaimer.focus).toHaveBeenCalledTimes(1);
 
-      ldCookieConsent.showDisclaimer()
-      await page.waitForChanges()
-      expect(disclaimer.focus).toHaveBeenCalledTimes(2)
-    })
+      ldCookieConsent.showDisclaimer();
+      await page.waitForChanges();
+      expect(disclaimer.focus).toHaveBeenCalledTimes(2);
+    });
 
     it('shows up on load without delay', async () => {
       const page = await newSpecPage({
@@ -310,15 +310,15 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
       const disclaimer = ldCookieConsent.shadowRoot.querySelector(
         '[part="disclaimer"]'
-      )
-      await page.waitForChanges()
+      );
+      await page.waitForChanges();
 
-      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible')
-    })
+      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible');
+    });
 
     it('does not show up on load if consent has already been given', async () => {
       global.localStorage.setItem(
@@ -329,9 +329,9 @@ describe('ld-cookie-consent', () => {
           rejectedCategories: [],
           revision: 0,
         })
-      )
+      );
 
-      const consentLoadHandler = jest.fn()
+      const consentLoadHandler = jest.fn();
       const page = await newSpecPage({
         components: [LdCookieConsent],
         template: () => (
@@ -344,21 +344,21 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
+      });
 
-      const ldCookieConsent = getLdCookieConsent(page)
+      const ldCookieConsent = getLdCookieConsent(page);
       const disclaimer = ldCookieConsent.shadowRoot.querySelector(
         '[part="disclaimer"]'
-      )
-      await page.waitForChanges()
+      );
+      await page.waitForChanges();
 
       expect(disclaimer).not.toHaveClass(
         'ld-cookie-consent__disclaimer--visible'
-      )
+      );
 
-      await page.waitForChanges()
-      expect(consentLoadHandler).toHaveBeenCalled()
-    })
+      await page.waitForChanges();
+      expect(consentLoadHandler).toHaveBeenCalled();
+    });
 
     it('shows up if consent has expired', async () => {
       global.localStorage.setItem(
@@ -369,7 +369,7 @@ describe('ld-cookie-consent', () => {
           rejectedCategories: [],
           revision: 0,
         })
-      )
+      );
 
       const page = await newSpecPage({
         components: [LdCookieConsent],
@@ -383,15 +383,15 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
       const disclaimer = ldCookieConsent.shadowRoot.querySelector(
         '[part="disclaimer"]'
-      )
-      await page.waitForChanges()
+      );
+      await page.waitForChanges();
 
-      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible')
-    })
+      expect(disclaimer).toHaveClass('ld-cookie-consent__disclaimer--visible');
+    });
 
     it('does not show up if revision is the same', async () => {
       global.localStorage.setItem(
@@ -402,7 +402,7 @@ describe('ld-cookie-consent', () => {
           rejectedCategories: [],
           revision: 1,
         })
-      )
+      );
 
       const page = await newSpecPage({
         components: [LdCookieConsent],
@@ -416,18 +416,18 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
       const disclaimer = ldCookieConsent.shadowRoot.querySelector(
         '[part="disclaimer"]'
-      )
-      await page.waitForChanges()
+      );
+      await page.waitForChanges();
 
       expect(disclaimer).not.toHaveClass(
         'ld-cookie-consent__disclaimer--visible'
-      )
-    })
-  })
+      );
+    });
+  });
 
   describe('accepted and rejected categories', () => {
     it('returns preselected as accepted in notice-only mode', async () => {
@@ -442,31 +442,31 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      await page.waitForChanges();
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(true)
-      expect(accepted.has('functional')).toEqual(true)
-      expect(accepted.has('targeting')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(false)
-      expect(rejected.has('functional')).toEqual(false)
-      expect(rejected.has('targeting')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(true);
+      expect(accepted.has('functional')).toEqual(true);
+      expect(accepted.has('targeting')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(false);
+      expect(rejected.has('functional')).toEqual(false);
+      expect(rejected.has('targeting')).toEqual(true);
 
       expect(await ldCookieConsent.isCategoryAccepted('necessary')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('functional')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('targeting')).toEqual(
         false
-      )
-    })
+      );
+    });
 
     it('returns preselected as accepted in opt-out mode', async () => {
       const page = await newSpecPage({
@@ -480,31 +480,31 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      await page.waitForChanges();
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(true)
-      expect(accepted.has('functional')).toEqual(true)
-      expect(accepted.has('targeting')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(false)
-      expect(rejected.has('functional')).toEqual(false)
-      expect(rejected.has('targeting')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(true);
+      expect(accepted.has('functional')).toEqual(true);
+      expect(accepted.has('targeting')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(false);
+      expect(rejected.has('functional')).toEqual(false);
+      expect(rejected.has('targeting')).toEqual(true);
 
       expect(await ldCookieConsent.isCategoryAccepted('necessary')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('functional')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('targeting')).toEqual(
         false
-      )
-    })
+      );
+    });
 
     it('returns saved accepted in opt-out mode', async () => {
       global.localStorage.setItem(
@@ -515,7 +515,7 @@ describe('ld-cookie-consent', () => {
           rejectedCategories: ['functional', 'targeting'],
           revision: 0,
         })
-      )
+      );
 
       const page = await newSpecPage({
         components: [LdCookieConsent],
@@ -528,31 +528,31 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      await page.waitForChanges();
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(true)
-      expect(accepted.has('functional')).toEqual(false)
-      expect(accepted.has('targeting')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(false)
-      expect(rejected.has('functional')).toEqual(true)
-      expect(rejected.has('targeting')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(true);
+      expect(accepted.has('functional')).toEqual(false);
+      expect(accepted.has('targeting')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(false);
+      expect(rejected.has('functional')).toEqual(true);
+      expect(rejected.has('targeting')).toEqual(true);
 
       expect(await ldCookieConsent.isCategoryAccepted('necessary')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('functional')).toEqual(
         false
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('targeting')).toEqual(
         false
-      )
-    })
+      );
+    });
 
     it('returns preselected in opt-out mode if consent has expired', async () => {
       global.localStorage.setItem(
@@ -563,7 +563,7 @@ describe('ld-cookie-consent', () => {
           rejectedCategories: ['functional', 'targeting'],
           revision: 0,
         })
-      )
+      );
 
       const page = await newSpecPage({
         components: [LdCookieConsent],
@@ -577,31 +577,31 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      await page.waitForChanges();
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(true)
-      expect(accepted.has('functional')).toEqual(true)
-      expect(accepted.has('targeting')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(false)
-      expect(rejected.has('functional')).toEqual(false)
-      expect(rejected.has('targeting')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(true);
+      expect(accepted.has('functional')).toEqual(true);
+      expect(accepted.has('targeting')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(false);
+      expect(rejected.has('functional')).toEqual(false);
+      expect(rejected.has('targeting')).toEqual(true);
 
       expect(await ldCookieConsent.isCategoryAccepted('necessary')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('functional')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('targeting')).toEqual(
         false
-      )
-    })
+      );
+    });
 
     it('returns none in opt-in mode', async () => {
       const page = await newSpecPage({
@@ -615,31 +615,31 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      await page.waitForChanges();
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(false)
-      expect(accepted.has('functional')).toEqual(false)
-      expect(accepted.has('targeting')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(true)
-      expect(rejected.has('functional')).toEqual(true)
-      expect(rejected.has('targeting')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(false);
+      expect(accepted.has('functional')).toEqual(false);
+      expect(accepted.has('targeting')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(true);
+      expect(rejected.has('functional')).toEqual(true);
+      expect(rejected.has('targeting')).toEqual(true);
 
       expect(await ldCookieConsent.isCategoryAccepted('necessary')).toEqual(
         false
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('functional')).toEqual(
         false
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('targeting')).toEqual(
         false
-      )
-    })
+      );
+    });
 
     it('returns saved accepted in opt-in mode', async () => {
       global.localStorage.setItem(
@@ -650,7 +650,7 @@ describe('ld-cookie-consent', () => {
           rejectedCategories: ['functional', 'targeting'],
           revision: 0,
         })
-      )
+      );
 
       const page = await newSpecPage({
         components: [LdCookieConsent],
@@ -663,31 +663,31 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      await page.waitForChanges();
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(true)
-      expect(accepted.has('functional')).toEqual(false)
-      expect(accepted.has('targeting')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(false)
-      expect(rejected.has('functional')).toEqual(true)
-      expect(rejected.has('targeting')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(true);
+      expect(accepted.has('functional')).toEqual(false);
+      expect(accepted.has('targeting')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(false);
+      expect(rejected.has('functional')).toEqual(true);
+      expect(rejected.has('targeting')).toEqual(true);
 
       expect(await ldCookieConsent.isCategoryAccepted('necessary')).toEqual(
         true
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('functional')).toEqual(
         false
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('targeting')).toEqual(
         false
-      )
-    })
+      );
+    });
 
     it('returns none in opt-out mode if consent has expired', async () => {
       global.localStorage.setItem(
@@ -698,7 +698,7 @@ describe('ld-cookie-consent', () => {
           rejectedCategories: ['functional', 'targeting'],
           revision: 0,
         })
-      )
+      );
 
       const page = await newSpecPage({
         components: [LdCookieConsent],
@@ -712,32 +712,32 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      const ldCookieConsent = getLdCookieConsent(page)
-      await page.waitForChanges()
+      });
+      const ldCookieConsent = getLdCookieConsent(page);
+      await page.waitForChanges();
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(false)
-      expect(accepted.has('functional')).toEqual(false)
-      expect(accepted.has('targeting')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(true)
-      expect(rejected.has('functional')).toEqual(true)
-      expect(rejected.has('targeting')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(false);
+      expect(accepted.has('functional')).toEqual(false);
+      expect(accepted.has('targeting')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(true);
+      expect(rejected.has('functional')).toEqual(true);
+      expect(rejected.has('targeting')).toEqual(true);
 
       expect(await ldCookieConsent.isCategoryAccepted('necessary')).toEqual(
         false
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('functional')).toEqual(
         false
-      )
+      );
       expect(await ldCookieConsent.isCategoryAccepted('targeting')).toEqual(
         false
-      )
-    })
-  })
+      );
+    });
+  });
 
   describe('loading scripts conditionally', () => {
     it('loads dormant scripts for selected categories', async () => {
@@ -756,32 +756,32 @@ describe('ld-cookie-consent', () => {
             />
           </div>
         ),
-      })
-      const scripts = page.body.querySelectorAll('script')
-      await page.waitForChanges()
+      });
+      const scripts = page.body.querySelectorAll('script');
+      await page.waitForChanges();
 
-      expect(scripts[0].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[1].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[2].getAttribute('type')).toEqual('text/plain')
+      expect(scripts[0].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[1].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[2].getAttribute('type')).toEqual('text/plain');
 
-      const ldCookieConsent = getLdCookieConsent(page)
-      const activateScriptsHandler = jest.fn()
+      const ldCookieConsent = getLdCookieConsent(page);
+      const activateScriptsHandler = jest.fn();
       ldCookieConsent.addEventListener(
         'ldCookieConsentActivateScripts',
         activateScriptsHandler
-      )
+      );
 
-      await openPrefs(page)
-      await acceptInPrefs(page, 'selected')
-      const freshScripts = page.body.querySelectorAll('script')
+      await openPrefs(page);
+      await acceptInPrefs(page, 'selected');
+      const freshScripts = page.body.querySelectorAll('script');
 
-      expect(freshScripts[0].getAttribute('type')).toBeNull()
-      freshScripts[0].onload.apply(null) // because not async
+      expect(freshScripts[0].getAttribute('type')).toBeNull();
+      freshScripts[0].onload.apply(null); // because not async
 
-      expect(freshScripts[1].getAttribute('type')).toBeNull()
-      expect(freshScripts[2].getAttribute('type')).toEqual('text/plain')
-      expect(activateScriptsHandler).toHaveBeenCalledTimes(1)
-    })
+      expect(freshScripts[1].getAttribute('type')).toBeNull();
+      expect(freshScripts[2].getAttribute('type')).toEqual('text/plain');
+      expect(activateScriptsHandler).toHaveBeenCalledTimes(1);
+    });
 
     it('loads dormant scripts for all categories', async () => {
       const page = await newSpecPage({
@@ -799,25 +799,25 @@ describe('ld-cookie-consent', () => {
             />
           </div>
         ),
-      })
-      const scripts = page.body.querySelectorAll('script')
-      await page.waitForChanges()
+      });
+      const scripts = page.body.querySelectorAll('script');
+      await page.waitForChanges();
 
-      expect(scripts[0].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[1].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[2].getAttribute('type')).toEqual('text/plain')
+      expect(scripts[0].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[1].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[2].getAttribute('type')).toEqual('text/plain');
 
-      await openPrefs(page)
-      await acceptInPrefs(page, 'all')
+      await openPrefs(page);
+      await acceptInPrefs(page, 'all');
 
-      const freshScripts = page.body.querySelectorAll('script')
+      const freshScripts = page.body.querySelectorAll('script');
 
-      expect(freshScripts[0].getAttribute('type')).toBeNull()
-      freshScripts[0].onload.apply(null) // because not async
+      expect(freshScripts[0].getAttribute('type')).toBeNull();
+      freshScripts[0].onload.apply(null); // because not async
 
-      expect(freshScripts[1].getAttribute('type')).toBeNull()
-      expect(freshScripts[2].getAttribute('type')).toBeNull()
-    })
+      expect(freshScripts[1].getAttribute('type')).toBeNull();
+      expect(freshScripts[2].getAttribute('type')).toBeNull();
+    });
 
     it('loads dormant scripts for all categories via disclaimer', async () => {
       const page = await newSpecPage({
@@ -835,24 +835,24 @@ describe('ld-cookie-consent', () => {
             />
           </div>
         ),
-      })
-      const scripts = page.body.querySelectorAll('script')
-      await page.waitForChanges()
+      });
+      const scripts = page.body.querySelectorAll('script');
+      await page.waitForChanges();
 
-      expect(scripts[0].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[1].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[2].getAttribute('type')).toEqual('text/plain')
+      expect(scripts[0].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[1].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[2].getAttribute('type')).toEqual('text/plain');
 
-      await acceptInDisclaimer(page, 'all')
+      await acceptInDisclaimer(page, 'all');
 
-      const freshScripts = page.body.querySelectorAll('script')
+      const freshScripts = page.body.querySelectorAll('script');
 
-      expect(freshScripts[0].getAttribute('type')).toBeNull()
-      freshScripts[0].onload.apply(null) // because not async
+      expect(freshScripts[0].getAttribute('type')).toBeNull();
+      freshScripts[0].onload.apply(null); // because not async
 
-      expect(freshScripts[1].getAttribute('type')).toBeNull()
-      expect(freshScripts[2].getAttribute('type')).toBeNull()
-    })
+      expect(freshScripts[1].getAttribute('type')).toBeNull();
+      expect(freshScripts[2].getAttribute('type')).toBeNull();
+    });
 
     it('does not load dormant scripts when all categories have been rejected', async () => {
       const page = await newSpecPage({
@@ -870,28 +870,28 @@ describe('ld-cookie-consent', () => {
             />
           </div>
         ),
-      })
-      const scripts = page.body.querySelectorAll('script')
-      await page.waitForChanges()
+      });
+      const scripts = page.body.querySelectorAll('script');
+      await page.waitForChanges();
 
-      expect(scripts[0].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[1].getAttribute('type')).toEqual('text/plain')
-      expect(scripts[2].getAttribute('type')).toEqual('text/plain')
+      expect(scripts[0].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[1].getAttribute('type')).toEqual('text/plain');
+      expect(scripts[2].getAttribute('type')).toEqual('text/plain');
 
-      await openPrefs(page)
-      await acceptInPrefs(page, 'none')
+      await openPrefs(page);
+      await acceptInPrefs(page, 'none');
 
-      const freshScripts = page.body.querySelectorAll('script')
+      const freshScripts = page.body.querySelectorAll('script');
 
-      expect(freshScripts[0].getAttribute('type')).toEqual('text/plain')
-      expect(freshScripts[1].getAttribute('type')).toEqual('text/plain')
-      expect(freshScripts[2].getAttribute('type')).toEqual('text/plain')
-    })
-  })
+      expect(freshScripts[0].getAttribute('type')).toEqual('text/plain');
+      expect(freshScripts[1].getAttribute('type')).toEqual('text/plain');
+      expect(freshScripts[2].getAttribute('type')).toEqual('text/plain');
+    });
+  });
 
   describe('clearing cookies automatically', () => {
     it('clears cookies in opt-out mode', async () => {
-      const categoriesWithAutoclear = [...categories]
+      const categoriesWithAutoclear = [...categories];
       categoriesWithAutoclear[0]['autoclear'] = [
         {
           name: 'foo',
@@ -901,7 +901,7 @@ describe('ld-cookie-consent', () => {
         {
           name: 'bar',
         },
-      ]
+      ];
 
       const page = await newSpecPage({
         components: [LdCookieConsent, LdModal],
@@ -915,27 +915,27 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      await page.waitForChanges()
+      });
+      await page.waitForChanges();
 
-      const ldCookieConsent = getLdCookieConsent(page)
-      const autoclearHandler = jest.fn()
+      const ldCookieConsent = getLdCookieConsent(page);
+      const autoclearHandler = jest.fn();
       ldCookieConsent.addEventListener(
         'ldCookieConsentAutoclearCookies',
         autoclearHandler
-      )
+      );
 
-      await openPrefs(page)
-      await acceptInPrefs(page, 'none')
+      await openPrefs(page);
+      await acceptInPrefs(page, 'none');
 
-      expect(Cookies.remove).toHaveBeenCalledTimes(2)
-      expect(autoclearHandler).toHaveBeenCalledTimes(1)
-    })
-  })
+      expect(Cookies.remove).toHaveBeenCalledTimes(2);
+      expect(autoclearHandler).toHaveBeenCalledTimes(1);
+    });
+  });
 
   describe('cookie details', () => {
     it('shows a table', async () => {
-      const categoriesWithTable = [...categories]
+      const categoriesWithTable = [...categories];
       categoriesWithTable[2].details['cookieTable'] = {
         headers: ['Name', 'Provider', 'Description', 'Lifespan'],
         rows: [
@@ -947,7 +947,7 @@ describe('ld-cookie-consent', () => {
             '1 minute',
           ],
         ],
-      }
+      };
 
       const page = await newSpecPage({
         components: [LdCookieConsent, LdModal],
@@ -961,18 +961,18 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      await page.waitForChanges()
-      await openPrefs(page)
+      });
+      await page.waitForChanges();
+      await openPrefs(page);
 
-      const prefsModal = getPrefsModal(page)
+      const prefsModal = getPrefsModal(page);
       const table = prefsModal.querySelector(
         '[part="preferences-category-table"]'
-      )
+      );
 
-      expect(table).toMatchSnapshot()
-    })
-  })
+      expect(table).toMatchSnapshot();
+    });
+  });
 
   describe('toggling cookie categories', () => {
     it('toggles without saving', async () => {
@@ -991,36 +991,36 @@ describe('ld-cookie-consent', () => {
             />
           </div>
         ),
-      })
-      await page.waitForChanges()
+      });
+      await page.waitForChanges();
 
-      await openPrefs(page)
+      await openPrefs(page);
 
-      const ldCookieConsent = getLdCookieConsent(page)
+      const ldCookieConsent = getLdCookieConsent(page);
       let acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      let accepted = acceptedAndRejected.acceptedCategories
-      let rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('functional')).toEqual(true)
-      expect(rejected.has('functional')).toEqual(false)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      let accepted = acceptedAndRejected.acceptedCategories;
+      let rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('functional')).toEqual(true);
+      expect(rejected.has('functional')).toEqual(false);
 
-      const toggles = getToggles(page)
+      const toggles = getToggles(page);
 
-      expect(toggles[1].checked).toBeTruthy()
+      expect(toggles[1].checked).toBeTruthy();
 
-      toggles[1].click()
-      await page.waitForChanges()
+      toggles[1].click();
+      await page.waitForChanges();
 
-      expect(toggles[1].checked).toBeFalsy()
+      expect(toggles[1].checked).toBeFalsy();
 
       acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      accepted = acceptedAndRejected.acceptedCategories
-      rejected = acceptedAndRejected.rejectedCategories
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      accepted = acceptedAndRejected.acceptedCategories;
+      rejected = acceptedAndRejected.rejectedCategories;
 
-      expect(accepted.has('functional')).toEqual(true)
-      expect(rejected.has('functional')).toEqual(false)
-    })
+      expect(accepted.has('functional')).toEqual(true);
+      expect(rejected.has('functional')).toEqual(false);
+    });
 
     it('allows rejecting and re-selecting disabled categories', async () => {
       const page = await newSpecPage({
@@ -1038,44 +1038,44 @@ describe('ld-cookie-consent', () => {
             />
           </div>
         ),
-      })
-      await page.waitForChanges()
+      });
+      await page.waitForChanges();
 
-      await openPrefs(page)
-      await acceptInPrefs(page, 'none')
+      await openPrefs(page);
+      await acceptInPrefs(page, 'none');
 
-      const ldCookieConsent = getLdCookieConsent(page)
+      const ldCookieConsent = getLdCookieConsent(page);
       let acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      let accepted = acceptedAndRejected.acceptedCategories
-      let rejected = acceptedAndRejected.rejectedCategories
-      expect(accepted.has('necessary')).toEqual(false)
-      expect(rejected.has('necessary')).toEqual(true)
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      let accepted = acceptedAndRejected.acceptedCategories;
+      let rejected = acceptedAndRejected.rejectedCategories;
+      expect(accepted.has('necessary')).toEqual(false);
+      expect(rejected.has('necessary')).toEqual(true);
 
-      await openPrefs(page)
+      await openPrefs(page);
 
-      const toggles = getToggles(page)
+      const toggles = getToggles(page);
 
-      expect(toggles[0].ariaDisabled).toBeFalsy()
+      expect(toggles[0].ariaDisabled).toBeFalsy();
 
-      toggles[0].click()
-      await page.waitForChanges()
+      toggles[0].click();
+      await page.waitForChanges();
 
-      await acceptInPrefs(page, 'selected')
+      await acceptInPrefs(page, 'selected');
 
       acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      accepted = acceptedAndRejected.acceptedCategories
-      rejected = acceptedAndRejected.rejectedCategories
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      accepted = acceptedAndRejected.acceptedCategories;
+      rejected = acceptedAndRejected.rejectedCategories;
 
-      expect(accepted.has('necessary')).toEqual(true)
-      expect(rejected.has('necessary')).toEqual(false)
+      expect(accepted.has('necessary')).toEqual(true);
+      expect(rejected.has('necessary')).toEqual(false);
 
-      await openPrefs(page)
+      await openPrefs(page);
 
-      expect(toggles[0].ariaDisabled).toBeTruthy()
-    })
-  })
+      expect(toggles[0].ariaDisabled).toBeTruthy();
+    });
+  });
 
   describe('notice only', () => {
     it('allows to have settings without categories', async () => {
@@ -1090,20 +1090,20 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      await page.waitForChanges()
-      await acceptInDisclaimer(page, 'all')
+      });
+      await page.waitForChanges();
+      await acceptInDisclaimer(page, 'all');
 
-      const ldCookieConsent = getLdCookieConsent(page)
+      const ldCookieConsent = getLdCookieConsent(page);
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
 
-      expect(accepted.size).toEqual(0)
-      expect(rejected.size).toEqual(0)
-    })
-  })
+      expect(accepted.size).toEqual(0);
+      expect(rejected.size).toEqual(0);
+    });
+  });
 
   describe('dismissable', () => {
     it('allows rejecting all cookies from disclaimer', async () => {
@@ -1120,26 +1120,29 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      await page.waitForChanges()
+      });
+      await page.waitForChanges();
 
-      const ldCookieConsent = getLdCookieConsent(page)
-      const dismissHandler = jest.fn()
-      ldCookieConsent.addEventListener('ldCookieConsentDismiss', dismissHandler)
-      await dismissDisclaimer(page)
+      const ldCookieConsent = getLdCookieConsent(page);
+      const dismissHandler = jest.fn();
+      ldCookieConsent.addEventListener(
+        'ldCookieConsentDismiss',
+        dismissHandler
+      );
+      await dismissDisclaimer(page);
 
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
 
-      expect(accepted.size).toEqual(2)
-      expect(rejected.size).toEqual(1)
+      expect(accepted.size).toEqual(2);
+      expect(rejected.size).toEqual(1);
 
-      expect(localStorage.getItem('ld-cookie-consent')).toBeFalsy()
-      expect(dismissHandler).toHaveBeenCalled()
-    })
-  })
+      expect(localStorage.getItem('ld-cookie-consent')).toBeFalsy();
+      expect(dismissHandler).toHaveBeenCalled();
+    });
+  });
 
   describe('rejectable', () => {
     it('allows rejecting all cookies from disclaimer', async () => {
@@ -1156,20 +1159,20 @@ describe('ld-cookie-consent', () => {
             }}
           />
         ),
-      })
-      await page.waitForChanges()
-      await acceptInDisclaimer(page, 'none')
+      });
+      await page.waitForChanges();
+      await acceptInDisclaimer(page, 'none');
 
-      const ldCookieConsent = getLdCookieConsent(page)
+      const ldCookieConsent = getLdCookieConsent(page);
       const acceptedAndRejected =
-        await ldCookieConsent.getAcceptedAndRejectedCategories()
-      const accepted = acceptedAndRejected.acceptedCategories
-      const rejected = acceptedAndRejected.rejectedCategories
+        await ldCookieConsent.getAcceptedAndRejectedCategories();
+      const accepted = acceptedAndRejected.acceptedCategories;
+      const rejected = acceptedAndRejected.rejectedCategories;
 
-      expect(accepted.size).toEqual(0)
-      expect(rejected.size).toEqual(3)
+      expect(accepted.size).toEqual(0);
+      expect(rejected.size).toEqual(3);
 
-      expect(localStorage.getItem('ld-cookie-consent')).toBeTruthy()
-    })
-  })
-})
+      expect(localStorage.getItem('ld-cookie-consent')).toBeTruthy();
+    });
+  });
+});

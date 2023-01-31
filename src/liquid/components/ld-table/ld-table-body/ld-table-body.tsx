@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core'
+import { Component, h } from '@stencil/core';
 
 /**
  * @part tbody - the actual tbody element
@@ -16,6 +16,6 @@ export class LdTableBody {
       <tbody class="ld-table-body" part="tbody">
         <slot />
       </tbody>
-    )
+    );
   }
 }

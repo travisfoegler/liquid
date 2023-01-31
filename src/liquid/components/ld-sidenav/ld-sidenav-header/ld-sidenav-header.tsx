@@ -9,8 +9,8 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
+} from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /**
  * @slot - Slot for the header title.
@@ -24,63 +24,63 @@ import { getClassNames } from '../../../utils/getClassNames'
   shadow: true,
 })
 export class LdSidenavHeader {
-  @Element() el: HTMLLdSidenavHeaderElement
-  private sidenav: HTMLLdSidenavElement
-  private tooltipRef: HTMLLdTooltipElement
+  @Element() el: HTMLLdSidenavHeaderElement;
+  private sidenav: HTMLLdSidenavElement;
+  private tooltipRef: HTMLLdTooltipElement;
 
   /** href to be used on the anchor element within the sidenav header. */
-  @Prop() href?: string
+  @Prop() href?: string;
 
   /** aria-label to be used on the anchor element within the sidenav header. */
-  @Prop() ariaLabel: string
+  @Prop() ariaLabel: string;
 
   /** Label to be used for the toggle button when navigation is expanded. */
-  @Prop() labelCollapse = 'Collapse side navigation'
+  @Prop() labelCollapse = 'Collapse side navigation';
   /** Label to be used for the toggle button when navigation is collapsed. */
-  @Prop() labelExpand = 'Expand side navigation'
+  @Prop() labelExpand = 'Expand side navigation';
 
   /** Tooltip tether options object to be merged with the default options (optionally stringified). */
-  @Prop() tetherOptions?: Partial<Tether.ITetherOptions> | string
+  @Prop() tetherOptions?: Partial<Tether.ITetherOptions> | string;
 
-  @State() sidenavAlignement: 'left' | 'right'
-  @State() sidenavClosable: boolean
-  @State() sidenavCollapsed: boolean
-  @State() sidenavCollapsedFully: boolean
-  @State() sidenavCollapsible: boolean
-  @State() sidenavOpen: boolean
+  @State() sidenavAlignement: 'left' | 'right';
+  @State() sidenavClosable: boolean;
+  @State() sidenavCollapsed: boolean;
+  @State() sidenavCollapsedFully: boolean;
+  @State() sidenavCollapsible: boolean;
+  @State() sidenavOpen: boolean;
 
   /** Emitted on toggle click. */
-  @Event() ldSidenavHeaderToggleClick: EventEmitter
+  @Event() ldSidenavHeaderToggleClick: EventEmitter;
 
   @Listen('ldSidenavCollapsedChange', { target: 'window', passive: true })
   handleSidenavCollapsedChange(
     ev: CustomEvent<{
-      collapsed: boolean
-      fully: boolean
+      collapsed: boolean;
+      fully: boolean;
     }>
   ) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavCollapsed = ev.detail.collapsed
-    this.sidenavCollapsedFully = ev.detail.collapsed && ev.detail.fully
-    this.tooltipRef?.hideTooltip()
+    if (ev.target !== this.sidenav) return;
+    this.sidenavCollapsed = ev.detail.collapsed;
+    this.sidenavCollapsedFully = ev.detail.collapsed && ev.detail.fully;
+    this.tooltipRef?.hideTooltip();
   }
 
   @Listen('ldSidenavBreakpointChange', { target: 'window', passive: true })
   handleSidenavBreakpointChange(ev: CustomEvent<boolean>) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavClosable = ev.detail
-    this.tooltipRef?.hideTooltip()
+    if (ev.target !== this.sidenav) return;
+    this.sidenavClosable = ev.detail;
+    this.tooltipRef?.hideTooltip();
   }
 
   @Listen('ldSidenavOpenChange', { target: 'window', passive: true })
   handleSidenavOpenChange(ev: CustomEvent<boolean>) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavOpen = this.sidenav.open
+    if (ev.target !== this.sidenav) return;
+    this.sidenavOpen = this.sidenav.open;
   }
 
   private handleToggleClick = () => {
-    this.ldSidenavHeaderToggleClick.emit()
-  }
+    this.ldSidenavHeaderToggleClick.emit();
+  };
 
   /**
    * @internal
@@ -89,16 +89,16 @@ export class LdSidenavHeader {
   @Method()
   async updateCollapsible() {
     if (this.sidenav) {
-      this.sidenavCollapsible = this.sidenav.collapsible
+      this.sidenavCollapsible = this.sidenav.collapsible;
     }
   }
 
   componentWillLoad() {
-    this.sidenav = this.el.closest('ld-sidenav')
+    this.sidenav = this.el.closest('ld-sidenav');
     if (this.sidenav) {
-      this.sidenavAlignement = this.sidenav.align
-      this.sidenavCollapsible = this.sidenav.collapsible
-      this.sidenavCollapsed = this.sidenav.collapsed
+      this.sidenavAlignement = this.sidenav.align;
+      this.sidenavCollapsible = this.sidenav.collapsible;
+      this.sidenavCollapsed = this.sidenav.collapsed;
     }
   }
 
@@ -113,7 +113,7 @@ export class LdSidenavHeader {
         !this.sidenavClosable &&
         'ld-sidenav-header--collapsed-fully',
       this.sidenavAlignement === 'right' && 'ld-sidenav-header--right-aligned',
-    ])
+    ]);
 
     return (
       <Host class={cl}>
@@ -180,6 +180,6 @@ export class LdSidenavHeader {
           </span>
         </a>
       </Host>
-    )
+    );
   }
 }

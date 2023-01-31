@@ -491,6 +491,7 @@ Type: `Promise<void>`
 
 | Part                   | Description               |
 | ---------------------- | ------------------------- |
+| `"focusable"`          |                           |
 | `"icon-wrapper"`       | Both wrappers of icons    |
 | `"icon-wrapper-end"`   | Wrapper of the end icon   |
 | `"icon-wrapper-start"` | Wrapper of the start icon |

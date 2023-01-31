@@ -659,6 +659,7 @@ Type: `Promise<void>`
 | Part             | Description                     |
 | ---------------- | ------------------------------- |
 | `"button"`       | Actual button or anchor element |
+| `"focusable"`    |                                 |
 | `"progress-bar"` | Progress bar                    |
 
 

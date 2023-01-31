@@ -1,50 +1,50 @@
-import { getPageWithContent } from '../../../utils/e2e-tests'
-import { LdButton } from '../../ld-button/ld-button'
-import { LdIcon } from '../../ld-icon/ld-icon'
-import { LdTypo } from '../../ld-typo/ld-typo'
-import { LdHeader } from '../ld-header'
+import { getPageWithContent } from '../../../utils/e2e-tests';
+import { LdButton } from '../../ld-button/ld-button';
+import { LdIcon } from '../../ld-icon/ld-icon';
+import { LdTypo } from '../../ld-typo/ld-typo';
+import { LdHeader } from '../ld-header';
 
 describe('ld-header', () => {
   describe('web component', () => {
     it('default', async () => {
       const page = await getPageWithContent(
         '<ld-header site-name="Liquid Oxygen"></ld-header>'
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with linked logo', async () => {
       const page = await getPageWithContent(
         '<ld-header site-name="Liquid Oxygen" logo-title="Home" logo-url="#"></ld-header>'
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('without site name', async () => {
-      const page = await getPageWithContent('<ld-header></ld-header>')
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      const page = await getPageWithContent('<ld-header></ld-header>');
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with custom logo', async () => {
       const page = await getPageWithContent(`
         <ld-header site-name="Rocket Science">
           <ld-icon name="rocket" size="lg" slot="logo"></ld-icon>
-        </ld-header>`)
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+        </ld-header>`);
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with linked custom logo', async () => {
       const page = await getPageWithContent(`
         <ld-header site-name="Rocket Science" logo-title="Home" logo-url="#">
           <ld-icon name="rocket" size="lg" slot="logo"></ld-icon>
-        </ld-header>`)
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+        </ld-header>`);
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with custom site name', async () => {
       const page = await getPageWithContent(`
@@ -52,10 +52,10 @@ describe('ld-header', () => {
           <ld-typo tag="div" variant="h5">
             <span style="color: var(--ld-thm-secondary)">Liquid</span> Oxygen
           </ld-typo>
-        </ld-header>`)
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+        </ld-header>`);
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with buttons', async () => {
       const page = await getPageWithContent(`
@@ -67,10 +67,10 @@ describe('ld-header', () => {
           <ld-button mode="ghost" slot="end" title="Login" type="button">
             <ld-icon name="user" size="lg"></ld-icon>
           </ld-button>
-        </ld-header>`)
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+        </ld-header>`);
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with burger menu button', async () => {
       const page = await getPageWithContent(`
@@ -78,10 +78,10 @@ describe('ld-header', () => {
           <ld-button mode="ghost" slot="start" type="button">
             <ld-icon name="burger-menu" size="lg"></ld-icon>
           </ld-button>
-        </ld-header>`)
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+        </ld-header>`);
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('sticky', async () => {
       const page = await getPageWithContent(
@@ -89,10 +89,10 @@ describe('ld-header', () => {
         <ld-header site-name="Liquid Oxygen" sticky></ld-header>
         <p>I am content.</p>`,
         { notWrapped: true }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     xit('sticky after scroll', async () => {
       const page = await getPageWithContent(
@@ -100,11 +100,11 @@ describe('ld-header', () => {
         <ld-header site-name="Liquid Oxygen" sticky></ld-header>
         <p>I am content.</p>`,
         { notWrapped: true }
-      )
-      await page.mouse.wheel({ deltaY: 25 })
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      await page.mouse.wheel({ deltaY: 25 });
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('hidden', async () => {
       const page = await getPageWithContent(
@@ -113,11 +113,11 @@ describe('ld-header', () => {
         </ld-header>
         <p>I am content.</p>`,
         { notWrapped: true }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
-  })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
+  });
 
   describe('css component', () => {
     it('default', async () => {
@@ -130,10 +130,10 @@ describe('ld-header', () => {
           </div>
         </header>`,
         { components: [LdHeader, LdIcon, LdTypo] }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with linked logo', async () => {
       const page = await getPageWithContent(
@@ -147,10 +147,10 @@ describe('ld-header', () => {
           </div>
         </header>`,
         { components: [LdHeader, LdIcon, LdTypo] }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('without site name', async () => {
       const page = await getPageWithContent(
@@ -163,10 +163,10 @@ describe('ld-header', () => {
         {
           components: [LdHeader, LdIcon, LdTypo],
         }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with custom logo', async () => {
       const page = await getPageWithContent(
@@ -178,10 +178,10 @@ describe('ld-header', () => {
           </div>
         </header>`,
         { components: [LdHeader, LdIcon, LdTypo] }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with linked custom logo', async () => {
       const page = await getPageWithContent(
@@ -195,10 +195,10 @@ describe('ld-header', () => {
           </div>
         </header>`,
         { components: [LdHeader, LdIcon, LdTypo] }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with custom site name', async () => {
       const page = await getPageWithContent(
@@ -212,10 +212,10 @@ describe('ld-header', () => {
           </div>
         </header>`,
         { components: [LdHeader, LdIcon, LdTypo] }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with buttons', async () => {
       const page = await getPageWithContent(
@@ -234,10 +234,10 @@ describe('ld-header', () => {
           </div>
         </header>`,
         { components: [LdButton, LdHeader, LdIcon, LdTypo] }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('with burger menu button', async () => {
       const page = await getPageWithContent(
@@ -252,10 +252,10 @@ describe('ld-header', () => {
           </div>
         </header>`,
         { components: [LdButton, LdHeader, LdIcon, LdTypo] }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('sticky', async () => {
       const page = await getPageWithContent(
@@ -268,10 +268,10 @@ describe('ld-header', () => {
         </header>
         <p>I am content.</p>`,
         { components: [LdHeader, LdIcon, LdTypo], notWrapped: true }
-      )
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     xit('sticky after scroll', async () => {
       const page = await getPageWithContent(
@@ -284,11 +284,11 @@ describe('ld-header', () => {
         </header>
         <p>I am content.</p>`,
         { components: [LdHeader, LdIcon, LdTypo], notWrapped: true }
-      )
-      await page.mouse.wheel({ deltaY: 25 })
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
+      );
+      await page.mouse.wheel({ deltaY: 25 });
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
 
     it('hidden', async () => {
       const page = await getPageWithContent(
@@ -301,10 +301,10 @@ describe('ld-header', () => {
         </header>
         <p>I am content.</p>`,
         { components: [LdHeader, LdIcon, LdTypo], notWrapped: true }
-      )
-      await page.waitForTimeout(100)
-      const results = await page.compareScreenshot()
-      expect(results).toMatchScreenshot()
-    })
-  })
-})
+      );
+      await page.waitForTimeout(100);
+      const results = await page.compareScreenshot();
+      expect(results).toMatchScreenshot();
+    });
+  });
+});

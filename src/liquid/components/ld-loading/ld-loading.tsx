@@ -1,5 +1,5 @@
-import { Component, h, Host, Prop } from '@stencil/core'
-import { getClassNames } from '../../utils/getClassNames'
+import { Component, h, Host, Prop } from '@stencil/core';
+import { getClassNames } from '../../utils/getClassNames';
 
 /**
  * @virtualProp ref - reference to component
@@ -12,20 +12,20 @@ import { getClassNames } from '../../utils/getClassNames'
 })
 export class LdLoading {
   /** Used as svg title element content. */
-  @Prop() label = 'Loading'
+  @Prop() label = 'Loading';
 
   /** Uses neutral colors. */
-  @Prop() neutral?: boolean
+  @Prop() neutral?: boolean;
 
   /** Pauses all animations. */
-  @Prop() paused?: boolean
+  @Prop() paused?: boolean;
 
   render() {
     const cl = getClassNames([
       'ld-loading',
       this.neutral && 'ld-loading--neutral',
       this.paused && 'ld-loading--paused',
-    ])
+    ]);
 
     return (
       <Host class={cl}>
@@ -52,6 +52,6 @@ export class LdLoading {
           </g>
         </svg>
       </Host>
-    )
+    );
   }
 }

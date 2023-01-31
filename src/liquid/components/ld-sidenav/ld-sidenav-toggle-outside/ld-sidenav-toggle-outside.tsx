@@ -7,8 +7,8 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
+} from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /**
  * @virtualProp ref - reference to component
@@ -20,63 +20,63 @@ import { getClassNames } from '../../../utils/getClassNames'
   shadow: true,
 })
 export class LdSidenavToggleOutside implements InnerFocusable {
-  @Element() el: HTMLLdSidenavToggleOutsideElement
-  private sidenav: HTMLLdSidenavElement
-  private tooltipRef: HTMLLdTooltipElement
-  private toggle: HTMLButtonElement
+  @Element() el: HTMLLdSidenavToggleOutsideElement;
+  private sidenav: HTMLLdSidenavElement;
+  private tooltipRef: HTMLLdTooltipElement;
+  private toggle: HTMLButtonElement;
 
   /** Label to be used for the toggle button when navigation is collapsed. */
-  @Prop() labelExpand = 'Expand side navigation'
+  @Prop() labelExpand = 'Expand side navigation';
 
   /** Tab index of the toggle. */
-  @Prop() ldTabindex: number | undefined
+  @Prop() ldTabindex: number | undefined;
 
   /** Tooltip tether options object to be merged with the default options (optionally stringified). */
-  @Prop() tetherOptions?: Partial<Tether.ITetherOptions> | string
+  @Prop() tetherOptions?: Partial<Tether.ITetherOptions> | string;
 
-  @State() sidenavClosable: boolean
-  @State() sidenavCollapsed: boolean
-  @State() sidenavCollapsedFully: boolean
-  @State() sidenavAlignement: 'left' | 'right'
+  @State() sidenavClosable: boolean;
+  @State() sidenavCollapsed: boolean;
+  @State() sidenavCollapsedFully: boolean;
+  @State() sidenavAlignement: 'left' | 'right';
 
   /** Sets focus on the radio button. */
   @Method()
   async focusInner() {
-    this.toggle.focus()
+    this.toggle.focus();
   }
 
   @Listen('ldSidenavCollapsedChange', { target: 'window', passive: true })
   handleSidenavCollapsedChange(
     ev: CustomEvent<{
-      collapsed: boolean
-      fully: boolean
+      collapsed: boolean;
+      fully: boolean;
     }>
   ) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavCollapsed = ev.detail.collapsed
-    this.sidenavCollapsedFully = ev.detail.collapsed && ev.detail.fully
-    this.tooltipRef.hideTooltip()
+    if (ev.target !== this.sidenav) return;
+    this.sidenavCollapsed = ev.detail.collapsed;
+    this.sidenavCollapsedFully = ev.detail.collapsed && ev.detail.fully;
+    this.tooltipRef.hideTooltip();
   }
 
   @Listen('ldSidenavBreakpointChange', { target: 'window', passive: true })
   handleSidenavBreakpointChange(ev: CustomEvent<boolean>) {
-    if (ev.target !== this.sidenav) return
-    this.sidenavClosable = ev.detail
-    this.tooltipRef.hideTooltip()
+    if (ev.target !== this.sidenav) return;
+    this.sidenavClosable = ev.detail;
+    this.tooltipRef.hideTooltip();
   }
 
   private toggleSidenavCollapsedState = () => {
-    this.sidenav.toggle()
-  }
+    this.sidenav.toggle();
+  };
 
   componentWillLoad() {
-    this.sidenav = this.el.nextElementSibling as HTMLLdSidenavElement
+    this.sidenav = this.el.nextElementSibling as HTMLLdSidenavElement;
     if (!this.sidenav || this.sidenav.tagName !== 'LD-SIDENAV') {
       throw new Error(
         `The ld-sidenav-toggle-outside component is expecting to have an ld-sidenav component as its next element sibling, but instead there was: ${this.sidenav}`
-      )
+      );
     }
-    this.sidenavAlignement = this.sidenav.align || 'left'
+    this.sidenavAlignement = this.sidenav.align || 'left';
   }
 
   render() {
@@ -86,7 +86,7 @@ export class LdSidenavToggleOutside implements InnerFocusable {
       this.sidenavClosable && 'ld-sidenav-toggle-outside--closable',
       this.sidenavCollapsedFully &&
         'ld-sidenav-toggle-outside--collapsed-fully',
-    ])
+    ]);
 
     return (
       <Host class={cl}>
@@ -122,6 +122,6 @@ export class LdSidenavToggleOutside implements InnerFocusable {
           <ld-typo>{this.labelExpand}</ld-typo>
         </ld-tooltip>
       </Host>
-    )
+    );
   }
 }

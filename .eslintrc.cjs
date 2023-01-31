@@ -17,6 +17,19 @@ const commonTSConfig = {
     '@stencil/strict-mutable': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
+    '@typescript-eslint/member-delimiter-style': [
+      'warn',
+      {
+        multiline: {
+          delimiter: 'semi',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+      },
+    ],
     '@typescript-eslint/no-extra-semi': 0,
     'prettier/prettier': 'error',
     'react/jsx-no-bind': 0,

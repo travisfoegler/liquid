@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core'
+import { Component, h } from '@stencil/core';
 
 /**
  * @part figcaption - the actual figcaption element
@@ -16,6 +16,6 @@ export class LdTableCaption {
       <figcaption class="ld-table-caption" part="figcaption">
         <slot></slot>
       </figcaption>
-    )
+    );
   }
 }

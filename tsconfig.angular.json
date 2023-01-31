@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist",
+    "paths": {
+      "@emdgroup-liquid/liquid": ["./*"]
+    }
+  },
+  "include": ["./src/angular/", "./src/public-api.ts"],
+  "exclude": ["node_modules"]
+}

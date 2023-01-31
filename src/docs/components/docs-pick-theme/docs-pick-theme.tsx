@@ -1,4 +1,4 @@
-import { Component, h, Host, Event, EventEmitter, State } from '@stencil/core'
+import { Component, h, Host, Event, EventEmitter, State } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -7,17 +7,17 @@ import { Component, h, Host, Event, EventEmitter, State } from '@stencil/core'
   shadow: false,
 })
 export class DocsPickTheme {
-  @State() currentTheme = 'ocean'
+  @State() currentTheme = 'ocean';
 
   /** Theme pick change event. */
-  @Event() pickTheme: EventEmitter<string>
+  @Event() pickTheme: EventEmitter<string>;
 
   private handleChange(ev) {
-    this.pickTheme.emit(ev.detail[0])
-    this.currentTheme = ev.detail[0]
+    this.pickTheme.emit(ev.detail[0]);
+    this.currentTheme = ev.detail[0];
   }
 
-  private themes = ['ocean', 'bubblegum', 'shake', 'solvent', 'tea']
+  private themes = ['ocean', 'bubblegum', 'shake', 'solvent', 'tea'];
 
   render() {
     return (
@@ -99,6 +99,6 @@ export class DocsPickTheme {
           </fieldset>
         </form>
       </Host>
-    )
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, h, Prop, Host } from '@stencil/core'
+import { Component, h, Prop, Host } from '@stencil/core';
 
 /**
  * @virtualProp ref - reference to component
@@ -13,7 +13,7 @@ import { Component, h, Prop, Host } from '@stencil/core'
 })
 export class LdInputMessage {
   /** Input message mode. */
-  @Prop() mode: 'error' | 'info' | 'valid' = 'error'
+  @Prop() mode: 'error' | 'info' | 'valid' = 'error';
 
   render() {
     return (
@@ -28,6 +28,6 @@ export class LdInputMessage {
           <slot></slot>
         </span>
       </Host>
-    )
+    );
   }
 }

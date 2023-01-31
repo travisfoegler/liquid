@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core'
+import { Component, h, Prop } from '@stencil/core';
 
 /**
  * @part col - the actual col element
@@ -12,13 +12,13 @@ import { Component, h, Prop } from '@stencil/core'
 })
 export class LdTableCol {
   /** indicating the number of consecutive columns the colgroup element spans. */
-  @Prop() span: HTMLTableColElement['span']
+  @Prop() span: HTMLTableColElement['span'];
 
   render() {
     return (
       <col class="ld-table-col" span={this.span} part="col">
         <slot />
       </col>
-    )
+    );
   }
 }

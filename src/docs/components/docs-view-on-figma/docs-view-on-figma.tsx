@@ -1,4 +1,4 @@
-import { Component, h, Host } from '@stencil/core'
+import { Component, h, Host } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -62,6 +62,6 @@ export class DocsViewOnFigma {
           <docs-figma-access-notice />
         </ld-tooltip>
       </Host>
-    )
+    );
   }
 }

@@ -1,6 +1,6 @@
-import { Build, Component, Element, h, Host, Prop, Watch } from '@stencil/core'
-import { getClassNames } from '../../utils/getClassNames'
-import { fetchPattern } from '../../utils/fetchAsset'
+import { Build, Component, Element, h, Host, Prop, Watch } from '@stencil/core';
+import { getClassNames } from '../../utils/getClassNames';
+import { fetchPattern } from '../../utils/fetchAsset';
 
 export type CellType =
   | 'bioreliance'
@@ -20,7 +20,7 @@ export type CellType =
   | 'synthetic'
   | 't' // Technical
   | 'technical'
-  | 'tile' // Plastic
+  | 'tile'; // Plastic
 
 /**
  * @virtualProp ref - reference to component
@@ -35,49 +35,49 @@ export type CellType =
   shadow: true,
 })
 export class LdBgCells {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   /** Cells pattern */
-  @Prop() type: CellType = 'hexagon'
+  @Prop() type: CellType = 'hexagon';
 
   /** Use 3 color layers */
-  @Prop() threeLayers = false
+  @Prop() threeLayers = false;
 
   /** Animate the pattern */
-  @Prop() animated = false
+  @Prop() animated = false;
 
   @Watch('type')
   private async loadPatternPathData(): Promise<void> {
     if ((!Build.isBrowser && !Build.isTesting) || !this.type) {
-      return
+      return;
     }
 
-    const patternString = await fetchPattern(this.type)
+    const patternString = await fetchPattern(this.type);
     this.el.shadowRoot.querySelectorAll('svg').forEach((layer) => {
-      const div = document.createElement('div')
-      div.innerHTML = patternString
+      const div = document.createElement('div');
+      div.innerHTML = patternString;
       Array.from(div.children[0]?.children || []).forEach((child) => {
         if (child.tagName !== 'script') {
-          layer.appendChild(child)
+          layer.appendChild(child);
         }
-      })
-    })
+      });
+    });
   }
 
   componentWillLoad() {
-    this.loadPatternPathData()
+    this.loadPatternPathData();
   }
 
   render() {
     // Handle aliases (for backward compatibility).
-    let cellType = this.type
+    let cellType = this.type;
 
-    if (cellType === 'qa-x2f-qc') cellType = 'supelco'
-    if (cellType === 'functional') cellType = 'f'
-    if (cellType === 'technical') cellType = 't'
-    if (cellType === 'plastic') cellType = 'tile'
-    if (cellType === 'synthetic') cellType = 'hexagon'
-    if (cellType === 'organic') cellType = 'o'
+    if (cellType === 'qa-x2f-qc') cellType = 'supelco';
+    if (cellType === 'functional') cellType = 'f';
+    if (cellType === 'technical') cellType = 't';
+    if (cellType === 'plastic') cellType = 'tile';
+    if (cellType === 'synthetic') cellType = 'hexagon';
+    if (cellType === 'organic') cellType = 'o';
 
     return (
       <Host
@@ -108,6 +108,6 @@ export class LdBgCells {
           part="layer"
         ></svg>
       </Host>
-    )
+    );
   }
 }

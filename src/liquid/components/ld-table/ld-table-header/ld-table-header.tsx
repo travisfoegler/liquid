@@ -6,9 +6,9 @@ import {
   h,
   Method,
   Prop,
-} from '@stencil/core'
-import { closest } from '../../../utils/closest'
-import { getClassNames } from '../../../utils/getClassNames'
+} from '@stencil/core';
+import { closest } from '../../../utils/closest';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /**
  * @part cell - the actual th element
@@ -24,42 +24,42 @@ import { getClassNames } from '../../../utils/getClassNames'
   shadow: true,
 })
 export class LdTableHeader {
-  @Element() el: HTMLLdTableHeaderElement
+  @Element() el: HTMLLdTableHeaderElement;
 
   /**
    * This attribute contains a short abbreviated description
    * of the cell's content. Some user-agents, such as speech readers,
    * may present this description before the content itself.
    */
-  @Prop() abbr?: HTMLTableCellElement['abbr']
+  @Prop() abbr?: HTMLTableCellElement['abbr'];
 
   /** Indicates for how many columns the cell extends. */
-  @Prop() colspan?: HTMLTableCellElement['colSpan']
+  @Prop() colspan?: HTMLTableCellElement['colSpan'];
 
   /**
    * This attribute contains a list of space-separated strings,
    * each corresponding to the id attribute of the <th> elements
    * that apply to this element.
    */
-  @Prop() headers?: HTMLTableCellElement['headers']
+  @Prop() headers?: HTMLTableCellElement['headers'];
 
   /** Indicates for how many rows the cell extends. */
-  @Prop() rowspan?: HTMLTableCellElement['rowSpan']
+  @Prop() rowspan?: HTMLTableCellElement['rowSpan'];
 
   /** Defines the cells that the header element relates to. */
-  @Prop() scope?: HTMLTableCellElement['scope']
+  @Prop() scope?: HTMLTableCellElement['scope'];
 
   /** Defines whether the column is sortable. */
-  @Prop() sortable = false
+  @Prop() sortable = false;
 
   /** Defines whether the column is sorted and in which order. */
-  @Prop({ mutable: true }) sortOrder?: 'asc' | 'desc'
+  @Prop({ mutable: true }) sortOrder?: 'asc' | 'desc';
 
   /** Emitted with culumn index and sort order. */
   @Event() ldTableSort: EventEmitter<{
-    columnIndex: number
-    sortOrder: 'asc' | 'desc'
-  }>
+    columnIndex: number;
+    sortOrder: 'asc' | 'desc';
+  }>;
 
   /**
    * @internal
@@ -67,37 +67,39 @@ export class LdTableHeader {
    */
   @Method()
   async resetSort() {
-    this.sortOrder = undefined
+    this.sortOrder = undefined;
   }
 
   handleSort = (sortOrder: 'asc' | 'desc') => {
-    this.sortOrder = sortOrder
-    const columnIndex = Array.from(this.el.parentNode.children).indexOf(this.el)
+    this.sortOrder = sortOrder;
+    const columnIndex = Array.from(this.el.parentNode.children).indexOf(
+      this.el
+    );
     this.ldTableSort.emit({
       columnIndex,
       sortOrder,
-    })
-  }
+    });
+  };
 
   onSortClick = (ev: Event, sortOrder: 'asc' | 'desc') => {
-    ev.preventDefault()
-    ev.stopPropagation()
-    if (closest('ld-button', ev.target as HTMLElement).ariaDisabled) return
-    this.handleSort(sortOrder)
-  }
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (closest('ld-button', ev.target as HTMLElement).ariaDisabled) return;
+    this.handleSort(sortOrder);
+  };
 
   onThClick = () => {
-    if (!this.sortable) return
+    if (!this.sortable) return;
     if (this.sortOrder === 'desc') {
-      this.handleSort('asc')
+      this.handleSort('asc');
     } else {
-      this.handleSort('desc')
+      this.handleSort('desc');
     }
-  }
+  };
 
   componentWillLoad() {
     if (this.sortOrder) {
-      this.handleSort(this.sortOrder)
+      this.handleSort(this.sortOrder);
     }
   }
 
@@ -123,7 +125,7 @@ export class LdTableHeader {
           />
         </svg>
       </ld-icon>
-    )
+    );
   }
 
   render() {
@@ -165,6 +167,6 @@ export class LdTableHeader {
           </div>
         )}
       </th>
-    )
+    );
   }
 }

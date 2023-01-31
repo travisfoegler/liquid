@@ -9,8 +9,8 @@ import {
   Prop,
   State,
   Watch,
-} from '@stencil/core'
-import { getClassNames } from '../../../utils/getClassNames'
+} from '@stencil/core';
+import { getClassNames } from '../../../utils/getClassNames';
 
 /** @internal **/
 @Component({
@@ -19,54 +19,54 @@ import { getClassNames } from '../../../utils/getClassNames'
   shadow: true,
 })
 export class LdSelectPopper {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   /** A watcher is applied to the CSS class in order to be able to react to tether changes. */
-  @Prop({ reflect: true }) class: string
+  @Prop({ reflect: true }) class: string;
 
   /** Popper is visually detached from the select trigger element (there's a gap between the two). */
-  @Prop() detached: boolean
+  @Prop() detached: boolean;
 
   /** Indicates if select element is expanded. */
-  @Prop() expanded = false
+  @Prop() expanded = false;
 
   /** Set this property to `true` in order to enable an input field for filtering options. */
-  @Prop() filter: boolean
+  @Prop() filter: boolean;
 
   /** The filter input placeholder. */
-  @Prop() filterPlaceholder: string
+  @Prop() filterPlaceholder: string;
 
   /** Attaches CSS class to the select popper element. */
-  @Prop() popperClass?: string
+  @Prop() popperClass?: string;
 
   /** Size of the select trigger button (required for applying the correct shadow height). */
-  @Prop() size?: 'sm' | 'lg'
+  @Prop() size?: 'sm' | 'lg';
 
   /** Since the select popper is located outside the select element, the theme needs to be applied as a prop. */
-  @Prop() theme: string
+  @Prop() theme: string;
 
-  @State() isPinned = false
-  @State() shadowHeight = '100%'
+  @State() isPinned = false;
+  @State() shadowHeight = '100%';
 
   /**
    * @internal
    * Emitted on filter change with the filter input value.
    */
-  @Event() ldselectfilterchange: EventEmitter<string>
+  @Event() ldselectfilterchange: EventEmitter<string>;
 
   private handleFilterInput = (ev) => {
-    this.ldselectfilterchange.emit(ev.target.value)
-  }
+    this.ldselectfilterchange.emit(ev.target.value);
+  };
 
   @Watch('class')
   updatePinnedState() {
-    this.isPinned = this.el.classList.contains('ld-tether-pinned')
+    this.isPinned = this.el.classList.contains('ld-tether-pinned');
   }
 
   @Watch('theme')
   updatePopperTheme(newValue: string, oldValue: string) {
-    this.el.classList.remove(`ld-theme-${oldValue}`)
-    if (newValue) this.el.classList.add(`ld-theme-${newValue}`)
+    this.el.classList.remove(`ld-theme-${oldValue}`);
+    if (newValue) this.el.classList.add(`ld-theme-${newValue}`);
   }
 
   /**
@@ -74,11 +74,11 @@ export class LdSelectPopper {
    */
   @Method()
   async updateShadowHeight(height: string) {
-    this.shadowHeight = height
+    this.shadowHeight = height;
   }
 
   componentWillLoad() {
-    this.popperClass && this.el.classList.add(this.popperClass)
+    this.popperClass && this.el.classList.add(this.popperClass);
   }
 
   render() {
@@ -123,6 +123,6 @@ export class LdSelectPopper {
           </div>
         </div>
       </Host>
-    )
+    );
   }
 }

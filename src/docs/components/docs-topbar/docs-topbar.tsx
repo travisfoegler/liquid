@@ -1,4 +1,4 @@
-import { Component, h, getAssetPath } from '@stencil/core'
+import { Component, h, getAssetPath } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -8,7 +8,7 @@ import { Component, h, getAssetPath } from '@stencil/core'
   assetsDirs: ['assets'],
 })
 export class DocsTopbar {
-  private base = document.querySelector('base').href
+  private base = document.querySelector('base').href;
 
   render() {
     return (
@@ -79,6 +79,6 @@ export class DocsTopbar {
           </a>
         </div>
       </ld-header>
-    )
+    );
   }
 }

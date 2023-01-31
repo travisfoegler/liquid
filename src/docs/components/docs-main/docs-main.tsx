@@ -1,4 +1,4 @@
-import { Component, Element, h, Host } from '@stencil/core'
+import { Component, Element, h, Host } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -7,14 +7,14 @@ import { Component, Element, h, Host } from '@stencil/core'
   shadow: false,
 })
 export class DocsNav {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
   componentDidLoad() {
     this.el
       .querySelectorAll('#css-variables + table code, #properties + table code')
       .forEach((code) => {
-        code.innerHTML = code.innerHTML.replace(/\\\|/g, '|')
-      })
+        code.innerHTML = code.innerHTML.replace(/\\\|/g, '|');
+      });
   }
 
   render() {
@@ -24,6 +24,6 @@ export class DocsNav {
           <slot></slot>
         </main>
       </Host>
-    )
+    );
   }
 }

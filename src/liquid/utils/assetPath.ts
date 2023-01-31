@@ -1,4 +1,4 @@
-import { Build } from '@stencil/core'
+import { Build } from '@stencil/core';
 
 /**
  * Reads components asset path config from meta tag or global variable.
@@ -12,16 +12,16 @@ export const getAssetPath = (path: string) => {
     : document.head.querySelector<HTMLMetaElement>('meta[data-ld-asset-path]')
         ?.dataset.ldAssetPath ||
       window.__LD_ASSET_PATH__ ||
-      '/'
-  let assetPath = path
+      '/';
+  let assetPath = path;
 
   if (path.startsWith('./')) {
-    assetPath = path.substring(2)
+    assetPath = path.substring(2);
   }
 
   if (!assetBasePath.endsWith('/')) {
-    assetPath = '/' + assetPath
+    assetPath = '/' + assetPath;
   }
 
-  return assetBasePath + assetPath
-}
+  return assetBasePath + assetPath;
+};

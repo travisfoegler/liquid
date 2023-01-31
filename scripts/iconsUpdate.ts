@@ -1,34 +1,34 @@
-import fetch from 'node-fetch'
-import { promises } from 'fs'
+import fetch from 'node-fetch';
+import { promises } from 'fs';
 
 type FigmaNode = {
-  characters?: string
-  id: string
-  name: string
-  type: string
-  children?: FigmaNode[]
-}
+  characters?: string;
+  id: string;
+  name: string;
+  type: string;
+  children?: FigmaNode[];
+};
 
 type FigmaFileResponseBody = {
   nodes: {
-    document: FigmaNode
-  }[]
-}
+    document: FigmaNode;
+  }[];
+};
 
 type FigmaImageResponseBody = {
-  err: unknown
-  images?: Record<string, string>
-}
+  err: unknown;
+  images?: Record<string, string>;
+};
 
-type Icon = { id: string; name: string }
+type Icon = { id: string; name: string };
 
-const { writeFile } = promises
-const iconFileNames: string[] = []
+const { writeFile } = promises;
+const iconFileNames: string[] = [];
 
 const iconsFilter =
   process.env.FIGMA_ICONS_FILTER && process.env.FIGMA_ICONS_FILTER !== ''
     ? process.env.FIGMA_ICONS_FILTER.split(',')
-    : []
+    : [];
 
 async function getIconCollectionFromFigma(
   figmaFileId = '8GYcAOePm8Tt9qqJ7Gnv99',
@@ -42,66 +42,66 @@ async function getIconCollectionFromFigma(
         'X-Figma-Token': process.env.FIGMA_API_KEY,
       },
     }
-  )
+  );
 
-  const { nodes }: FigmaFileResponseBody = await response.json()
+  const { nodes }: FigmaFileResponseBody = await response.json();
 
-  const icons: Icon[] = []
+  const icons: Icon[] = [];
 
   Object.values(nodes).forEach(({ document }) => {
     document.children?.forEach(({ type, children }) => {
       if (type === 'GROUP') {
         const { id } =
-          children?.find((groupChild) => groupChild.type === 'INSTANCE') ?? {}
+          children?.find((groupChild) => groupChild.type === 'INSTANCE') ?? {};
         const { characters } =
-          children?.find((groupChild) => groupChild.type === 'TEXT') ?? {}
+          children?.find((groupChild) => groupChild.type === 'TEXT') ?? {};
 
         if (id && characters) {
           icons.push({
             id,
             name: characters.replace(/\n/g, ' ').replace(/\s\s/g, ' '),
-          })
+          });
         }
       }
-    })
-  })
+    });
+  });
 
   if (iconsFilter.length) {
-    console.log('Icons filter applied!')
-    return icons.filter(({ name }) => iconsFilter.includes(name))
+    console.log('Icons filter applied!');
+    return icons.filter(({ name }) => iconsFilter.includes(name));
   }
 
-  return icons
+  return icons;
 }
 
 const getSingleIcon = async (name: string, url: string) => {
   if (!url) {
-    console.warn(`No download URL for  "${name}" found. Skipping.`)
-    return
+    console.warn(`No download URL for  "${name}" found. Skipping.`);
+    return;
   }
 
   const unifiedName = name
     .trim()
     .toLocaleLowerCase()
     .replace(/[^0-9a-zA-Z]/g, '-')
-    .replace(/--/g, '-')
+    .replace(/--/g, '-');
 
   if (iconFileNames.includes(unifiedName)) {
-    console.warn(`Duplicate icon name "${unifiedName}" detected! Skipping.`)
-    return
+    console.warn(`Duplicate icon name "${unifiedName}" detected! Skipping.`);
+    return;
   }
 
-  const iconResponse = await fetch(url)
+  const iconResponse = await fetch(url);
 
   if (!iconResponse.ok) {
-    throw new Error('Error downloading icon.')
+    throw new Error('Error downloading icon.');
   }
 
-  const icon = await iconResponse.text()
+  const icon = await iconResponse.text();
 
   if (!icon) {
-    console.warn(`Icon ${name} has no content. Skipping.`)
-    return
+    console.warn(`Icon ${name} has no content. Skipping.`);
+    return;
   }
 
   await writeFile(
@@ -109,22 +109,25 @@ const getSingleIcon = async (name: string, url: string) => {
     icon
       .replace(/\sfill="#[^"]*"/g, ' fill="currentcolor"')
       .replace(/\sstroke="#[^"]*"/g, ' stroke="currentcolor"')
-  )
-  iconFileNames.push(unifiedName)
-  console.log(`${unifiedName}.svg successfully written.`)
-}
+  );
+  iconFileNames.push(unifiedName);
+  console.log(`${unifiedName}.svg successfully written.`);
+};
 
 const downloadIcons = async (icons: Icon[], images: Record<string, string>) => {
   await Promise.all(
     icons.map(async ({ name, id }) => {
       try {
-        await exponentialBackoff(() => getSingleIcon(name, images[id]))
+        await exponentialBackoff(() => getSingleIcon(name, images[id]));
       } catch (error) {
-        console.log(`Error downloading ${name} icon with node ID ${id}.`, error)
+        console.log(
+          `Error downloading ${name} icon with node ID ${id}.`,
+          error
+        );
       }
     })
-  )
-}
+  );
+};
 
 const loadAndWriteIcons = async (icons: Icon[]) => {
   const response = await fetch(
@@ -137,43 +140,43 @@ const loadAndWriteIcons = async (icons: Icon[]) => {
         'X-Figma-Token': process.env.FIGMA_API_KEY,
       },
     }
-  )
+  );
 
   if (!response.ok) {
     throw new Error(
       `Error requesting icons from Figma: ${await response.text()}`
-    )
+    );
   }
 
-  const { err, images }: FigmaImageResponseBody = await response.json()
+  const { err, images }: FigmaImageResponseBody = await response.json();
 
   if (err) {
-    throw new Error(`Invalid image response data from Figma: ${err}`)
+    throw new Error(`Invalid image response data from Figma: ${err}`);
   }
 
-  return downloadIcons(icons, images)
-}
+  return downloadIcons(icons, images);
+};
 
 // Increase retries or base, if you run into rate limit exceptions
 const exponentialBackoff = async (fn, depth = 1, retries = 7, base = 2) => {
   try {
-    return await fn()
+    return await fn();
   } catch (error) {
     if (depth > retries) {
-      throw error
+      throw error;
     }
-    await new Promise((res) => setTimeout(res, base ** depth * 10))
+    await new Promise((res) => setTimeout(res, base ** depth * 10));
 
-    return exponentialBackoff(fn, depth + 1)
+    return exponentialBackoff(fn, depth + 1);
   }
-}
+};
 
-;(async () => {
+(async () => {
   try {
-    const iconsCollection = await getIconCollectionFromFigma()
-    console.log(`Found ${iconsCollection.length} icons. Downloading...`)
-    await loadAndWriteIcons(iconsCollection)
+    const iconsCollection = await getIconCollectionFromFigma();
+    console.log(`Found ${iconsCollection.length} icons. Downloading...`);
+    await loadAndWriteIcons(iconsCollection);
   } catch (error) {
-    console.error('error', error)
+    console.error('error', error);
   }
-})()
+})();

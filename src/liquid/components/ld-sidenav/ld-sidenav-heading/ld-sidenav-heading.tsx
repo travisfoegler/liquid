@@ -1,4 +1,4 @@
-import { Component, h, Host } from '@stencil/core'
+import { Component, h, Host } from '@stencil/core';
 
 /**
  * @virtualProp ref - reference to component
@@ -17,6 +17,6 @@ export class LdSidenavHeading {
           <slot></slot>
         </ld-typo>
       </Host>
-    )
+    );
   }
 }

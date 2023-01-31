@@ -1,7 +1,7 @@
-import { Component, Element, h, Method, Prop, State } from '@stencil/core'
-import { getClassNames } from 'src/liquid/utils/getClassNames'
-import { cloneAttributes } from '../../utils/cloneAttributes'
-import { registerAutofocus } from '../../utils/focus'
+import { Component, Element, h, Method, Prop, State } from '@stencil/core';
+import { getClassNames } from 'src/liquid/utils/getClassNames';
+import { cloneAttributes } from '../../utils/cloneAttributes';
+import { registerAutofocus } from '../../utils/focus';
 
 /**
  * @virtualProp ref - reference to component
@@ -15,57 +15,57 @@ import { registerAutofocus } from '../../utils/focus'
   shadow: true,
 })
 export class LdButton implements InnerFocusable, ClonesAttributes {
-  @Element() el: HTMLElement
-  private button: HTMLAnchorElement | HTMLButtonElement
+  @Element() el: HTMLElement;
+  private button: HTMLAnchorElement | HTMLButtonElement;
 
-  private attributesObserver: MutationObserver
+  private attributesObserver: MutationObserver;
 
   /** Align text. */
-  @Prop({ mutable: true }) alignText?: 'left' | 'right'
+  @Prop({ mutable: true }) alignText?: 'left' | 'right';
 
   /** Automatically focus the form control when the page is loaded. */
-  @Prop({ reflect: true }) autofocus: boolean
+  @Prop({ reflect: true }) autofocus: boolean;
 
   // `onBrandColor` is not possible, as Stencil expects `on*` props to be events.
   /** Style the button so that it looks good on the current theme's primary color. */
-  @Prop() brandColor?: boolean
+  @Prop() brandColor?: boolean;
 
   /** Disabled state of the button. */
-  @Prop() disabled?: boolean
+  @Prop() disabled?: boolean;
 
   /** Associates the control with a form element. */
-  @Prop() form?: string
+  @Prop() form?: string;
 
   /** Overrides the `action` attribute of the button's form owner. */
   @Prop() formaction?:
     | 'application/x-www-form-urlencoded'
     | 'multipart/form-data'
-    | 'text/plain'
+    | 'text/plain';
 
   /** Overrides the `enctype` attribute of the button's form owner. */
-  @Prop() formenctype?: string
+  @Prop() formenctype?: string;
 
   /** Overrides the `method` attribute of the button's form owner. */
-  @Prop() formmethod?: 'get' | 'post'
+  @Prop() formmethod?: 'get' | 'post';
 
   /** Overrides the `novalidate` attribute of the button's form owner. */
-  @Prop() formnovalidate?: boolean
+  @Prop() formnovalidate?: boolean;
 
   /** Overrides the `target` attribute of the button's form owner. */
-  @Prop() formtarget?: '_blank' | '_parent' | '_self' | '_top'
+  @Prop() formtarget?: '_blank' | '_parent' | '_self' | '_top';
 
   /**
    * Transforms the button to an anchor element.
    * See [mdn docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-href)
    * for more information on the `href` attribute.
    */
-  @Prop() href?: string
+  @Prop() href?: string;
 
   /** Justify content. */
-  @Prop({ mutable: true }) justifyContent?: 'start' | 'end' | 'between'
+  @Prop({ mutable: true }) justifyContent?: 'start' | 'end' | 'between';
 
   /** Tab index of the button. */
-  @Prop() ldTabindex: number | undefined
+  @Prop() ldTabindex: number | undefined;
 
   /** Display mode. */
   @Prop() mode?:
@@ -73,32 +73,32 @@ export class LdButton implements InnerFocusable, ClonesAttributes {
     | 'secondary'
     | 'ghost'
     | 'danger'
-    | 'danger-secondary'
+    | 'danger-secondary';
 
   /** Used to specify the name of the control. */
-  @Prop() name?: string
+  @Prop() name?: string;
 
   /** Displays a progress bar at the bottom of the button. */
-  @Prop() progress?: 'pending' | number
+  @Prop() progress?: 'pending' | number;
 
   /** Size of the button. */
-  @Prop() size?: 'sm' | 'lg'
+  @Prop() size?: 'sm' | 'lg';
 
   /**
    * The `target` attributed can be used in conjunction with the `href` attribute.
    * See [mdn docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target)
    * for more information on the `target` attribute.
    */
-  @Prop() target?: '_blank' | '_self' | '_parent' | '_top'
+  @Prop() target?: '_blank' | '_self' | '_parent' | '_top';
 
   /** Specifies the default behavior of the button. */
-  @Prop() type: 'button' | 'reset' | 'submit' = 'submit'
+  @Prop() type: 'button' | 'reset' | 'submit' = 'submit';
 
   /** Defines the value associated with the button’s `name` when it’s submitted with the form data. */
-  @Prop() value?: string
+  @Prop() value?: string;
 
-  @State() clonedAttributes
-  @State() iconOnly = false
+  @State() clonedAttributes;
+  @State() iconOnly = false;
 
   /**
    * Sets focus on the button
@@ -106,69 +106,69 @@ export class LdButton implements InnerFocusable, ClonesAttributes {
   @Method()
   async focusInner() {
     if (this.button !== undefined) {
-      this.button.focus()
+      this.button.focus();
     }
   }
 
   connectedCallback() {
     this.el.addEventListener('click', this.handleClick, {
       capture: true,
-    })
+    });
   }
 
   disconnectedCallback() {
     this.el.removeEventListener('click', this.handleClick, {
       capture: true,
-    })
-    this.attributesObserver?.disconnect()
+    });
+    this.attributesObserver?.disconnect();
   }
 
   private clickHiddenButton() {
-    const button = document.createElement('button')
+    const button = document.createElement('button');
 
-    button.style.pointerEvents = 'none'
-    button.style.position = 'absolute'
-    button.style.visibility = 'hidden'
+    button.style.pointerEvents = 'none';
+    button.style.position = 'absolute';
+    button.style.visibility = 'hidden';
 
-    if (this.form) button.setAttribute('form', this.form)
-    if (this.formaction !== undefined) button.formAction = this.formaction
-    if (this.formenctype !== undefined) button.formEnctype = this.formenctype
-    if (this.formmethod !== undefined) button.formMethod = this.formmethod
+    if (this.form) button.setAttribute('form', this.form);
+    if (this.formaction !== undefined) button.formAction = this.formaction;
+    if (this.formenctype !== undefined) button.formEnctype = this.formenctype;
+    if (this.formmethod !== undefined) button.formMethod = this.formmethod;
     if (this.formnovalidate !== undefined)
-      button.formNoValidate = this.formnovalidate
-    if (this.formtarget !== undefined) button.formTarget = this.formtarget
-    if (this.name !== undefined) button.name = this.name
-    if (this.type !== undefined) button.type = this.type
-    if (this.value !== undefined) button.value = this.value
+      button.formNoValidate = this.formnovalidate;
+    if (this.formtarget !== undefined) button.formTarget = this.formtarget;
+    if (this.name !== undefined) button.name = this.name;
+    if (this.type !== undefined) button.type = this.type;
+    if (this.value !== undefined) button.value = this.value;
 
-    this.el.parentNode.append(button)
-    button.click()
-    button.remove()
+    this.el.parentNode.append(button);
+    button.click();
+    button.remove();
   }
 
   private handleClick = (ev: MouseEvent) => {
-    const ariaDisabled = this.button.getAttribute('aria-disabled')
+    const ariaDisabled = this.button.getAttribute('aria-disabled');
 
     if (this.disabled || (ariaDisabled && ariaDisabled !== 'false')) {
-      ev.preventDefault()
+      ev.preventDefault();
       // Stopping propagation is important for clicks on child elements,
       // because otherwise event handlers attached to the ld-button
       // are still called (no matter if the event was prevented or not).
-      ev.stopPropagation()
-      return
+      ev.stopPropagation();
+      return;
     }
 
     if (!this.href && this.type !== 'button') {
       setTimeout(() => {
         if (!ev.defaultPrevented) {
-          const form = this.el.closest('form')
+          const form = this.el.closest('form');
           if (form || this.form) {
-            this.clickHiddenButton()
+            this.clickHiddenButton();
           }
         }
-      })
+      });
     }
-  }
+  };
 
   componentWillLoad() {
     this.attributesObserver = cloneAttributes.call(this, [
@@ -180,15 +180,15 @@ export class LdButton implements InnerFocusable, ClonesAttributes {
       'progress',
       'size',
       this.type === 'submit' ? 'type' : undefined, // submit is default
-    ])
+    ]);
 
-    const textInButton = this.el.textContent.trim()
+    const textInButton = this.el.textContent.trim();
 
     if (!textInButton) {
-      this.iconOnly = true
+      this.iconOnly = true;
     }
 
-    registerAutofocus(this.autofocus)
+    registerAutofocus(this.autofocus);
   }
 
   render() {
@@ -200,18 +200,18 @@ export class LdButton implements InnerFocusable, ClonesAttributes {
       this.justifyContent && `ld-button--justify-${this.justifyContent}`,
       this.mode && `ld-button--${this.mode}`,
       this.size && `ld-button--${this.size}`,
-    ])
+    ]);
 
-    const Tag = this.href ? 'a' : 'button'
+    const Tag = this.href ? 'a' : 'button';
 
-    const hasProgress = this.progress !== undefined && this.progress !== null
+    const hasProgress = this.progress !== undefined && this.progress !== null;
 
     const styleProgress = !isNaN(parseFloat(this.progress + ''))
       ? { '--ld-button-progress': this.progress + '' }
-      : undefined
+      : undefined;
     const clProgress = `ld-button__progress${
       this.progress === 'pending' ? ' ld-button__progress--pending' : ''
-    }`
+    }`;
 
     return (
       <Tag
@@ -242,6 +242,6 @@ export class LdButton implements InnerFocusable, ClonesAttributes {
           ></span>
         )}
       </Tag>
-    )
+    );
   }
 }

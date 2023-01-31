@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host } from '@stencil/core'
+import { Component, Prop, h, Host } from '@stencil/core';
 
 /** @internal **/
 @Component({
@@ -8,7 +8,7 @@ import { Component, Prop, h, Host } from '@stencil/core'
 })
 export class DocsIconGroup {
   /** Group name */
-  @Prop() name: string
+  @Prop() name: string;
 
   render() {
     return (
@@ -20,6 +20,6 @@ export class DocsIconGroup {
           <slot />
         </div>
       </Host>
-    )
+    );
   }
 }

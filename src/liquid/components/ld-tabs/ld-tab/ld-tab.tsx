@@ -7,7 +7,7 @@ import {
   Method,
   Prop,
   Watch,
-} from '@stencil/core'
+} from '@stencil/core';
 
 /**
  * @virtualProp ref - reference to component
@@ -24,52 +24,52 @@ import {
   shadow: true,
 })
 export class LdTab implements InnerFocusable {
-  @Element() el: HTMLElement
+  @Element() el: HTMLElement;
 
-  private btnRef: HTMLButtonElement
+  private btnRef: HTMLButtonElement;
 
   /** Disables the tab. */
-  @Prop() disabled?: boolean
+  @Prop() disabled?: boolean;
 
   /** Tab index of the tab. */
-  @Prop() ldTabindex: number | undefined
+  @Prop() ldTabindex: number | undefined;
 
   /** If present, this boolean attribute indicates that the tab is selected. */
-  @Prop({ mutable: true, reflect: true }) selected?: boolean
+  @Prop({ mutable: true, reflect: true }) selected?: boolean;
 
   /** Focuses the tab */
   @Method()
   async focusInner() {
-    this.btnRef.focus({ preventScroll: true })
+    this.btnRef.focus({ preventScroll: true });
   }
 
   /**
    * @internal
    * Emitted with the id of the selected tab.
    */
-  @Event() ldtabselect: EventEmitter<undefined>
+  @Event() ldtabselect: EventEmitter<undefined>;
 
   private handleTabClick(event: MouseEvent) {
-    event.preventDefault()
+    event.preventDefault();
 
-    this.select()
+    this.select();
   }
 
   @Watch('selected')
   emitEvent(newSelected: boolean, oldSelected: boolean) {
-    if (!newSelected || newSelected === oldSelected) return
+    if (!newSelected || newSelected === oldSelected) return;
 
-    this.ldtabselect.emit()
+    this.ldtabselect.emit();
   }
 
   /** Set selected tab to a certain index */
   @Method()
   async select() {
-    if (this.disabled) return
+    if (this.disabled) return;
 
-    if (this.btnRef.getAttribute('aria-selected')) return
+    if (this.btnRef.getAttribute('aria-selected')) return;
 
-    this.selected = true
+    this.selected = true;
   }
 
   render() {
@@ -90,6 +90,6 @@ export class LdTab implements InnerFocusable {
         </span>
         <span class="ld-tab__spacer" part="spacer spacer-right" />
       </button>
-    )
+    );
   }
 }
