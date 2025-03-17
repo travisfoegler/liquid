@@ -35,7 +35,7 @@ Although Liquid Oxygen components are Web Components, we provide first class sup
 
 ## Getting Started
 
-You can add Liquid Oxygen easily to your existing project. It integrates seamlessly with any framework or library. See our comprehensive guides and detailed explanation of how to integrate Liquid Oxygen into your project.
+Ydsfsdfou can add Liquid Oxygen easily to your existing project. It integrates seamlessly with any framework or library. See our comprehensive guides and detailed explanation of how to integrate Liquid Oxygen into your project.
 
 - [Gettings Started](introduction/getting-started/)
 - [React](introduction/getting-started/react/)
